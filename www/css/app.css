@@ -1,0 +1,30 @@
+
+/* Tip: Use "@import" to add styles instead of adding <link>'s in your
+   HTML, and volo will inline it when building for production */
+
+/* @import "install-button.css"; */
+/* @import "layouts.css"; */
+
+/* Your styles here */
+
+section.detail .contents, section.edit .contents {
+    padding: 1em;
+}
+
+section.detail .contents h1 {
+    margin: 0;
+}
+
+section.edit .field {
+    margin-top: 1em;
+}
+
+section.list li:before {
+    content: ' ';
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background: url(../img/glyphicons-halflings.png) no-repeat -95px -2px;
+    margin-right: 5px;
+    vertical-align: middle;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/install-button.css">
+    <link rel="stylesheet" href="css/layouts.css">
+  </head>
+  <body>
+    <!-- Use this installation button to install locally without going
+         through the marketpace (see app.js) -->
+    <!-- <button id="install-btn">Install</button>     -->
+
+    <div id="app">
+
+      <section class="list open">
+        <header>
+          <button class="refresh">Refresh</button>
+          <h1>My Items</h1>
+          <button class="add">+</button>
+          <button class="delete">-</button>
+        </header>
+      </section>
+
+      <section class="detail">
+        <header>
+          <h1></h1>
+          <button class="edit">Edit</button>
+        </header>
+        
+        <h1 class="title"></h1>
+        <p class="desc"></p>
+        <p class="date"></p>
+      </section>
+
+      <section class="edit">
+        <h1>Edit</h1>
+        <input type="hidden" name="id" value="" />
+        <div class="field">Title: <input type="text" name="title" /></div>
+        <div class="field">Description: <input type="text" name="desc" /></div>
+        <button type="submit" class="add">Add</button>
+      </section>
+    </div>
+
+    <!-- Using require.js, a module system for javascript, include the
+         js files. This loads "main.js", which in turn can load other
+         files, all handled by require.js:
+         http://requirejs.org/docs/api.html#jsfiles -->
+    <script type="text/javascript"
+            data-main="js/init.js"
+            src="js/lib/require.js"></script>
+  </body>
+</html>

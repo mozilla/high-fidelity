@@ -1,0 +1,26 @@
+{
+  "version": "0.1",
+  "name": "Podcasts",
+  "description": "Podcast app for HTML5",
+  "launch_path": "/",
+  "icons": {
+    "16": "/img/icons/mortar-16.png",
+    "48": "/img/icons/mortar-48.png",
+    "128": "/img/icons/mortar-128.png"
+  },
+  "developer": {
+    "name": "tofumatt and wenzel",
+    "url": "http://github.com/tofumatt/podcasts"
+  },
+  "installs_allowed_from": ["*"],
+  "appcache_path": "/cache.manifest",
+  "locales": {
+    "fr": {
+      "description": "App pour podcasts en HTML5",
+      "developer": {
+        "url": "http://github.com/tofumatt/podcasts"
+      }
+    }
+  },
+  "default_locale": "en"
+}
