@@ -11,48 +11,58 @@ define(function(require) {
 
     // Write your app here.
 
-    $('.delete').click(function() {});
-
-    var app = require('./list-detail');
-
-    app.addItem({ id: 0,
-                  title: 'JFK Berlin Address',
-                  url: 'http://upload.wikimedia.org/wikipedia/commons/3/3a/Jfk_berlin_address_high.ogg',
-                  date: new Date() });
+    require('layouts/view');
+    require('layouts/list');
 
     function formatDate(d) {
         return (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
     }
 
-    function renderRow(view) {
-        var model = view.model;
-        view.el.innerHTML = model.get('title') + ' - ' +
-            '<strong>' + formatDate(model.get('date')) + '</strong>';
-    }
+    var stack = require('layouts/view').stack;
 
-    function renderDetail(view) {
-        var model = view.model;
-        var contents = $('.contents', view.el);
+    var list = $('.list').get(0);
+    list.add({ id: 0,
+               title: 'JFK Berlin Address',
+               url: 'http://upload.wikimedia.org/wikipedia/commons/3/3a/Jfk_berlin_address_high.ogg',
+               date: new Date() });
 
-        contents.children('.title').text(model.get('title'));
-        contents.children('.url').text(model.get('url'));
-        contents.children('.date').text(formatDate(model.get('date')));
+    var detail = $('.detail').get(0);
+    detail.render = function(item) {
+        $('.title', this).text(item.get('title'));
+        $('.url', this).text(item.get('url'));
+        $('.date', this).text(formatDate(item.get('date')));
 
-        contents.children('.play').empty().append(
-            $('<audio controls>').attr('src', model.get('url'))
-        );
-    }
+        $('.play', this).empty().append(
+            $('<audio controls>').attr('src', item.get('url')));
+    };
 
-    function renderEdit(view) {
-        var model = view.model;
-        var el = $(this.el);
+    var edit = $('.edit').get(0);
+    edit.render = function(item) {
+        $('input[name=id]', this).val(item.id);
+        $('input[name=title]', this).val(item.get('title'));
+        $('input[name=url]', this).val(item.get('url'));
+    };
 
-        if(model) {
-            el.find('input[name=id]').val(model.id);
-            el.find('input[name=title]').val(model.get('title'));
-            el.find('input[name=url]').val(model.get('url'));
+    var search = $('.search').get(0);
+    $('.list button.add').click(function() {
+        stack.push(search);
+    });
+
+    $('.edit button.add').click(function() {
+        var el = $(edit);
+        var title = el.find('input[name=title]');
+        var url = el.find('input[name=url]');
+        var model = edit.model;
+
+        if (model) {
+            model.set({ title: title.val(), url: url.val() });
+        } else {
+            list.add({ title: title,
+                       url: url,
+                       date: new Date() });
         }
-    }
 
-    app.init(renderRow, renderDetail, renderEdit);
+        edit.pop();
+    });
+
 });

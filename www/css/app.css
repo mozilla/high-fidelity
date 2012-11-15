@@ -14,19 +14,19 @@ html {
   font-family: 'Open Sans', sans-serif;
 }
 
-section.detail .contents, section.edit .contents {
+x-view.detail .contents, x-view.edit .contents {
     padding: 1em;
 }
 
-section.detail .contents h1 {
+x-view.detail .contents h1 {
     margin: 0;
 }
 
-section.edit .field {
+x-view.edit .field {
     margin-top: 1em;
 }
 
-section.list li:before {
+x-listview.list li:before {
     content: ' ';
     display: inline-block;
     width: 15px;
