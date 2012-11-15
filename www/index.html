@@ -9,9 +9,9 @@
 
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/install-button.css">
     <link rel="stylesheet" href="css/layouts.css">
+    <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
     <!-- Use this installation button to install locally without going
@@ -23,7 +23,7 @@
       <section class="list open">
         <header>
           <button class="refresh">Refresh</button>
-          <h1>My Items</h1>
+          <h1>Podcasts</h1>
           <button class="add">+</button>
           <button class="delete">-</button>
         </header>
@@ -34,17 +34,19 @@
           <h1></h1>
           <button class="edit">Edit</button>
         </header>
-        
+
         <h1 class="title"></h1>
-        <p class="desc"></p>
+        <p class="url"></p>
         <p class="date"></p>
+
+        <div class="play"></div>
       </section>
 
       <section class="edit">
         <h1>Edit</h1>
         <input type="hidden" name="id" value="" />
         <div class="field">Title: <input type="text" name="title" /></div>
-        <div class="field">Description: <input type="text" name="desc" /></div>
+        <div class="field">URL: <input type="text" name="url" /></div>
         <button type="submit" class="add">Add</button>
       </section>
     </div>

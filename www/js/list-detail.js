@@ -131,17 +131,17 @@ define(function(require) {
             var el = $(this.el);
             var id = el.find('input[name=id]');
             var title = el.find('input[name=title]');
-            var desc = el.find('input[name=desc]');
+            var url = el.find('input[name=url]');
 
             if(id.val()) {
                 var model = itemList.get(id.val());
                 model.set({ title: title.val(),
-                            desc: desc.val() });
+                            url: url.val() });
             }
             else {
                 itemList.add(new itemList.model({ id: itemList.length,
                                                   title: title.val(),
-                                                  desc: desc.val(),
+                                                  url: url.val(),
                                                   date: new Date() }));
             }
 
@@ -365,7 +365,7 @@ define(function(require) {
 
             detailView = new DetailView({ el: $('#app > section.detail'),
                                           render: renderDetail });
-            
+
             listView = new ListView({ collection: itemList,
                                       el: $('#app > section.list'),
                                       render: renderRow });

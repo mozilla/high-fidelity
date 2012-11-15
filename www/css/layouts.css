@@ -4,7 +4,7 @@ html, body {
     padding: 0;
     height: 100%;
     overflow: hidden;
-    font-family: Georgia, serif;
+    font-family: 'Open Sans', serif;
 }
 
 .list ul {

@@ -16,22 +16,12 @@ define(function(require) {
     var app = require('./list-detail');
 
     app.addItem({ id: 0,
-                  title: 'Cook yummy food',
-                  desc: 'COOK ALL THE THINGS',
+                  title: 'JFK Berlin Address',
+                  url: 'http://upload.wikimedia.org/wikipedia/commons/3/3a/Jfk_berlin_address_high.ogg',
                   date: new Date() });
-    app.addItem({ id: 1,
-                  title: 'Make things',
-                  desc: 'Make this look like that',
-                  date: new Date(12, 9, 5) });
-    app.addItem({ id: 2,
-                  title: 'Move stuff',
-                  desc: 'Move this over there',
-                  date: new Date(12, 10, 1) });
 
     function formatDate(d) {
-        return (d.getMonth()+1) + '/' +
-            d.getDate() + '/' +
-            d.getFullYear();
+        return (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
     }
 
     function renderRow(view) {
@@ -45,8 +35,12 @@ define(function(require) {
         var contents = $('.contents', view.el);
 
         contents.children('.title').text(model.get('title'));
-        contents.children('.desc').text(model.get('desc'));
+        contents.children('.url').text(model.get('url'));
         contents.children('.date').text(formatDate(model.get('date')));
+
+        contents.children('.play').empty().append(
+            $('<audio controls>').attr('src', model.get('url'))
+        );
     }
 
     function renderEdit(view) {
@@ -56,7 +50,7 @@ define(function(require) {
         if(model) {
             el.find('input[name=id]').val(model.id);
             el.find('input[name=title]').val(model.get('title'));
-            el.find('input[name=desc]').val(model.get('desc'));
+            el.find('input[name=url]').val(model.get('url'));
         }
     }
 

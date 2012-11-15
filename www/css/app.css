@@ -6,6 +6,13 @@
 /* @import "layouts.css"; */
 
 /* Your styles here */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+html {
+  width: 100%;
+  height: 100%;
+  font-family: 'Open Sans', sans-serif;
+}
 
 section.detail .contents, section.edit .contents {
     padding: 1em;
