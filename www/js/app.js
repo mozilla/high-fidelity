@@ -3,8 +3,7 @@
 // http://requirejs.org/docs/api.html#define
 
 define(function(require) {
-    // Receipt verification (https://github.com/mozilla/receiptverifier)
-    require('receiptverifier');
+    var _ = require('underscore');
 
     // Installation button
     require('./install-button');
@@ -46,6 +45,20 @@ define(function(require) {
     var search = $('.search').get(0);
     $('.list button.add').click(function() {
         stack.push(search);
+    });
+    $('.search form').submit(function(e) {
+        e.preventDefault();
+        $.ajaxJSONP({
+            url: ('https://gpodder.net/search.jsonp?jsonp=?&q=' +
+                  encodeURIComponent($('.search input').val())),
+            success: function(data) {
+                search.collection.reset();
+                $('.search ._list').html(''); // XXX ListView should do that when collection is emptied
+                _.each(data, function(i) {
+                    search.add(i);
+                });
+            }
+        });
     });
 
     $('.edit button.add').click(function() {

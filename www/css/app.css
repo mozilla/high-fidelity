@@ -35,3 +35,11 @@ x-listview.list li:before {
     margin-right: 5px;
     vertical-align: middle;
 }
+
+.search input {
+  font-size: 120%;
+  padding: .1em;
+  margin: 2%;
+  width: 96%;
+  -moz-box-sizing: border-box;
+}
