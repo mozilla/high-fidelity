@@ -14,16 +14,13 @@ html {
   font-family: 'Open Sans', sans-serif;
 }
 
-x-view.detail .contents, x-view.edit .contents {
+x-view.detail .contents,
+x-view.result .contents {
     padding: 1em;
 }
 
 x-view.detail .contents h1 {
     margin: 0;
-}
-
-x-view.edit .field {
-    margin-top: 1em;
 }
 
 x-listview.list li:before {

@@ -8,8 +8,6 @@ define(function(require) {
     // Installation button
     require('./install-button');
 
-    // Write your app here.
-
     require('layouts/view');
     require('layouts/list');
 
@@ -35,13 +33,6 @@ define(function(require) {
             $('<audio controls>').attr('src', item.get('url')));
     };
 
-    var edit = $('.edit').get(0);
-    edit.render = function(item) {
-        $('input[name=id]', this).val(item.id);
-        $('input[name=title]', this).val(item.get('title'));
-        $('input[name=url]', this).val(item.get('url'));
-    };
-
     var search = $('.search').get(0);
     $('.list button.add').click(function() {
         stack.push(search);
@@ -58,28 +49,21 @@ define(function(require) {
                     if (!i.title.length) return;
                     search.add({
                         title: i.title,
-                        url: i.url
+                        desc: i.description,
+                        url: i.url,
+                        logo: i.scaled_logo_url
                     });
                 });
             }
         });
     });
 
-    $('.edit button.add').click(function() {
-        var el = $(edit);
-        var title = el.find('input[name=title]');
-        var url = el.find('input[name=url]');
-        var model = edit.model;
-
-        if (model) {
-            model.set({ title: title.val(), url: url.val() });
-        } else {
-            list.add({ title: title,
-                       url: url,
-                       date: new Date() });
-        }
-
-        edit.pop();
-    });
+    var result = $('.result').get(0);
+    result.render = function(item) {
+        $('.title', this).text(item.get('title'));
+        $('.desc', this).text(item.get('desc'));
+        $('.logo', this).attr('src', item.get('logo'));
+    };
+    search.nextView = result;
 
 });

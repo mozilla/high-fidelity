@@ -23,37 +23,31 @@
         <header>
           <h1>Podcasts</h1>
           <button class="add">+</button>
-          <button class="delete">-</button>
         </header>
       </x-listview>
 
       <x-view class="detail">
-        <header>
-          <h1></h1>
-          <button data-view="x-view.edit">Edit</button>
-        </header>
+        <h1></h1>
 
         <h1 class="title"></h1>
-        <p class="url"></p>
         <p class="date"></p>
 
         <div class="play"></div>
       </x-view>
 
-      <x-view class="edit">
-        <h1>Edit</h1>
-        <input type="hidden" name="id" value="" />
-        <div class="field">Title: <input type="text" name="title" /></div>
-        <div class="field">URL: <input type="text" name="url" /></div>
-        <button type="submit" class="add">Add</button>
-      </x-view>
-
       <x-listview class="search list">
-        <h1>Add</h1>
+        <h1>Add a podcast</h1>
         <form action="#">
           <input type="text" name="q" placeholder="Search Terms" />
         </form>
       </x-listview>
+
+      <x-view class="result">
+        <h1 class="title"></h1>
+        <img src="" class="logo">
+        <p class="desc"></p>
+        <button type="submit" class="add">Add</button>
+      </x-view>
     </x-app>
 
     <!-- Using require.js, a module system for javascript, include the

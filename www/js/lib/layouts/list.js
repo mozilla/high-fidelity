@@ -83,7 +83,7 @@ define(function(require) {
             this.view = new ListView({ el: this,
                                        collection: new ItemList() });
 
-            if(this.dataset.first == 'true') {
+            if (this.dataset.first == 'true') {
                 stack.push(this);
             }
         },
