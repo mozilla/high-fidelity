@@ -55,7 +55,11 @@ define(function(require) {
                 search.collection.reset();
                 $('.search ._list').html(''); // XXX ListView should do that when collection is emptied
                 _.each(data, function(i) {
-                    search.add(i);
+                    if (!i.title.length) return;
+                    search.add({
+                        title: i.title,
+                        url: i.url
+                    });
                 });
             }
         });
