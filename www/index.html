@@ -3,58 +3,30 @@
   <head>
     <meta charset="utf-8">
 
-    <title></title>
-    <meta name="description" content="">
+    <title>Podcasts</title>
+    <meta name="description" content="HTML5-powered Podcasts App">
     <meta name="viewport" content="width=device-width">
 
     <!-- Place favicon.ico in the root directory -->
-
-    <link rel="stylesheet" href="css/install-button.css">
     <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/layouts.css">
   </head>
   <body>
-    <!-- Use this installation button to install locally without going
-         through the marketpace (see app.js) -->
-    <!-- <button id="install-btn">Install</button>     -->
+    <!-- The player that contains the actual audio file we're playing. -->
+    <div id="player"></div>
 
-    <x-app>
-      <x-listview class="list" data-first="true">
-        <header>
-          <h1>Podcasts</h1>
-          <button class="add">+</button>
-        </header>
-      </x-listview>
+    <div id="content">
+      <div id="podcasts"></div>
 
-      <x-view class="detail">
-        <h1></h1>
+      <div id="add-podcast">
+        <input id="add-rss" type="text" placeholder="Enter a podcast URL.">
+        <button id="add-rss-submit">Subscribe</button>
+      </div>
+    </div>
 
-        <h1 class="title"></h1>
-        <p class="date"></p>
-
-        <div class="play"></div>
-      </x-view>
-
-      <x-listview class="search list">
-        <h1>Add a podcast</h1>
-        <form action="#">
-          <input type="text" name="q" placeholder="Search Terms" />
-        </form>
-      </x-listview>
-
-      <x-view class="result">
-        <h1 class="title"></h1>
-        <img src="" class="logo">
-        <p class="desc"></p>
-        <button type="submit" class="add">Add</button>
-      </x-view>
-    </x-app>
-
-    <!-- Using require.js, a module system for javascript, include the
-         js files. This loads "main.js", which in turn can load other
-         files, all handled by require.js:
-         http://requirejs.org/docs/api.html#jsfiles -->
-    <script type="text/javascript" src="js/x-tag.js"></script>
-    <script type="text/javascript" data-main="js/init.js" src="js/lib/require.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script>window.google.load('feeds', '1');</script>
+    <script src="js/string.js"></script>
+    <script data-main="js/main.js" src="js/lib/require.js"></script>
   </body>
 </html>
+<!-- I never met a lady quite as pretty as Melody Dean -->
