@@ -1,26 +1,22 @@
 {
   "version": "0.1",
   "name": "Podcasts",
-  "description": "Podcast app for HTML5",
-  "launch_path": "/",
+  "description": "Listen to your favourite podcasts on your HTML5-powered device or browser.",
   "icons": {
-    "16": "/img/icons/mortar-16.png",
-    "48": "/img/icons/mortar-48.png",
-    "128": "/img/icons/mortar-128.png"
+    "16": "/img/icon-16.png",
+    "30": "/img/icon-30.png",
+    "32": "/img/icon-32.png",
+    "48": "/img/icon-48.png",
+    "60": "/img/icon-60.png",
+    "64": "/img/icon-64.png",
+    "128": "/img/icon-128.png",
+    "256": "/img/icon-128.png"
   },
   "developer": {
-    "name": "tofumatt and wenzel",
-    "url": "http://github.com/tofumatt/podcasts"
+    "name": "Mozilla",
+    "url": "http://mozilla.org/"
   },
-  "installs_allowed_from": ["*"],
-  "appcache_path": "/cache.manifest",
-  "locales": {
-    "fr": {
-      "description": "App pour podcasts en HTML5",
-      "developer": {
-        "url": "http://github.com/tofumatt/podcasts"
-      }
-    }
-  },
-  "default_locale": "en"
+  "launch_path": "/index.html",
+  "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
+  "appcache_path": "/manifest.appcache"
 }
