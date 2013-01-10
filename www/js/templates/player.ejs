@@ -1,0 +1,4 @@
+<strong><%= episode.get('title') %></strong><br>
+<% if (blobURL) { %>
+  <audio id="player-<%= episode.get('id') %>" src="<%= blobURL %>" controls autoload autoplay>
+<% } %>
