@@ -17,9 +17,7 @@
 //
 //     // And to destroy data:
 //     DataStore.destroy('some-key', callback)
-define([
-  'app'
-], function(App) {
+define(function(require) {
   var indexedDB = indexedDB || window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB,
       IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction;
   var dbVersion = 1;
@@ -29,7 +27,7 @@ define([
 
   // Create the podcasts and cover image database.
   function createObjectStore(database) {
-    var objectStore = database.createObjectStore(App.GLOBALS.OBJECT_STORE_NAME, {
+    var objectStore = database.createObjectStore(window.GLOBALS.OBJECT_STORE_NAME, {
       autoIncrement: false,
       keyPath: 'id'
     });
@@ -38,7 +36,7 @@ define([
   // Connect to the database; should be fired on app start, with the app
   // initialization running after the database is ensured to be working.
   function load(callback) {
-    var databaseConnect = indexedDB.open(App.GLOBALS.DATABASE_NAME, dbVersion);
+    var databaseConnect = indexedDB.open(window.GLOBALS.DATABASE_NAME, dbVersion);
 
     databaseConnect.onerror = function(event) {
       console.error('Error connecting to IndexedDB. Podcasts will fail.');
@@ -48,8 +46,8 @@ define([
       db = databaseConnect.result;
       window._DB = db;
 
-      var trans = db.transaction([App.GLOBALS.DATABASE_NAME], 'readwrite');
-      var store = trans.objectStore(App.GLOBALS.OBJECT_STORE_NAME);
+      var trans = db.transaction([window.GLOBALS.DATABASE_NAME], 'readwrite');
+      var store = trans.objectStore(window.GLOBALS.OBJECT_STORE_NAME);
 
       db.onerror = function(event) {
           console.log('Error creating/accessing IndexedDB database');
@@ -77,7 +75,7 @@ define([
   // useful.
   function clearAll() {
     window.localStorage.clear();
-    var objectStore = db.transaction(App.GLOBALS.DATABASE_NAME, 'readwrite').objectStore(App.GLOBALS.OBJECT_STORE_NAME);
+    var objectStore = db.transaction(window.GLOBALS.DATABASE_NAME, 'readwrite').objectStore(window.GLOBALS.OBJECT_STORE_NAME);
  
     objectStore.openCursor().onsuccess = function(event) {
       var cursor = event.target.result;
@@ -92,16 +90,16 @@ define([
   // Destroy a blob based on it's id key.
   // TODO: Write this sucker!
   function destroy(id) {
-    var trans = db.transaction([App.GLOBALS.DATABASE_NAME], 'readwrite');
-    var store = trans.objectStore(App.GLOBALS.OBJECT_STORE_NAME);
+    var trans = db.transaction([window.GLOBALS.DATABASE_NAME], 'readwrite');
+    var store = trans.objectStore(window.GLOBALS.OBJECT_STORE_NAME);
   }
 
   // Get blob data based on a simple, string key. Sends the request event
   // and the blob data (if it exists) as the two arguments to a callback.
   // TODO: Supply event data to callback.
   function get(id, callback) {
-    var transaction = db.transaction([App.GLOBALS.DATABASE_NAME]);
-    var objectStore = transaction.objectStore(App.GLOBALS.OBJECT_STORE_NAME);
+    var transaction = db.transaction([window.GLOBALS.DATABASE_NAME]);
+    var objectStore = transaction.objectStore(window.GLOBALS.OBJECT_STORE_NAME);
     var request = objectStore.get(id);
 
     request.onsuccess = function(event) {
@@ -112,11 +110,11 @@ define([
   // Save data based on a key to IndexedDB. This can take some time, be warned.
   function set(id, blob, callback) {
     // Open a transaction to the database.
-    var transaction = db.transaction([App.GLOBALS.DATABASE_NAME], 'readwrite');
+    var transaction = db.transaction([window.GLOBALS.DATABASE_NAME], 'readwrite');
 
     // Put the blob into the dabase.
     // TODO: Check for key collisions.
-    var put = transaction.objectStore(App.GLOBALS.OBJECT_STORE_NAME).add({id: id, file: blob});
+    var put = transaction.objectStore(window.GLOBALS.OBJECT_STORE_NAME).add({id: id, file: blob});
 
     if (callback) {
       put.onsuccess = callback;

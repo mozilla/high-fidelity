@@ -22,6 +22,7 @@ define([
         OBJECT_STORE_NAME: 'podcasts',
         TIME_TO_UPDATE: 3600 * 5 // Update podcasts every five hours
     }
+    window.GLOBALS = GLOBALS;
 
     function initialize(callback) {
         if (GLOBALS.HAS.nativeScroll) {
