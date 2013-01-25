@@ -10,18 +10,18 @@ define([
     'collections/podcasts',
     'models/podcast',
     'views/episode',
+    'text!templates/podcast-cover.ejs',
     'text!templates/podcast.ejs'
-], function($, _, Backbone, App, Podcasts, Podcast, EpisodeView, PodcastTemplate) {
-    var PodcastView = Backbone.View.extend({
+], function($, _, Backbone, App, Podcasts, Podcast, EpisodeView, PodcastCoverTemplate, PodcastTemplate) {
+    var PodcastItemView = Backbone.View.extend({
         className: 'podcast',
         el: '#podcasts',
         $el: $('#podcasts'),
         model: Podcast,
-        tagName: 'li',
-        template: _.template(PodcastTemplate),
+        template: _.template(PodcastCoverTemplate),
 
         events: {
-
+            'click .reveal': 'showEpisodes'
         },
 
         initialize: function() {
@@ -32,8 +32,61 @@ define([
                 this.model.save();
             }
 
-            this.model.update(function() {
-                self.render();
+            if (this.model.get('lastUpdated') === 0) {
+                this.model.update(function() {
+                    self.render();
+                });
+            }
+
+            this.model.on('destroyed', function() {
+                self.remove();
+            });
+
+            this.render();
+        },
+
+        render: function() {
+            var html = this.template({
+                podcastCover: this.model.cover(),
+                podcast: this.model
+            });
+
+            var podcast = this.$el.children('#podcast-{id}'.format({
+                id: this.model.get('id')}
+            ));
+
+            if (podcast.length) {
+                podcast.html(html);
+            } else {
+                this.$el.append(html);
+            }
+        },
+
+        showEpisodes: function(event) {
+            console.log(event);
+            var episodes = new PodcastView({
+                model: this.model
+            });
+            $('#podcasts-modal').show();
+        }
+    });
+
+    var PodcastView = Backbone.View.extend({
+        className: 'podcast',
+        el: '#podcasts-modal',
+        $el: $('#podcasts-modal'),
+        model: Podcast,
+        template: _.template(PodcastTemplate),
+
+        events: {
+            'click .destroy': 'destroy'
+        },
+
+        initialize: function() {
+            var self = this;
+
+            this.model.on('destroyed', function() {
+                self.remove();
             });
 
             this.render();
@@ -44,7 +97,7 @@ define([
                 podcast: this.model
             });
 
-            var podcast = this.$el.children('#podcast-{id}'.format({
+            var podcast = this.$el.children('#podcast-details-{id}'.format({
                 id: this.model.get('id')}
             ));
 
@@ -59,8 +112,18 @@ define([
                     model: episode
                 });
             });
+        },
+
+        destroy: function(event) {
+            console.log($(event.originalTarget).data('podcastid') === this.model.get('id'));
+            if ($(event.originalTarget).data('podcastid') === this.model.get('id')) {
+                this.model.destroy();
+            }
         }
     });
 
-    return PodcastView;
+    return {
+        cover: PodcastItemView,
+        detail: PodcastView
+    };
 });

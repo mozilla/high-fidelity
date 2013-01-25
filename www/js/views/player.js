@@ -21,16 +21,29 @@ define([
         template: _.template(PlayerTemplate),
 
         events: {
-
+            'click #play-pause': 'playPause'
         },
 
         initialize: function() {
-            this.getEpisode();
+            var self = this;
+
+            // It's possible to have an empty player, so we check to see if
+            // there's an episode loaded; if not, don't bother with much.
+            if (this.model.id) {
+                this.getEpisode();
+
+                this.model.on('destroyed', function() {
+                    self.remove();
+                });
+            }
 
             this.render();
         },
 
         render: function() {
+            // Re-rendering the play/pause buttons means redelegating events.
+            this.undelegateEvents();
+
             var html = this.template({
                 blobURL: this.options.blobURL,
                 episode: this.model
@@ -42,7 +55,7 @@ define([
         downloadEpisode: function() {
             var self = this;
 
-            var request = new window.XMLHttpRequest();
+            var request = new window.XMLHttpRequest({mozSystem: true});
 
             request.open('GET', this.model.get('enclosure').url, true);
             request.responseType = 'blob';
@@ -59,11 +72,10 @@ define([
 
             this.model.blob(function(podcast) {
                 if (podcast && podcast.file) {
-                    console.log('exists!', podcast.file);
                     try {
                         self.options.blobURL = window.URL.createObjectURL(podcast.file);
                     } catch (e) {
-                        console.log(e);
+                        console.log('ERROR', e);
                     }
                 } else {
                     self.downloadEpisode();
@@ -71,6 +83,16 @@ define([
 
                 self.render();
             });
+        },
+
+        playPause: function(event) {
+            if ($('#audio')[0].paused) {
+                $('#audio')[0].play();
+            } else {
+                $('#audio')[0].pause();
+            }
+
+            $('#play-pause').toggleClass('paused');
         }
     });
 

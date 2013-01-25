@@ -1,5 +1,7 @@
-<div id="podcast-<%= podcast.get('id') %>">  
+<div id="podcast-details-<%= podcast.get('id') %>" class="podcast-details">  
   <h2><%= podcast.get('name') %></h2>
 
-  <ul class="episodes" data-podcastid="%= podcast.get('id') %>"></ul>
+  <a href="#delete" class="destroy" data-podcastid="<%= podcast.get('id') %>">[X]</a>
+
+  <ul class="episodes" data-podcastid="<%= podcast.get('id') %>"></ul>
 </div>

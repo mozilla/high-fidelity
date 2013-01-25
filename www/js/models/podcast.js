@@ -3,11 +3,15 @@
 define([
     'underscore',
     'backbone',
+    'datastore',
     'rss',
+    'collections/podcasts',
     'require'
-], function(_, Backbone, RSS, require) {
+], function(_, Backbone, DataStore, RSS, Podcasts, require) {
     var PodcastModel = Backbone.Model.extend({
+        collection: Podcasts,
         defaults: {
+            lastUpdated: 0,
             name: 'Untitled Podcast',
             rssData: null,
             rssURL: null
@@ -20,11 +24,18 @@ define([
             episode.save();
         },
 
+        cover: function(callback) {
+            return '/img/no-cover.jpg';
+            DataStore.get('podcast-cover-{0}'.format([this.id]), callback);
+        },
+
         // When deleting a Podcast, delete all its Episodes as well.
         destroy: function(options) {
-            this.episodes().each(function(e) {
+            this.episodes().forEach(function(e) {
                 e.destroy();
             });
+
+            this.trigger('destroyed');
 
             return Backbone.Model.prototype.destroy.call(this, options);
         },
@@ -52,6 +63,10 @@ define([
             RSS.download(this.get('rssURL'), function(result) {
                 var newEpisodes = [];
                 result.items.forEach(function(episode) {
+                    if (newEpisodes.length > 4) { // TODO: Magic constant!
+                        return;
+                    }
+
                     self.set({
                         name: result.title
                     });
@@ -64,12 +79,15 @@ define([
                             podcastID: self.get('id')
                         }, episode));
 
-                        console.log(episodeInstance);
+                        // console.log(episodeInstance);
 
                         newEpisodes.push(episodeInstance);
                         self.addEpisode(episodeInstance);
                     }
                 });
+
+                self.set({lastUpdated: window.timestamp()});
+                self.save();
 
                 if (callback) {
                     callback(newEpisodes);

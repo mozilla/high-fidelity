@@ -11,7 +11,7 @@ define([], function() {
     // Download a podcast feed from the URL specified. Execute a callback
     // (the second argument) whenever the data loads.
     function download(url, callback) {
-        var request = new window.XMLHttpRequest();
+        var request = new window.XMLHttpRequest({mozSystem: true});
 
         request.open('GET', url, true);
 

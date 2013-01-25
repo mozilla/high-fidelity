@@ -4,20 +4,23 @@
 
 define([
     'zepto',
-    'blod',
+    'install',
+    'datastore',
     'collections/episodes',
     'collections/podcasts',
     'models/episode',
     'models/podcast',
     'views/app'
-], function($, Blod, Episodes, Podcasts, Episode, Podcast, AppView) {
+], function($, install, DataStore, Episodes, Podcasts, Episode, Podcast, AppView) {
     var GLOBALS = {
+        DATABASE_NAME: 'podcasts',
         HAS: {
             nativeScroll: (function() {
                 return 'WebkitOverflowScrolling' in window.document.createElement('div').style;
             })()
         },
-        TIME_TO_UPDATE: 3600 * 1 // Update podcasts every hour
+        OBJECT_STORE_NAME: 'podcasts',
+        TIME_TO_UPDATE: 3600 * 5 // Update podcasts every five hours
     }
 
     function initialize(callback) {
@@ -25,10 +28,19 @@ define([
             $('body').addClass('native-scroll');
         }
 
-        Blod.load(function() {
+        DataStore.load(function() {
             var app = new AppView();
         });
     }
+
+    function timestamp(date) {
+        if (!date) {
+            date = new Date()
+        }
+
+        return Math.round(date.getTime() / 1000)
+    }
+    window.timestamp = timestamp;
 
     return {
         initialize: initialize

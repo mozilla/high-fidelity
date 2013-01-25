@@ -9,8 +9,7 @@ require.config({
     paths: {
         backbone: 'lib/backbone',
         localstorage: 'lib/backbone.localstorage',
-        // mediadb: 'lib/mediadb',
-        // rss: 'lib/rssfeeds_google',
+        install: 'lib/install',
         text: 'lib/require.text',
         underscore: 'lib/lodash',
         zepto: 'lib/zepto'
@@ -25,9 +24,6 @@ require.config({
             ],
             exports: 'Backbone'
         },
-        // 'mediadb': {
-        //     exports: 'MediaDB'
-        // },
         'underscore': {
             exports: '_'
         },
@@ -43,10 +39,10 @@ require([
 ], function(App, AppRouter) {
     function init() {
         // Initialize routing and start Backbone.history()
-        var router = new AppRouter()
+        var router = new AppRouter();
 
-        Backbone.history.start()
+        Backbone.history.start();
     }
 
-    App.initialize(init)
+    App.initialize(init);
 });

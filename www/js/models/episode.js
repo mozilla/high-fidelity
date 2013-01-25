@@ -3,10 +3,12 @@
 define([
   'underscore',
   'backbone',
-  'blod',
+  'datastore',
+  'collections/episodes',
   'require'
-], function(_, Backbone, Blod, require) {
+], function(_, Backbone, DataStore, Episodes, require) {
     var EpisodeModel = Backbone.Model.extend({
+        collection: Episodes,
         defaults: {
             isDownloaded: false,
             url: null
@@ -24,7 +26,7 @@ define([
         // Extend Backbone's default destroy method so we also delete the
         // podcast blob in indexedDB.
         destroy: function(options) {
-            Blod.destroy(this.id);
+            DataStore.destroy(this.id);
 
             return Backbone.Model.prototype.destroy.call(this, options);
         },
@@ -35,17 +37,18 @@ define([
         },
 
         _getBlob: function(callback) {
-          Blod.get(this.id, callback);
+          DataStore.get(this.id, callback);
         },
 
         _setBlob: function(blob) {
           var self = this;
 
-          Blod.save(this.id, blob, function() {
+          DataStore.set(this.id, blob, function() {
             self.set({
               isDownloaded: true
             });
             self.save();
+            self.trigger('updated');
           });
         }
     });

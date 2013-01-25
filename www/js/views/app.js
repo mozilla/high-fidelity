@@ -10,8 +10,9 @@ define([
     'collections/episodes',
     'collections/podcasts',
     'models/podcast',
+    'views/player',
     'views/podcast'
-], function($, _, Backbone, App, Episodes, Podcasts, Podcast, PodcastView) {
+], function($, _, Backbone, App, Episodes, Podcasts, Podcast, PlayerView, PodcastViews) {
     var AppView = Backbone.View.extend({
         el: '#content',
         $el: $('#content'),
@@ -22,6 +23,10 @@ define([
 
         initialize: function() {
             var self = this;
+
+            var player = new PlayerView({
+                model: null
+            });
 
             Podcasts.fetch({
                 success: function(podcast) {
@@ -34,10 +39,18 @@ define([
 
         loadPodcasts: function() {
             Podcasts.forEach(function(podcast) {
-                var view = new PodcastView({
+                var view = new PodcastViews.cover({
                     model: podcast
                 });
             });
+        },
+
+        // Show a Podcast's info including artwork and episodes.
+        showPodcast: function(id) {
+            console.log(id);
+            // PodcastView({
+            //     model: podcast
+            // });
         },
 
         subscribe: function() {
@@ -48,7 +61,7 @@ define([
                 return;
             }
 
-            var podcast = new PodcastView({
+            var podcast = new PodcastView.cover({
                 model: new Podcast({rssURL: url})
             });
         }

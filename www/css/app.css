@@ -6,37 +6,126 @@
 /* @import "layouts.css"; */
 
 /* Your styles here */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
-
-html {
-  width: 100%;
-  height: 100%;
-  font-family: 'Open Sans', sans-serif;
-}
-
-x-view.detail .contents,
-x-view.result .contents {
-    padding: 1em;
-}
-
-x-view.detail .contents h1 {
+body {
+    background-color: #222;
+    color: #f2f2f2;
+    font-family: "MozTT", sans-serif;
     margin: 0;
+    padding: 0;
 }
 
-x-listview.list li:before {
-    content: ' ';
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    background: url(../img/glyphicons-halflings.png) no-repeat -95px -2px;
-    margin-right: 5px;
-    vertical-align: middle;
+.hide {
+    position: absolute;
+    text-indent: -9999px;
+    top: 0;
 }
 
-.search input {
-  font-size: 120%;
-  padding: .1em;
-  margin: 2%;
-  width: 96%;
-  -moz-box-sizing: border-box;
+/** Podcast Cover/List View */
+#podcasts {
+
+}
+
+#podcasts::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+
+.podcast-cover {
+    background: -moz-linear-gradient(top, rgba(250,198,149,1) 0%, rgba(245,171,102,1) 47%, rgba(239,141,49,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(250,198,149,1)), color-stop(47%,rgba(245,171,102,1)), color-stop(100%,rgba(239,141,49,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(250,198,149,1) 0%,rgba(245,171,102,1) 47%,rgba(239,141,49,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -ms-linear-gradient(top, rgba(250,198,149,1) 0%,rgba(245,171,102,1) 47%,rgba(239,141,49,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(250,198,149,1) 0%,rgba(245,171,102,1) 47%,rgba(239,141,49,1) 100%); /* W3C */
+    border: 1px solid #d2d2d2;
+    display: block;
+    float: left;
+    height: 150px;
+    margin: 10px;
+    max-height: 150px;
+    max-width: 150px;
+    width: 50%;
+}
+
+.podcast-cover a {
+    color: #030203;
+    display: block;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.podcast-cover a .name {
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/** Podcast Modal */
+
+#podcasts-modal {
+    background: rgba(2, 2, 2, .9);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.podcast-details {
+    background: #f3f3f3;
+    border: 1px solid #090909;
+    color: #010101;
+    height: 75%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    width: 90%;
+    transform: translate(-50%, -50%);
+}
+
+/** Player (BOTTOM OF SCREEN) */
+
+#player {
+    background: #111;
+    border-top: 1px solid #d2d2d2;
+    bottom: 0;
+    height: 64px;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    z-index: 10000;
+}
+
+#player h2 {
+    margin: 7.5px 5px 5px;
+}
+
+#player h3 {
+    margin: 0 0 0 5px;
+}
+
+#player p {
+    display: none;
+    height: 64px;
+    overflow: ellipsis;
+    width: 50%;
+}
+
+#play-pause {
+    background: url(../img/button-pause.png) center;
+    float: right;
+    height: 60px;
+    width: 60px;
+}
+
+#play-pause.paused {
+    background-image: url(../img/button-play.png);
+}
+
+#add-podcast {
+    display: none;
 }

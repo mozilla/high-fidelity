@@ -25,12 +25,13 @@ define([
         },
 
         initialize: function() {
+            var self = this;
             if (!this.model.get('id')) {
                 Episodes.add(this.model);
                 this.model.save();
             }
 
-            this.el = '#podcast-{id}'.format({
+            this.el = '#podcast-details-{id}'.format({
                 id: this.model.get('podcastID') ? this.model.get('podcastID') : 'no-id'
             });
             this.$el = $(this.el);
@@ -39,19 +40,23 @@ define([
                 this.downloadEpisode();
             }
 
+            this.model.on('updated', function() {
+                self.render();
+            });
+
             this.render();
         },
 
         downloadEpisode: function() {
             var self = this;
 
-            var request = new window.XMLHttpRequest();
+            var request = new window.XMLHttpRequest({mozSystem: true});
 
             request.open('GET', this.model.get('enclosure').url, true);
             request.responseType = 'blob';
 
             request.addEventListener('load', function(event) {
-                self.model.blob(request.response, self.render);
+                self.model.blob(request.response);
             });
 
             request.send(null);
