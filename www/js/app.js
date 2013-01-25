@@ -15,6 +15,14 @@ define([
     var GLOBALS = {
         DATABASE_NAME: 'podcasts',
         HAS: {
+            audioSupportMP3: (function() {
+                var a = window.document.createElement('audio');
+                return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
+            })(),
+            audioSupportOGG: (function() {
+                var a = window.document.createElement('audio');
+                return !!(a.canPlayType && a.canPlayType('audio/ogg;').replace(/no/, ''));
+            })(),
             nativeScroll: (function() {
                 return 'WebkitOverflowScrolling' in window.document.createElement('div').style;
             })()
