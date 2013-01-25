@@ -10,7 +10,7 @@
     "60": "/img/icon-60.png",
     "64": "/img/icon-64.png",
     "128": "/img/icon-128.png",
-    "256": "/img/icon-128.png"
+    "256": "/img/icon-256.png"
   },
   "developer": {
     "name": "Mozilla",
@@ -18,5 +18,16 @@
   },
   "launch_path": "/index.html",
   "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
-  "appcache_path": "/manifest.appcache"
+  "permissions": {
+    "network-http": {
+      "description": "Required to download podcasts."
+    },
+    "storage": {
+      "access": "readcreate",
+      "description": "Required to store podcast files and metadata."
+    },
+    "systemXHR": {
+      "description": "Required to download podcasts."
+    }
+  }
 }
