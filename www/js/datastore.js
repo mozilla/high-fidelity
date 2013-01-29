@@ -126,5 +126,5 @@ define(function(require) {
     get: get,
     load: load,
     set: set
-  }
+  };
 });

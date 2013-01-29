@@ -23,6 +23,12 @@ define([
           }
         },
 
+        // Output the published date of this podcast in a pretty way.
+        date: function() {
+          var date = new Date(this.get('datePublished'));
+          return date.toLocaleDateString();
+        },
+
         // Extend Backbone's default destroy method so we also delete the
         // podcast blob in indexedDB.
         destroy: function(options) {
@@ -31,9 +37,36 @@ define([
             return Backbone.Model.prototype.destroy.call(this, options);
         },
 
+        download: function() {
+            if (window.DownloadQueue.length <= window.GLOBALS.MAX_DOWNLOADS) {
+                window.DownloadQueue.add('e{id}'.format({id: this.get('id')}));
+                this._download();
+            } else {
+                window.DownloadQueue.add('e{id}'.format({id: this.get('id')}), this);
+            }
+        },
+
         podcast: function() {
             var Podcasts = require('collections/podcasts');
             return Podcasts.where({id: this.get('podcastID')})[0];
+        },
+
+        // Download a podcast's audio file. Called by the download queue
+        // manager, so we don't try to download one hundred MP3s at once!
+        _download: function() {
+            var self = this;
+
+            var request = new window.XMLHttpRequest({mozSystem: true});
+
+            request.open('GET', this.get('enclosure').url, true);
+            request.responseType = 'blob';
+
+            request.addEventListener('load', function(event) {
+                self.blob(request.response);
+                window.DownloadQueue.done('e{id}'.format({id: this.get('id')}));
+            });
+
+            request.send(null);
         },
 
         _getBlob: function(callback) {
@@ -48,6 +81,7 @@ define([
               isDownloaded: true
             });
             self.save();
+            self.trigger('downloaded');
             self.trigger('updated');
           });
         }

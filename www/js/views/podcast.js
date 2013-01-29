@@ -27,6 +27,8 @@ define([
         initialize: function() {
             var self = this;
 
+            _(this).bindAll('hideEpisodes', 'showEpisodes');
+
             if (!this.model.get('id')) {
                 Podcasts.add(this.model);
                 this.model.save();
@@ -56,25 +58,35 @@ define([
             ));
 
             if (podcast.length) {
-                podcast.html(html);
+                podcast.replaceWith(html);
             } else {
                 this.$el.append(html);
             }
         },
 
         showEpisodes: function(event) {
-            console.log(event);
-            var episodes = new PodcastView({
+            if ($(event.currentTarget).data('podcastid') !== this.model.get('id')) {
+                return;
+            }
+
+            this.episodesView = new PodcastView({
                 model: this.model
             });
-            $('#podcasts-modal').show();
+            $('#podcasts').hide();
+            $('#back,#podcast-details').show();
+        },
+
+        hideEpisodes: function() {
+            $('#back,#podcast-details').hide();
+            $('#podcasts').show();
+            this.episodesView.remove();
         }
     });
 
     var PodcastView = Backbone.View.extend({
         className: 'podcast',
-        el: '#podcasts-modal',
-        $el: $('#podcasts-modal'),
+        el: '#podcast-details',
+        $el: $('#podcast-details'),
         model: Podcast,
         template: _.template(PodcastTemplate),
 
@@ -102,8 +114,10 @@ define([
             ));
 
             if (podcast.length) {
+                console.log(podcast);
                 podcast.html(html);
             } else {
+                console.log(this.$el);
                 this.$el.append(html);
             }
 
@@ -112,6 +126,8 @@ define([
                     model: episode
                 });
             });
+
+            this.$el.addClass('active');
         },
 
         destroy: function(event) {

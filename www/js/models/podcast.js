@@ -63,9 +63,9 @@ define([
             RSS.download(this.get('rssURL'), function(result) {
                 var newEpisodes = [];
                 result.items.forEach(function(episode) {
-                    if (newEpisodes.length > 4) { // TODO: Magic constant!
-                        return;
-                    }
+                    // if (newEpisodes.length > 4) { // TODO: Magic constant!
+                    //     return;
+                    // }
 
                     self.set({
                         name: result.title

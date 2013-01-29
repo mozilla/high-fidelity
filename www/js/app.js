@@ -27,9 +27,10 @@ define([
                 return 'WebkitOverflowScrolling' in window.document.createElement('div').style;
             })()
         },
+        MAX_DOWNLOADS: 2, // Maximum number of podcast downloads at one time.
         OBJECT_STORE_NAME: 'podcasts',
         TIME_TO_UPDATE: 3600 * 5 // Update podcasts every five hours
-    }
+    };
     window.GLOBALS = GLOBALS;
 
     function initialize(callback) {
@@ -40,14 +41,38 @@ define([
         DataStore.load(function() {
             var app = new AppView();
         });
+
+        if ($('#_install').length) {
+            $('#_install').on('click', function() {
+                install();
+            });
+        }
     }
+
+    function DownloadQueue() {
+        var queue = [];
+
+        this.add = function(id, object) {
+            queue[id] = object ? object : true;
+        }
+
+        this.done = function(id) {
+            delete queue[id];
+            if (queue.length) {
+                _.first(queue)._download();
+            }
+        }
+
+        return this;
+    }
+    window.DownloadQueue = DownloadQueue;
 
     function timestamp(date) {
         if (!date) {
-            date = new Date()
+            date = new Date();
         }
 
-        return Math.round(date.getTime() / 1000)
+        return Math.round(date.getTime() / 1000);
     }
     window.timestamp = timestamp;
 

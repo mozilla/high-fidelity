@@ -8,7 +8,7 @@ define([
     var appView;
     var AppRouter = Backbone.Router.extend({
         routes:{
-            'podcast/:id': 'podcast',
+            // 'podcast/:id': 'podcast',
             '': 'index'
         },
 

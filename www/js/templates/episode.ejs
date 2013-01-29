@@ -1,7 +1,7 @@
 <li id="episode-<%= episode.get('id') %>" class="episode">
   <% if (episode.get('isDownloaded')) { %>
-    <strong><%= episode.get('title') %></strong> <a href="#play" class="play" data-episodeid="<%= episode.get('id') %>">PLAY</a>
+    <a href="#play" class="title play" data-episodeid="<%= episode.get('id') %>"><p><%= episode.get('title') %><br><small><%= episode.date() %></small></p></a>
   <% } else { %>
-    Downloading episode...
+    <p class="title"><%= episode.get('title') %></p><progress></progress>
   <% } %>
 </li>

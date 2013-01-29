@@ -31,13 +31,13 @@ define([
                 this.model.save();
             }
 
-            this.el = '#podcast-details-{id}'.format({
+            this.el = '#podcast-details-{id} ul'.format({
                 id: this.model.get('podcastID') ? this.model.get('podcastID') : 'no-id'
             });
             this.$el = $(this.el);
 
             if (!this.model.get('isDownloaded')) {
-                this.downloadEpisode();
+                this.model.download();
             }
 
             this.model.on('updated', function() {
@@ -45,21 +45,6 @@ define([
             });
 
             this.render();
-        },
-
-        downloadEpisode: function() {
-            var self = this;
-
-            var request = new window.XMLHttpRequest({mozSystem: true});
-
-            request.open('GET', this.model.get('enclosure').url, true);
-            request.responseType = 'blob';
-
-            request.addEventListener('load', function(event) {
-                self.model.blob(request.response);
-            });
-
-            request.send(null);
         },
 
         render: function() {
@@ -76,10 +61,22 @@ define([
             } else {
                 this.$el.append(html);
             }
+
+            // TODO: Scale size of text to fit in the list item element.
+            // var episodeText = this.$el.children('#episode-{id}'.format({
+            //     id: this.model.get('id')}
+            // )).find('p')[0];
+            // var episodeWidth = episodeText.offsetWidth;
+            // var maxWidth = episodeText.parentNode.offsetWidth;
+            // var scaleFactor = Math.min(1, (maxWidth - 5) / episodeWidth);
+            // console.log(scaleFactor, episodeText);
+            // episodeText.style.transform = 'scale(' + scaleFactor + ')';
+            // episodeText.style.MozTransform = 'scale(' + scaleFactor + ')';
+            // episodeText.style.WebkitTransform = 'scale(' + scaleFactor + ')';
         },
 
         play: function(event) {
-            if ($(event.originalTarget).data('episodeid') === this.model.get('id')) {
+            if ($(event.currentTarget).data('episodeid') === this.model.get('id')) {
                 var player = new PlayerView({
                     model: this.model
                 });
