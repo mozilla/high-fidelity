@@ -53,9 +53,6 @@ define([
 
         // Download a podcast's audio file. Called by the download queue
         // manager, so we don't try to download one hundred MP3s at once!
-        // TODO: Fire an event that says we've started downloading, so we
-        // can only show the loading animation for episodes that are _actively_
-        // downloading.
         _download: function() {
             var self = this;
 
