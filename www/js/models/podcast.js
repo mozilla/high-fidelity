@@ -18,6 +18,7 @@ define([
         },
 
         initialize: function() {
+            // TODO: Actually check against a real time.
             if (this.get('lastUpdated') === 0) {
                 this.update();
             }
