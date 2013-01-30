@@ -40,6 +40,12 @@ define([
                 this.model.download();
             }
 
+            this.model.on('downloadStarted', function() {
+                self.render({
+                    isDownloading: true
+                });
+            });
+
             this.model.on('updated', function() {
                 self.render();
             });
@@ -47,9 +53,15 @@ define([
             this.render();
         },
 
-        render: function() {
+        render: function(args) {
+            if (!args) {
+                args = {}
+            }
+
             var html = this.template({
-                episode: this.model
+                episode: this.model,
+                isDownloading: args.isDownloading,
+                isQueued: args.isQueued
             });
 
             var episode = this.$el.children('#episode-{id}'.format({

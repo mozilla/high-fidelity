@@ -141,7 +141,7 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
     line-height: 1.2em;
 }
 
-#podcast-details li, #podcast-details a {
+#podcast-details li, #podcast-details .title {
     height: auto;
 }
 
@@ -151,10 +151,14 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
     padding: 5px;
 }
 
-#podcast-details .title p {
+#podcast-details p {
     font-size: 1em;
     line-height: 1.1em;
     padding: 0;
+}
+
+#podcast-details .episode progress {
+    float: right;
 }
 
 /** Player (BOTTOM OF SCREEN) */

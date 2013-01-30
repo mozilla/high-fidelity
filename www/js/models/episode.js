@@ -38,8 +38,12 @@ define([
             return Backbone.Model.prototype.destroy.call(this, options);
         },
 
+        // TODO: Fire an event that says we've queued this download, so we
+        // can display this information in the UI.
+        // TODO: Hook the above into the UI.
         download: function() {
             queue.add('e{id}'.format({id: this.get('id')}), this);
+            this.trigger('queued');
         },
 
         podcast: function() {
@@ -49,8 +53,13 @@ define([
 
         // Download a podcast's audio file. Called by the download queue
         // manager, so we don't try to download one hundred MP3s at once!
+        // TODO: Fire an event that says we've started downloading, so we
+        // can only show the loading animation for episodes that are _actively_
+        // downloading.
         _download: function() {
             var self = this;
+
+            this.trigger('downloadStarted');
 
             var request = new window.XMLHttpRequest({mozSystem: true});
 
