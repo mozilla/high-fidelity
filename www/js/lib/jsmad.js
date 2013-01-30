@@ -16142,8 +16142,8 @@ Mad.ArrayBuffers.AjaxStream = Mad.ArrayBuffers.ByteStream.extend({
         var iteration = 0;
         
         var ochange = function () {
-            console.log("ochange! callbacks.length = " + self.callbacks.length + ", iteration = " + iteration);
-            console.log("readyState = " + request.readyState + ", amountRead = " + self.amountRead + ", contentLength = " + self.contentLength);
+            // console.log("ochange! callbacks.length = " + self.callbacks.length + ", iteration = " + iteration);
+            // console.log("readyState = " + request.readyState + ", amountRead = " + self.amountRead + ", contentLength = " + self.contentLength);
             iteration += 1;
             if ((self.callbacks.length > 0 && iteration % 32 === 0) || iteration % 256 === 0) {
                 self.updateBuffer();
@@ -17745,7 +17745,7 @@ Mad.Player = function (stream) {
 
     // default onProgress handler
     this.onProgress = function (playtime, total, preloaded) {
-        console.log("playtime = " + playtime + " / " + total + ", preloaded = " + preloaded);
+        // console.log("playtime = " + playtime + " / " + total + ", preloaded = " + preloaded);
     }
 };
 

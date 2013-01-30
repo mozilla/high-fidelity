@@ -11,8 +11,9 @@ define([
     'collections/podcasts',
     'models/episode',
     'models/podcast',
-    'text!templates/player.ejs'
-], function($, _, Backbone, App, Episodes, Podcasts, Episode, Podcast, PlayerTemplate) {
+    'text!templates/player.ejs',
+    'jsmad'
+], function($, _, Backbone, App, Episodes, Podcasts, Episode, Podcast, PlayerTemplate, JSMad) {
     var PlayerView = Backbone.View.extend({
         className: 'player',
         el: '#player',
@@ -37,6 +38,14 @@ define([
                 });
             }
 
+            // If there's a software player running, we need to stop its
+            // playback and remove it from the DOM.
+            if (window._player) {
+                window._player.setPlaying(false);
+                // window._player = null;
+                delete window._player;
+            }
+
             this.render();
         },
 
@@ -46,8 +55,22 @@ define([
 
             var html = this.template({
                 blobURL: this.options.blobURL,
-                episode: this.model
+                episode: this.model,
+                softwareDecode: !window.GLOBALS.HAS.audioSupportMP3
             });
+
+            // Check for audio codec support and attempt a software decoding
+            // fallback if native support isn't available. This is especially
+            // useful for testing on Firefox for desktop which, as of Feb 2013,
+            // lacks native MP3 support.
+            //
+            // TODO: Actually check audio type. For now, MP3 is assumed as it's
+            // a safe bet that most podcasts are in MP3 format.
+            if (this.options.blobURL && !window.GLOBALS.HAS.audioSupportMP3) {
+                JSMad.Player.fromURL(this.options.blobURL, this._startSoftwarePlayer);
+            } else {
+                window._player = null;
+            }
 
             this.$el.html(html);
         },
@@ -86,13 +109,25 @@ define([
         },
 
         playPause: function(event) {
-            if ($('#audio')[0].paused) {
-                $('#audio')[0].play();
+            if (window._player) {
+                window._player.setPlaying(!window._player.playing);
             } else {
-                $('#audio')[0].pause();
+                if ($('#audio')[0].paused) {
+                    $('#audio')[0].play();
+                } else {
+                    $('#audio')[0].pause();
+                }
             }
 
             $('#play-pause').toggleClass('paused');
+        },
+
+        _startSoftwarePlayer: function(player) {
+            player.onPlay = function() {};
+            player.onPause = function() {};
+            player.createDevice();
+            player.setPlaying(true);
+            window._player = player;
         }
     });
 

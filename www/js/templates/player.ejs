@@ -1,6 +1,8 @@
 <% if (episode.id) { %>
   <% if (blobURL) { %>
-    <audio id="audio" src="<%= blobURL %>" episode="<%= episode.get('id') %>" autoload autoplay></audio>
+    <% if (!softwareDecode) { %>
+      <audio id="audio" src="<%= blobURL %>" episode="<%= episode.get('id') %>" autoload autoplay></audio>
+    <% } %>
     <a id="play-pause" href="#play-pause" data-paused="0"><span class="hide">Play/Pause</span></a>
   <% } %>
   <h2 class="podcast-title"><%= episode.podcast().get('name') %></h2>

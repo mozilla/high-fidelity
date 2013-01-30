@@ -9,7 +9,9 @@ require.config({
     paths: {
         backbone: 'lib/backbone',
         localstorage: 'lib/backbone.localstorage',
+        jsmad: 'lib/jsmad',
         install: 'lib/install',
+        sink: 'lib/sink',
         text: 'lib/require.text',
         underscore: 'lib/lodash',
         zepto: 'lib/zepto'
@@ -23,6 +25,15 @@ require.config({
                 'zepto'
             ],
             exports: 'Backbone'
+        },
+        'jsmad': {
+            deps: [
+                'sink'
+            ],
+            exports: 'Mad'
+        },
+        'sink': {
+            exports: 'Sink'
         },
         'underscore': {
             exports: '_'

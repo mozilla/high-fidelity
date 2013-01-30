@@ -63,7 +63,7 @@ define([
 
             request.addEventListener('load', function(event) {
                 self.blob(request.response);
-                window.DownloadQueue.done('e{id}'.format({id: this.get('id')}));
+                window.DownloadQueue.done('e{id}'.format({id: self.get('id')}));
             });
 
             request.send(null);
