@@ -4,9 +4,10 @@ define([
   'underscore',
   'backbone',
   'datastore',
+  'queue',
   'collections/episodes',
   'require'
-], function(_, Backbone, DataStore, Episodes, require) {
+], function(_, Backbone, DataStore, queue, Episodes, require) {
     var EpisodeModel = Backbone.Model.extend({
         collection: Episodes,
         defaults: {
@@ -38,12 +39,7 @@ define([
         },
 
         download: function() {
-            if (window.DownloadQueue.length <= window.GLOBALS.MAX_DOWNLOADS) {
-                window.DownloadQueue.add('e{id}'.format({id: this.get('id')}));
-                this._download();
-            } else {
-                window.DownloadQueue.add('e{id}'.format({id: this.get('id')}), this);
-            }
+            queue.add('e{id}'.format({id: this.get('id')}), this);
         },
 
         podcast: function() {
@@ -63,7 +59,7 @@ define([
 
             request.addEventListener('load', function(event) {
                 self.blob(request.response);
-                window.DownloadQueue.done('e{id}'.format({id: self.get('id')}));
+                queue.done('e{id}'.format({id: self.get('id')}));
             });
 
             request.send(null);
