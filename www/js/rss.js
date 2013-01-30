@@ -75,6 +75,8 @@ define([], function() {
 
         var json = {};
 
+        // TODO: If any more nodeTypes are needed, convert this to a
+        // switch/case so it's a bit easier to read.
         if (xml.nodeType === 1) {
             if (xml.attributes.length > 0) {
                 json['@attributes'] = {};

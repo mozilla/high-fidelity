@@ -34,14 +34,12 @@ define([
                 this.model.save();
             }
 
-            if (this.model.get('lastUpdated') === 0) {
-                this.model.update(function() {
-                    self.render();
-                });
-            }
-
             this.model.on('destroyed', function() {
                 self.remove();
+            });
+
+            this.model.on('updated', function() {
+                self.render();
             });
 
             this.render();

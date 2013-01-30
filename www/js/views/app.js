@@ -31,9 +31,10 @@ define([
                 model: null
             });
 
-            _(this).bindAll('goBack', 'loadPodcasts');
+            _(this).bindAll('goBack', 'hideNewPodcastForm', 'loadPodcasts',
+                            'render', 'showNewPodcastForm', 'subscribe');
 
-            this.podcastViews = [];
+            this.options.podcastViews = [];
 
             this.render();
         },
@@ -42,6 +43,9 @@ define([
             var self = this;
 
             this.$el.html(this.template({}));
+
+            this.options.addPodcastForm = $('#add-podcast');
+            this.options.rssURLInput = $('#add-rss');
 
             Podcasts.fetch({
                 success: function(podcast) {
@@ -53,7 +57,7 @@ define([
         },
 
         loadPodcasts: function() {
-            var podcastViews = this.podcastViews;
+            var podcastViews = this.options.podcastViews;
 
             Podcasts.forEach(function(podcast) {
                 podcastViews[podcast.get('id')] = new PodcastViews.cover({
@@ -64,19 +68,19 @@ define([
 
         // Hide the "add podcast" sheet and reset the form info.
         hideNewPodcastForm: function() {
-            $('#add-rss').val('');
-            $('#add-podcast').hide();
+            this.options.rssURLInput.val('');
+            this.options.addPodcastForm.hide();
         },
 
         goBack: function(event) {
-            this.podcastViews[$('#podcast-details .episodes').data('podcastid')].hideEpisodes();
+            this.options.podcastViews[$('#podcast-details .episodes').data('podcastid')].hideEpisodes();
             this.render();
         },
 
         // Show the "add podcast" sheet, allowing the user to subscribe to
         // a new podcast.
         showNewPodcastForm: function() {
-            $('#add-podcast').show();
+            this.options.addPodcastForm.show();
         },
 
         // Show a Podcast's info including artwork and episodes.
@@ -88,15 +92,17 @@ define([
         },
 
         subscribe: function() {
-            var url = $('#add-rss').val();
+            var podcastViews = this.options.podcastViews;
+            var url = this.options.rssURLInput.val();
 
-            if (!url || !url.length) {
-                window.alert('Need a URL to subscribe to!');
-                return;
-            }
+            var podcast = new Podcast({rssURL: url});
+            Podcasts.add(podcast);
+            podcast.save();
 
-            var podcast = new PodcastViews.cover({
-                model: new Podcast({rssURL: url})
+            podcast.on('updated', function() {
+                podcastViews[podcast.get('id')] = new PodcastViews.cover({
+                    model: podcast
+                });
             });
 
             this.hideNewPodcastForm();

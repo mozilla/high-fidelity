@@ -17,6 +17,12 @@ define([
             rssURL: null
         },
 
+        initialize: function() {
+            if (this.get('lastUpdated') === 0) {
+                this.update();
+            }
+        },
+
         addEpisode: function(episode) {
             var Episodes = require('collections/episodes');
 
@@ -92,6 +98,8 @@ define([
                 if (callback) {
                     callback(newEpisodes);
                 }
+
+                self.trigger('updated');
             });
         }
     });

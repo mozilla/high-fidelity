@@ -2,6 +2,9 @@
 'use strict';
 
 define(function(require) {
+    // Constants for use in the queue.
+    var DOWNLOAD_ACTIVE = 1;
+
     // If the download queue already exists, just return it!
     if (window._downloadQueue) {
         return window._downloadQueue;
@@ -19,7 +22,8 @@ define(function(require) {
     //
     // TODO: Support for broken downloads, storing the queue in storage so
     // it's crash-resistant, and pause/resume of downloads (this one might be
-    // hard?).
+    // hard?), and retrieval of objects based on ID from a Backbone collection
+    // so restarting the app preserves the queue.
     function DownloadQueue() {
         var queue = [];
 
@@ -28,9 +32,9 @@ define(function(require) {
                 queue.forEach(function(download, i) {
                     // TODO: Remove reliance on podcasts-specific global and
                     // allow passing in/setting of max download count.
-                    if (numberOfActiveDownloads() < window.GLOBALS.MAX_DOWNLOADS && download[1] !== true) {
+                    if (numberOfActiveDownloads() < window.GLOBALS.MAX_DOWNLOADS && download[1] !== DOWNLOAD_ACTIVE) {
                         download[1]._download();
-                        queue[i][1] = true;
+                        queue[i][1] = DOWNLOAD_ACTIVE;
                     }
                 });
             }
@@ -42,7 +46,7 @@ define(function(require) {
             // TOOD: My brain is being weird but feels like there's a more
             // elegant way to do this.
             queue.forEach(function(download) {
-                if (download[1] === true) {
+                if (download[1] === DOWNLOAD_ACTIVE) {
                     active++;
                 }
             });
@@ -51,7 +55,7 @@ define(function(require) {
         }
 
         this.add = function(id, object) {
-            queue.push([id, object ? object : true]);
+            queue.push([id, object ? object : DOWNLOAD_ACTIVE]);
             next();
         }
 
@@ -64,7 +68,7 @@ define(function(require) {
                     return;
                 }
 
-                if (download[1] === true) {
+                if (download[1] === DOWNLOAD_ACTIVE) {
                     index = i;
                 }
             });
