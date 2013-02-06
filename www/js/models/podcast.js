@@ -66,7 +66,7 @@ define([
                 result.items.forEach(function(episode) {
                     self.set({
                         imageURL: result['itunes:image'],
-                        name: result.title,
+                        name: result.title
                     });
 
                     self.save();
