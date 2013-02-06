@@ -60,7 +60,7 @@ define([
 
             var request = new window.XMLHttpRequest({mozSystem: true});
 
-            request.open('GET', this.get('enclosure').url, true);
+            request.open('GET', this.get('enclosure'), true);
             request.responseType = 'blob';
 
             request.addEventListener('load', function(event) {

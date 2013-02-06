@@ -4,9 +4,13 @@
 // Podcast Atom/RSS parser. Downloads and extract useful info from a podcast
 // feed and returns the data as easy-to-consume (and minimally changed)
 // JavaScript objects.
-define([], function() {
+// TODO: Make this less podcast-focused; it would be a useful RSS library
+// in general.
+define(['underscore'], function(_) {
+    // Fields we get attributes from instead of simple text.
+    var ATTRIBUTE_FIELDS = {'enclosure': 'url', 'itunes:image': 'href'};
     // Text fields to look for on both channels and episodes.
-    var TEXT_FIELDS = ['description', 'guid', 'link', 'itunes:image', 'pubDate', 'title'];
+    var TEXT_FIELDS = ['description', 'guid', 'link', 'pubDate', 'title'];
 
     // Download a podcast feed from the URL specified. Execute a callback
     // (the second argument) whenever the data loads.
@@ -17,7 +21,7 @@ define([], function() {
 
         request.addEventListener('load', function(event) {
             if (callback) {
-                callback(parser(request.response));
+                callback(parse(request.response));
             }
         });
 
@@ -27,41 +31,51 @@ define([], function() {
     }
 
     // Parse an RSS feed (either actual RSS text or a parsed XML object) and
-    // return a subset of the data as a useful object full of podcast data.
-    // Will include iTunes images, descriptions, and enclosures.
-    function parser(rss) {
-        var podcast = {
+    // return a subset of the data as a useful object full of RSS data.
+    function parse(rss) {
+        var feed = {
             items: []
         };
-        
+
         rss = xmlToJSON(rss).rss;
 
+        _.keys(ATTRIBUTE_FIELDS).forEach(function(f) {
+            if (rss.channel && rss.channel[f] && rss.channel[f]['@attributes']) {
+                feed[f] = rss.channel[f]['@attributes'][ATTRIBUTE_FIELDS[f]];
+            }
+        });
         TEXT_FIELDS.forEach(function(f) {
+            // TODO: Normalize the weird XML-representation of this data
+            // so getting at it is easier.
             if (rss.channel && rss.channel[f] && rss.channel[f]['#text']) {
-                podcast[f] = rss.channel[f]['#text'];
+                feed[f] = rss.channel[f]['#text'];
             }
         });
 
         // Fetch individual items and store their relevant info.
         rss.channel.item.forEach(function(item) {
-            var episode = {};
+            var parsedItem = {};
 
-            if (item.enclosure) {
-                episode.enclosure = item.enclosure['@attributes'];
-            } else {
+            // Don't bother with items lacking an enclosure attribute.
+            if (!item.enclosure) {
                 return;
             }
 
+            _.keys(ATTRIBUTE_FIELDS).forEach(function(f) {
+                if (item && item[f] && item[f]['@attributes']) {
+                    parsedItem[f] = item[f]['@attributes'][ATTRIBUTE_FIELDS[f]];
+                }
+            });
             TEXT_FIELDS.forEach(function(f) {
                 if (item && item[f] && item[f]['#text']) {
-                    episode[f] = item[f]['#text'];
+                    parsedItem[f] = item[f]['#text'];
                 }
             });
 
-            podcast.items.push(episode);
+            feed.items.push(parsedItem);
         });
 
-        return podcast;
+        return feed;
     }
 
     // Utility function to parse an XML string or object and transform it into
@@ -114,7 +128,7 @@ define([], function() {
 
     return {
         download: download,
-        parser: parser,
+        parse: parse,
         xmlToJSON: xmlToJSON
     };
 });

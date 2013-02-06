@@ -24,13 +24,6 @@ define([
             }
         },
 
-        addEpisode: function(episode) {
-            var Episodes = require('collections/episodes');
-
-            Episodes.add(episode);
-            episode.save();
-        },
-
         cover: function(callback) {
             return '/img/no-cover.jpg';
             DataStore.get('podcast-cover-{0}'.format([this.id]), callback);
@@ -59,46 +52,40 @@ define([
             return Episodes.where(where);
         },
 
+        // Simply return the RSS data for this podcast.
         rss: function() {
             return this.get('rssData') ? JSON.parse(this.get('rssData')) : null;
         },
 
-        update: function(callback) {
+        update: function() {
             var Episode = require('models/episode');
+            var Episodes = require('collections/episodes');
             var self = this;
 
             RSS.download(this.get('rssURL'), function(result) {
-                var newEpisodes = [];
                 result.items.forEach(function(episode) {
-                    // if (newEpisodes.length > 4) { // TODO: Magic constant!
-                    //     return;
-                    // }
-
                     self.set({
-                        name: result.title
+                        imageURL: result['itunes:image'],
+                        name: result.title,
                     });
 
                     self.save();
 
+                    // If this episode doesn't exist in our database, it's
+                    // new and we should create it!
                     if (self.episodes({guid: episode.guid}).length === 0) {
                         var episodeInstance = new Episode(_.extend({
                             datePublished: episode.pubDate,
                             podcastID: self.get('id')
                         }, episode));
 
-                        // console.log(episodeInstance);
-
-                        newEpisodes.push(episodeInstance);
-                        self.addEpisode(episodeInstance);
+                        Episodes.add(episodeInstance);
+                        episodeInstance.save();
                     }
                 });
 
                 self.set({lastUpdated: window.timestamp()});
                 self.save();
-
-                if (callback) {
-                    callback(newEpisodes);
-                }
 
                 self.trigger('updated');
             });
