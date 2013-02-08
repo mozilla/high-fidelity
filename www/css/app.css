@@ -4,6 +4,11 @@
 
 /* @import "install-button.css"; */
 /* @import "layouts.css"; */
+@import "../shared/style/buttons.css";
+@import "../shared/style/headers.css";
+@import "../shared/style/input_areas.css";
+@import "../shared/style_unstable/progress_activity.css";
+@import "../shared/style_unstable/lists.css";
 
 /* Your styles here */
 body {
@@ -94,11 +99,13 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
 }
 
 .podcast-cover {
-    background: -moz-linear-gradient(top, rgba(250,198,149,1) 0%, rgba(245,171,102,1) 47%, rgba(239,141,49,1) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(250,198,149,1)), color-stop(47%,rgba(245,171,102,1)), color-stop(100%,rgba(239,141,49,1))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(250,198,149,1) 0%,rgba(245,171,102,1) 47%,rgba(239,141,49,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: -ms-linear-gradient(top, rgba(250,198,149,1) 0%,rgba(245,171,102,1) 47%,rgba(239,141,49,1) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(250,198,149,1) 0%,rgba(245,171,102,1) 47%,rgba(239,141,49,1) 100%); /* W3C */
+    background: no-repeat 0 0;
+    background-size: 100% auto;
+    background-image: -moz-linear-gradient(top, rgba(250,198,149,1) 0%, rgba(245,171,102,1) 47%, rgba(239,141,49,1) 100%); /* FF3.6+ */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(250,198,149,1)), color-stop(47%,rgba(245,171,102,1)), color-stop(100%,rgba(239,141,49,1))); /* Chrome,Safari4+ */
+    background-image: -webkit-linear-gradient(top, rgba(250,198,149,1) 0%,rgba(245,171,102,1) 47%,rgba(239,141,49,1) 100%); /* Chrome10+,Safari5.1+ */
+    background-image: -ms-linear-gradient(top, rgba(250,198,149,1) 0%,rgba(245,171,102,1) 47%,rgba(239,141,49,1) 100%); /* IE10+ */
+    background-image: linear-gradient(to bottom, rgba(250,198,149,1) 0%,rgba(245,171,102,1) 47%,rgba(239,141,49,1) 100%); /* W3C */
     border: 1px solid #030303;
     display: block;
     float: left;
@@ -123,6 +130,13 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
     text-align: center;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+.podcast-cover.has-image .name {
+    left: 0;
+    text-indent: -9999px;
+    top: 0;
+    transform: none;
 }
 
 /** Podcast Modal */
