@@ -165,6 +165,10 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
     padding: 5px;
 }
 
+#podcast-details .download p, #podcast-details .queued {
+    color: rgb(99, 99, 99);
+}
+
 #podcast-details p {
     font-size: 1em;
     line-height: 1.1em;

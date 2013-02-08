@@ -21,6 +21,7 @@ define([
         template: _.template(EpisodeTemplate),
 
         events: {
+            'click .download': 'download',
             'click .play': 'play'
         },
 
@@ -36,14 +37,12 @@ define([
             });
             this.$el = $(this.el);
 
-            if (!this.model.get('isDownloaded')) {
-                this.model.download();
-            }
+            this.model.on('download:queued', function() {
+                self.render({isQueued: true});
+            });
 
-            this.model.on('downloadStarted', function() {
-                self.render({
-                    isDownloading: true
-                });
+            this.model.on('download:started', function() {
+                self.render({isDownloading: true});
             });
 
             this.model.on('updated', function() {
@@ -69,7 +68,7 @@ define([
             ));
 
             if (episode.length) {
-                episode.html(html);
+                episode.replaceWith(html);
             } else {
                 this.$el.append(html);
             }
@@ -87,6 +86,14 @@ define([
             // episodeText.style.WebkitTransform = 'scale(' + scaleFactor + ')';
         },
 
+        download: function(event) {
+            if ($(event.currentTarget).data('episodeid') === this.model.get('id')) {
+                this.model.download();
+            }
+        },
+
+        // Play this episode by creating a new PlayerView; this will remove
+        // any previous PlayerView.
         play: function(event) {
             if ($(event.currentTarget).data('episodeid') === this.model.get('id')) {
                 var player = new PlayerView({

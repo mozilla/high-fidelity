@@ -38,6 +38,10 @@ define([
                 self.remove();
             });
 
+            this.model.on('image:available', function() {
+                self.render();
+            })
+
             this.model.on('updated', function() {
                 self.render();
             });
@@ -47,7 +51,7 @@ define([
 
         render: function() {
             var html = this.template({
-                podcastCover: this.model.cover(),
+                podcastCover: this.model.coverImage,
                 podcast: this.model
             });
 

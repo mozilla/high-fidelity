@@ -17,16 +17,14 @@ define([
             rssURL: null
         },
 
+        // When this podcast is loaded, let's try to update it.
         initialize: function() {
-            // TODO: Actually check against a real time.
-            if (this.get('lastUpdated') === 0) {
+            if (!this.get('lastUpdated') || window.timestamp() - this.get('lastUpdated') > window.GLOBALS.TIME_TO_UPDATE) {
                 this.update();
             }
-        },
 
-        cover: function(callback) {
-            return '/img/no-cover.jpg';
-            DataStore.get('podcast-cover-{0}'.format([this.id]), callback);
+            this.loadImage();
+            this.on('image:downloaded', this.loadImage);
         },
 
         // When deleting a Podcast, delete all its Episodes as well.
@@ -38,6 +36,25 @@ define([
             this.trigger('destroyed');
 
             return Backbone.Model.prototype.destroy.call(this, options);
+        },
+
+        // Download the cover image and update it in the blob datastore. Fires
+        // events to let any views know the image has changed.
+        downloadCoverImage: function() {
+            var self = this;
+
+            this.trigger('downloadImageStarted');
+
+            var request = new window.XMLHttpRequest({mozSystem: true});
+
+            request.open('GET', this.get('imageURL'), true);
+            request.responseType = 'blob';
+
+            request.addEventListener('load', function(event) {
+                self.saveImage(request.response);
+            });
+
+            request.send(null);
         },
 
         // Return all episodes belonging to this podcast.
@@ -52,9 +69,32 @@ define([
             return Episodes.where(where);
         },
 
+        loadImage: function() {
+            var self = this;
+
+            DataStore.get('podcastCover-' + this.id, function(blob) {
+                if (!blob || !blob.file) {
+                    return;
+                }
+
+                self.coverImage = window.URL.createObjectURL(blob.file);
+                self.trigger('image:available');
+            });
+        },
+
         // Simply return the RSS data for this podcast.
         rss: function() {
             return this.get('rssData') ? JSON.parse(this.get('rssData')) : null;
+        },
+
+        saveImage: function(blob) {
+            var self = this;
+
+            // TODO: Setup a separate "table" for different item types in the
+            // datastore.
+            DataStore.set('podcastCover-' + this.id, blob, function() {
+                self.trigger('image:downloaded');
+            });
         },
 
         update: function() {
@@ -64,12 +104,19 @@ define([
 
             RSS.download(this.get('rssURL'), function(result) {
                 result.items.forEach(function(episode) {
+                    var oldImageURL = self.get('imageURL');
+
                     self.set({
                         imageURL: result['itunes:image'],
                         name: result.title
                     });
-
                     self.save();
+
+                    // If the cover image has changed (or this podcast is new)
+                    // we update the cover image.
+                    if (!oldImageURL || oldImageURL !== self.get('imageURL')) {
+                        self.downloadCoverImage();
+                    }
 
                     // If this episode doesn't exist in our database, it's
                     // new and we should create it!

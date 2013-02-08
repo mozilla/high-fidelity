@@ -1,10 +1,12 @@
 <li id="episode-<%= episode.get('id') %>" class="episode">
   <% if (episode.get('isDownloaded')) { %>
     <a href="#play" class="title play" data-episodeid="<%= episode.get('id') %>"><p><%= episode.get('title') %><br><small><%= episode.date() %></small></p></a>
-  <% } else { %>
-    <% if (isDownloading) { %>
+  <% } else if (isDownloading || isQueued) { %>
+    <% if (true || isDownloading) { %>
       <progress></progress>
     <% } %>
-    <p class="title"><%= episode.get('title') %><br><small><%= episode.date() %></small></p>
+    <p class="queued title"><%= episode.get('title') %><br><small><%= episode.date() %></small></p>
+  <% } else { %>
+    <a href="#download" class="title download" data-episodeid="<%= episode.get('id') %>"><p><%= episode.get('title') %><br><small><%= episode.date() %></small></p></a>
   <% } %>
 </li>

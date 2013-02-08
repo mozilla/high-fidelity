@@ -43,7 +43,7 @@ define([
         // TODO: Hook the above into the UI.
         download: function() {
             queue.add('e{id}'.format({id: this.get('id')}), this);
-            this.trigger('queued');
+            this.trigger('download:queued');
         },
 
         podcast: function() {
@@ -56,7 +56,7 @@ define([
         _download: function() {
             var self = this;
 
-            this.trigger('downloadStarted');
+            this.trigger('download:started');
 
             var request = new window.XMLHttpRequest({mozSystem: true});
 
