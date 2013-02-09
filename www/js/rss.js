@@ -20,8 +20,12 @@ define(['underscore'], function(_) {
         request.open('GET', url, true);
 
         request.addEventListener('load', function(event) {
+            if (request.status !== 200) {
+                return;
+            }
+
             if (callback) {
-                callback(parse(request.response));
+                callback(parseAtom(request.response));
             }
         });
 
@@ -32,12 +36,22 @@ define(['underscore'], function(_) {
 
     // Parse an RSS feed (either actual RSS text or a parsed XML object) and
     // return a subset of the data as a useful object full of RSS data.
-    function parse(rss) {
+    function parseAtom(rss) {
         var feed = {
             items: []
         };
 
         rss = xmlToJSON(rss).rss;
+
+        if (!rss || !rss.channel) {
+            return null;
+        }
+
+        // Check for redirection of feedburner feeds. (At least for 5by5 feeds.)
+        if (rss.channel.link && !rss.channel.item.forEach) {
+            console.log(rss.channel.link['#text'], rss);
+            return rss.channel.link['#text'];
+        }
 
         _.keys(ATTRIBUTE_FIELDS).forEach(function(f) {
             if (rss.channel && rss.channel[f] && rss.channel[f]['@attributes']) {
@@ -128,7 +142,7 @@ define(['underscore'], function(_) {
 
     return {
         download: download,
-        parse: parse,
+        parse: parseAtom,
         xmlToJSON: xmlToJSON
     };
 });

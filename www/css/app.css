@@ -5,24 +5,34 @@
 /* @import "install-button.css"; */
 /* @import "layouts.css"; */
 @import "../shared/style/buttons.css";
+@import "../shared/style/confirm.css";
 @import "../shared/style/headers.css";
 @import "../shared/style/input_areas.css";
 @import "../shared/style_unstable/progress_activity.css";
 @import "../shared/style_unstable/lists.css";
+@import "../shared/style_unstable/tabs.css";
 
 /* Your styles here */
 body {
     background-color: #f2f2f2;
     color: #030303;
     font-family: "MozTT", sans-serif;
-    margin: 0;
-    padding: 0 0 64px;
+    margin: 5rem 0 0;
+    padding: 0 0 130px;
 }
 
 .hide {
     position: absolute;
     text-indent: -9999px;
     top: 0;
+}
+
+/** App Header */
+#app-header {
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 #back {
@@ -65,6 +75,12 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
 @keyframes appDeeperHeaderIn {
 50% { opacity: 0; }
 100% { opacity: 1; }
+}
+
+/** Panels */
+
+#popular-tab-container, #search-tab-container {
+    display: none;
 }
 
 /** ADD PODCAST SHEET */
@@ -174,12 +190,40 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
     float: right;
 }
 
+/** Search */
+
+.search-results {
+    margin: 0 0 170px;
+}
+
+.search-results .loading progress {
+    float: right;
+    margin: 1rem 0 0;
+}
+
+.search-results p {
+    font-size: 1.3em;
+    line-height: 1.6em;
+}
+
+.search-results .podcast-cover {
+    height: 60px;
+    margin: 15px 2.5px 0 0;
+    width: 60px;
+}
+
+.search-result p::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+
 /** Player (BOTTOM OF SCREEN) */
 
 #player {
     background: #e7e7e7;
     border-top: 1px solid #030303;
-    bottom: 0;
+    bottom: 4rem;
     font-size: .9em;
     height: 64px;
     left: 0;
@@ -213,4 +257,33 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
 
 #play-pause.paused {
     background-image: url(../img/button-play.png);
+}
+
+/** Tabs */
+#tabs {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    height: 4rem;
+    width: 100%;
+    z-index: 10000;
+}
+
+#tabs a.active {
+    color: rgb(98, 198, 245);
+}
+
+/** Dialogs */
+#modal-dialog {
+    position: fixed;
+    z-index: 1000000;
+}
+
+#modal-dialog section {
+    overflow-y: auto;
+}
+
+#modal-dialog img {
+    height: 45px;
+    width: 45px;
 }

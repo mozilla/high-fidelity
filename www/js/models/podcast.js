@@ -12,7 +12,7 @@ define([
         collection: Podcasts,
         defaults: {
             lastUpdated: 0,
-            name: 'Untitled Podcast',
+            name: null,
             rssData: null,
             rssURL: null
         },
@@ -105,7 +105,28 @@ define([
             var self = this;
 
             RSS.download(this.get('rssURL'), function(result) {
-                result.items.forEach(function(episode) {
+                if (!result) {
+                    return;
+                }
+
+                // If the result of downloading and parsing an RSS feed is
+                // just a string, it means we received a redirect with a new
+                // RSS feed URL. In the future it might be worth unabstracting
+                // that from the RSS reader, or making it an Exception or
+                // some special return code.
+                if (typeof(result) === 'string') {
+                    self.set({rssURL: result});
+                    self.update();
+                    return;
+                }
+
+                result.items.forEach(function(episode, i) {
+                    // TODO: Handle episode saving better; for now, simply get
+                    // the most recent 15 podcasts.
+                    // TODO: Remove magic constant.
+                    if (i > 15) {
+                        return;
+                    }
                     var oldImageURL = self.get('imageURL');
 
                     self.set({
@@ -120,8 +141,8 @@ define([
                         self.downloadCoverImage();
                     }
 
-                    // If this episode doesn't exist in our database, it's
-                    // new and we should create it!
+                    // If no episodes exist in our database, this podcast is
+                    // new and we should download some!
                     if (self.episodes({guid: episode.guid}).length === 0) {
                         var episodeInstance = new Episode(_.extend({
                             datePublished: episode.pubDate,
