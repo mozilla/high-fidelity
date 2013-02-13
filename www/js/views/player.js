@@ -75,21 +75,8 @@ define([
             this.$el.html(html);
         },
 
-        downloadEpisode: function() {
-            var self = this;
-
-            var request = new window.XMLHttpRequest({mozSystem: true});
-
-            request.open('GET', this.model.get('enclosure').url, true);
-            request.responseType = 'blob';
-
-            request.addEventListener('load', function(event) {
-                self.model.blob(request.response, self.render);
-            });
-
-            request.send(null);
-        },
-
+        // Extract an Object URI for this episode and insert it into the audio
+        // player's src attribute by re-rendering the template.
         getEpisode: function() {
             var self = this;
 
@@ -108,6 +95,8 @@ define([
             });
         },
 
+        // Play or pause the current track and update the DOM to reflect the
+        // player's state.
         playPause: function(event) {
             if (window._player) {
                 window._player.setPlaying(!window._player.playing);
@@ -122,6 +111,8 @@ define([
             $('#play-pause').toggleClass('paused');
         },
 
+        // Create a software player to decode audio using pure JS (used only
+        // if necessary when no hardware support for a codec exists).
         _startSoftwarePlayer: function(player) {
             player.onPlay = function() {};
             player.onPause = function() {};
