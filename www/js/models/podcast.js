@@ -97,6 +97,8 @@ define([
             });
         },
 
+        // Update this podcast from the RSS feed, but don't download any
+        // new episodes by default.
         update: function() {
             var Episode = require('models/episode');
             var Episodes = require('collections/episodes');
