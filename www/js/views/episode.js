@@ -10,7 +10,7 @@ define([
     'collections/episodes',
     'models/episode',
     'views/player',
-    'text!templates/episode.ejs',
+    'text!templates/episodes/list-item.ejs',
 ], function($, _, Backbone, App, Episodes, Episode, PlayerView, EpisodeTemplate) {
     var EpisodeView = Backbone.View.extend({
         className: 'episode',

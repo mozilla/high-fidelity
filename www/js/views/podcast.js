@@ -10,9 +10,9 @@ define([
     'collections/podcasts',
     'models/podcast',
     'views/episode',
-    'text!templates/podcast-cover.ejs',
-    'text!templates/podcast.ejs'
-], function($, _, Backbone, App, Podcasts, Podcast, EpisodeView, PodcastCoverTemplate, PodcastTemplate) {
+    'text!templates/podcasts/cover.ejs',
+    'text!templates/podcasts/details.ejs'
+], function($, _, Backbone, App, Podcasts, Podcast, EpisodeView, PodcastCoverTemplate, PodcastDetailsTemplate) {
     var PodcastItemView = Backbone.View.extend({
         className: 'podcast',
         el: '#podcasts',
@@ -90,7 +90,7 @@ define([
         el: '#podcast-details',
         $el: $('#podcast-details'),
         model: Podcast,
-        template: _.template(PodcastTemplate),
+        template: _.template(PodcastDetailsTemplate),
 
         events: {
             'click .destroy': 'destroy'
