@@ -9,6 +9,13 @@ The app requires elevated XmlHttpRequest priviledges to fetch podcast files.
 In FirefoxOS, this currently means being installed as a packaged app. Details
 for other platforms forthcoming.
 
+# Bugs, Feature Requests, and Love Notes #
+
+If you want to file bugs or request features for Mozilla's Podcasts app,
+please do so in [Bugzilla](https://bugzilla.mozilla.org/enter_bug.cgi?product=Marketplace&component=Reference%20Apps).
+Yes, it sucks, but it's where the rest of the bugs for Mozilla's reference
+apps are and it's nice to only have to use *one* issue tracker.
+
 # License #
 
 This program is free software; it is distributed under an [MIT License](http://github.com/mozilla/high-fidelity/blob/master/LICENSE.txt).
