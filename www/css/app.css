@@ -186,15 +186,12 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
     overflow: hidden;
     position: fixed;
     width: 100%;
-    z-index: 10000;
+    z-index: 1000;
 }
 
-#player h2 {
-    margin: 7.5px 5px 5px;
-}
-
-#player h3 {
-    margin: 0 0 0 5px;
+#player h2, #player h3 {
+    font-size: 24px;
+    margin: 0 5px 5px;
 }
 
 #player p {
@@ -208,7 +205,9 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
     background: url(../img/button-pause.png) center;
     float: right;
     height: 60px;
+    position: relative;
     width: 60px;
+    z-index: 1001;
 }
 
 #play-pause.paused {

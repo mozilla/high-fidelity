@@ -46,10 +46,17 @@ define([
                 delete window._player;
             }
 
+            this.playerTimeout = null;
+
             this.render();
         },
 
         render: function() {
+            var self = this;
+
+            // Stop titles from transitioning.
+            clearTimeout(this.playerTimeout);
+
             // Re-rendering the play/pause buttons means redelegating events.
             this.undelegateEvents();
 
@@ -73,6 +80,41 @@ define([
             }
 
             this.$el.html(html);
+
+            // Scale size of text to fit in the player element.
+            function resize(element) {
+                if (!element) {
+                    return;
+                }
+
+                var episodeWidth = element.offsetWidth;
+                var maxWidth = element.parentNode.offsetWidth;
+                // TODO: 70 should be the width of the play/pause button.
+                var scaleFactor = Math.min(1, (maxWidth - 70) / episodeWidth);
+                element.style.transform = 'scale(' + scaleFactor + ')';
+                element.style.MozTransform = 'scale(' + scaleFactor + ')';
+                element.style.WebkitTransform = 'scale(' + scaleFactor + ')';
+            }
+
+            var episodeTitle = this.$el.find('h3')[0];
+            var podcastTitle = this.$el.find('h2')[0];
+            resize(episodeTitle);
+            resize(podcastTitle);
+
+            // TODO: Wire this up to CSS transitions and such.
+            function transitionTitles() {
+                self.playerTimeout = setTimeout(function() {
+                    $(episodeTitle).toggleClass('hide');
+                    $(podcastTitle).toggleClass('hide');
+                    resize(episodeTitle);
+                    resize(podcastTitle);
+                    transitionTitles();
+                }, 4000);
+            }
+
+            if (episodeTitle && podcastTitle) {
+                transitionTitles();
+            }
         },
 
         // Extract an Object URI for this episode and insert it into the audio
