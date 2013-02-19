@@ -64,6 +64,16 @@ define([
             request.responseType = 'blob';
 
             request.addEventListener('load', function(event) {
+                // TODO: Make this better.
+                // Assume "mpeg" = MP3, for now. Kinda hacky.
+                var type = request.response.type.split('/')[1]
+
+                if (type === 'mpeg') {
+                    type = 'mp3';
+                }
+
+                self.set({type: type});
+                self.save();
                 self.blob(request.response);
                 queue.done('e{id}'.format({id: self.get('id')}));
             });

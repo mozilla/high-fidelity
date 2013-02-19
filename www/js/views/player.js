@@ -28,9 +28,12 @@ define([
         initialize: function() {
             var self = this;
 
+            _(this).bindAll('getEpisode');
+
             // It's possible to have an empty player, so we check to see if
             // there's an episode loaded; if not, don't bother with much.
             if (this.model.id) {
+                this.options.canPlayType = window.GLOBALS.HAS['audioSupport{type}'.format({type: this.model.get('type').toUpperCase()})]
                 this.getEpisode();
 
                 this.model.on('destroyed', function() {
@@ -63,7 +66,7 @@ define([
             var html = this.template({
                 blobURL: this.options.blobURL,
                 episode: this.model,
-                softwareDecode: !window.GLOBALS.HAS.audioSupportMP3
+                softwareDecode: !this.options.canPlayType
             });
 
             // Check for audio codec support and attempt a software decoding
@@ -71,9 +74,9 @@ define([
             // useful for testing on Firefox for desktop which, as of Feb 2013,
             // lacks native MP3 support.
             //
-            // TODO: Actually check audio type. For now, MP3 is assumed as it's
-            // a safe bet that most podcasts are in MP3 format.
-            if (this.options.blobURL && !window.GLOBALS.HAS.audioSupportMP3) {
+            // TODO: Try to play any file, then search for a software decoder
+            // backup if playback doesn't work (more futureproof).
+            if (this.options.blobURL && !this.options.canPlayType) {
                 JSMad.Player.fromURL(this.options.blobURL, this._startSoftwarePlayer);
             } else {
                 window._player = null;
