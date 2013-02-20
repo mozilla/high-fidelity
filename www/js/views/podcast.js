@@ -116,10 +116,8 @@ define([
             ));
 
             if (podcast.length) {
-                console.log(podcast);
                 podcast.html(html);
             } else {
-                console.log(this.$el);
                 this.$el.append(html);
             }
 
@@ -133,7 +131,6 @@ define([
         },
 
         destroy: function(event) {
-            console.log($(event.originalTarget).data('podcastid') === this.model.get('id'));
             if ($(event.originalTarget).data('podcastid') === this.model.get('id')) {
                 this.model.destroy();
             }
