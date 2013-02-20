@@ -12,17 +12,19 @@ define([
     'models/podcast',
     'views/player',
     'views/podcast',
+    'views/search',
     'text!templates/app.ejs'
-], function($, _, Backbone, App, Episodes, Podcasts, Podcast, PlayerView, PodcastViews, AppTemplate) {
+], function($, _, Backbone, App, Episodes, Podcasts, Podcast, PlayerView, PodcastViews, SearchViews, AppTemplate) {
     var AppView = Backbone.View.extend({
         el: '#content',
         $el: $('#content'),
         template: _.template(AppTemplate),
 
         events: {
-            'click #add-podcast-button': 'showNewPodcastForm',
-            'click #add-rss-cancel': 'hideNewPodcastForm',
+            // 'click #add-podcast-button': 'showNewPodcastForm',
+            // 'click #add-rss-cancel': 'hideNewPodcastForm',
             'click #back': 'goBack',
+            'click #tabs a': 'changeTab',
             'submit #add-podcast': 'subscribe'
         },
 
@@ -31,12 +33,20 @@ define([
                 model: null
             });
 
-            _(this).bindAll('goBack', 'hideNewPodcastForm', 'loadPodcasts',
-                            'render', 'showNewPodcastForm', 'subscribe');
+            _(this).bindAll('changeTab', 'goBack', 'hideNewPodcastForm',
+                            'loadPodcasts', 'render', 'showNewPodcastForm',
+                            'subscribe');
 
             this.options.podcastViews = [];
 
             this.render();
+
+            // Refresh the podcast list view any time the podcast list is
+            // updated.
+            // TODO: Write a collection "subscribe" method to fire a custom
+            // "subscribe"/"unsubscribe" event allow refresh only on
+            // subscription changes.
+            // Podcasts.on('add remove', this.render, this);
         },
 
         render: function() {
@@ -54,6 +64,20 @@ define([
                     });
                 }
             });
+
+            // Add other tabs with their own views after the main app template
+            // has been rendered.
+            this.options.popularViewTab = new SearchViews.Popular();
+            this.options.searchViewTab = new SearchViews.Search();
+        },
+
+        changeTab: function(event) {
+            var tabToLoad = $(event.currentTarget).attr('href') + '-container';
+            $('#tabs a').removeClass('active');
+            $(event.currentTarget).addClass('active');
+
+            $('.tab').hide();
+            $(tabToLoad).show();
         },
 
         loadPodcasts: function() {
@@ -91,9 +115,9 @@ define([
             // });
         },
 
-        subscribe: function() {
+        subscribe: function(url) {
             var podcastViews = this.options.podcastViews;
-            var url = this.options.rssURLInput.val();
+            url = url || this.options.rssURLInput.val();
 
             var podcast = new Podcast({rssURL: url});
             Podcasts.add(podcast);
