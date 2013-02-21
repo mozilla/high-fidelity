@@ -14,6 +14,9 @@ define([
     'text!templates/player.ejs',
     'jsmad'
 ], function($, _, Backbone, App, Episodes, Podcasts, Episode, Podcast, PlayerTemplate, JSMad) {
+    // Save audio position every five seconds.
+    var SAVE_POSITION_TIMER = 5000;
+
     var PlayerView = Backbone.View.extend({
         className: 'player',
         el: '#player',
@@ -28,12 +31,15 @@ define([
         initialize: function() {
             var self = this;
 
-            _(this).bindAll('getEpisode');
+            _(this).bindAll('getEpisode', 'playPause', 'savePlaybackPosition',
+                            'setPlaybackPosition',
+                            '_savePlaybackPositionTimer',
+                            '_startSoftwarePlayer');
 
             // It's possible to have an empty player, so we check to see if
             // there's an episode loaded; if not, don't bother with much.
             if (this.model.id) {
-                this.options.canPlayType = window.GLOBALS.HAS['audioSupport{type}'.format({type: this.model.get('type').toUpperCase()})]
+                this.options.canPlayType = window.GLOBALS.HAS['audioSupport{type}'.format({type: this.model.get('type').toUpperCase()})];
                 this.getEpisode();
 
                 this.model.on('destroyed', function() {
@@ -45,11 +51,13 @@ define([
             // playback and remove it from the DOM.
             if (window._player) {
                 window._player.setPlaying(false);
-                // window._player = null;
                 delete window._player;
             }
 
+            // Variables used to store timeouts that run to save position
+            // and change titles that appear.
             this.playerTimeout = null;
+            this.positionTimeout = null;
 
             this.render();
         },
@@ -84,9 +92,18 @@ define([
 
             this.$el.html(html);
 
+            // Set the start time of this podcast (in case it's been played
+            // before).
+            if (this.options.blobURL) {
+                // HACK: Attach model to audio player, because this.model
+                // gets fucked halfway through for some reason.
+                $('audio')[0]._model = this.model;
+                this.setPlaybackPosition(this.playPause);
+            }
+
             // Scale size of text to fit in the player element.
             function resize(element) {
-                if (!element) {
+                if (!element || !element.parentNode) {
                     return;
                 }
 
@@ -143,17 +160,72 @@ define([
         // Play or pause the current track and update the DOM to reflect the
         // player's state.
         playPause: function(event) {
+            var audioPlayer = $('#audio')[0];
             if (window._player) {
-                window._player.setPlaying(!window._player.playing);
-            } else {
-                if ($('#audio')[0].paused) {
-                    $('#audio')[0].play();
+                window._player.setPlaying();
+            } else if (audioPlayer) {
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                    this._savePlaybackPositionTimer();
                 } else {
-                    $('#audio')[0].pause();
+                    audioPlayer.pause();
+                    clearTimeout(this.positionTimeout);
+                    this.savePlaybackPosition();
                 }
+            } else {
+                // Audio elements aren't available/ready yet. Abort and try
+                // again in a bit!
+                setTimeout(this.playPause, 200);
+                return;
             }
 
             $('#play-pause').toggleClass('paused');
+        },
+
+        savePlaybackPosition: function() {
+            var audioPlayer = $('#audio')[0];
+            if (window._player) {
+                // TODO: Implement position saving for software decoder.
+                return;
+                // console.log(window._player);
+                // console.log(window._player.absoluteFrameIndex,
+                //             window._player.dev.getPlaybackTime(),
+                //             window._player.stream.contentLength);
+                // this.model.set({
+                //     playbackPosition: window._player.absoluteFrameIndex
+                // });
+                // this.model.save();
+            } else if (audioPlayer) {
+                audioPlayer._model.set({playbackPosition: audioPlayer.currentTime});
+                audioPlayer._model.save();
+            }
+        },
+
+        setPlaybackPosition: function(callback) {
+            var audioPlayer = $('#audio')[0];
+            var playbackPosition = this.model.get('playbackPosition');
+            var self = this;
+
+            if (window._player) {
+                // TOOD: Implement this in software decoding mode.
+                return;
+            } else if (audioPlayer) {
+                $(audioPlayer).on('canplay', function() {
+                    audioPlayer.currentTime = playbackPosition;
+                    $(audioPlayer).off('canplay');
+
+                    callback();
+                });
+            }
+        },
+
+        _savePlaybackPositionTimer: function() {
+            var self = this;
+
+            this.positionTimeout = setTimeout(function() {
+                self.savePlaybackPosition();
+                self._savePlaybackPositionTimer();
+            }, SAVE_POSITION_TIMER);
         },
 
         // Create a software player to decode audio using pure JS (used only
@@ -162,6 +234,13 @@ define([
             player.onPlay = function() {};
             player.onPause = function() {};
             player.createDevice();
+
+            // If this model has a previously set playback position, load it.
+            if (this.model.get('playbackPosition')) {
+                // TODO: Implement this.
+                console.log('Implement playbackPosition for software decoder');
+            }
+
             player.setPlaying(true);
             window._player = player;
         }
