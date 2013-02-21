@@ -35,13 +35,13 @@ define([
             }
 
             var extraViewOptions = view.childViewOptions || {};
-            var resultView = new SearchResultView(_.extend(extraViewOptions, {
+            var resultView = new SearchResultView(_.defaults({
                 templateData: {
                     imageURL: r.logo_url,
                     name: r.title,
                     rssURL: r.url
                 }
-            }));
+            }, extraViewOptions));
 
             view.options.resultViews.push(resultView);
         });
@@ -96,7 +96,7 @@ define([
     var PopularPodcastsView = Backbone.View.extend({
         childViewOptions: {
             el: '#popular-results ul',
-            $el: $('#popular-results ul')
+            $el: '#popular-results ul'
         },
         el: '#popular-tab-container',
         $el: $('#popular-tab-container'),
@@ -168,6 +168,11 @@ define([
         },
 
         initialize: function() {
+            // Hack to load proper $el value if overloaded.
+            if (typeof(this.$el) === 'string') {
+                this.$el = $(this.$el);
+            }
+
             _(this).bindAll('subscribe');
 
             this.render();
@@ -190,30 +195,23 @@ define([
         },
 
         subscribe: function(event) {
-            if ($(event.currentTarget).data('rss') !== this.options.templateData.rssURL) {
-                return;
-            }
-
             var self = this;
 
             var dialog = new DialogViews.Subscribe({
                 confirm: function() {
-                    var rssURL = $(event.currentTarget).data('rss');
-                    if (rssURL === self.options.templateData.rssURL) {
-                        window.app.subscribe(rssURL);
+                    window.app.subscribe($(event.currentTarget).data('rss'));
 
-                        self.remove();
+                    self.remove();
 
-                        // TODO: Make this something that happens in the router
-                        // rather than being naughty with DOM events.
-                        // TODO: Make this navigate to the podcast detail view
-                        // instead of the main listing view.
-                        $('#tabs #podcasts-tab a').trigger('click');
-                    }
+                    // TODO: Make this something that happens in the router
+                    // rather than being naughty with DOM events.
+                    // TODO: Make this navigate to the podcast detail view
+                    // instead of the main listing view.
+                    $('#tabs #podcasts-tab a').trigger('click');
                 },
-                templateData: _.extend(this.options.templateData, {
+                templateData: _.defaults({
                     description: null
-                })
+                }, this.options.templateData)
             });
         }
     });
