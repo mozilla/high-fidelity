@@ -14,8 +14,8 @@
 
 /* Your styles here */
 body {
-    background-color: #f2f2f2;
-    color: #030303;
+    background-color: #030303;
+    color: #f2f2f2;
     font-family: "MozTT", sans-serif;
     margin: 5rem 0 0;
     padding: 0 0 130px;
@@ -35,46 +35,12 @@ body {
     width: 100%;
 }
 
-#back {
-    display: none;
+#app-header header {
+    background-color: rgb(26, 36, 37);
 }
 
-/** ANIMATIONS */
-/* Move main screen */
-animation: appDeeperOut 0.4s forwards ease-in;
-@keyframes appDeeperOut {
-99% { transform: translateX(0); }
-100% { transform: translateX(-100%); }
-}
- 
-/* Move main screen header */
-animation: appDeeperHeaderOut 0.4s forwards ease-in;
-@keyframes appDeeperHeaderOut {
-50% { transform: translateX(0); }
-99% { transform: translateX(-10%); }
-100% { transform: translateX(0); }
-}
- 
-/* Move main screen body */
-animation: appDeeperBodyOut 0.4s forwards ease-in;
-@keyframes appDeeperBodyOut {
-0% { transform: translateX(0); }
-99% { transform: translateX(-100%); }
-100% { transform: translateX(0); }
-}
- 
-/* Move secondary screen */
-animation: appDeeperIn 0.4s forwards ease-in;
-@keyframes appDeeperIn {
-0% { transform: translateX(100%); }
-100% { transform: translateX(0); }
-}
- 
-/* Fade in secondary screen header */
-animation: appDeeperHeaderIn 0.4s forwards ease-in;
-@keyframes appDeeperHeaderIn {
-50% { opacity: 0; }
-100% { opacity: 1; }
+#back {
+    display: none;
 }
 
 /** Panels */
@@ -115,9 +81,8 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
 }
 
 .podcast-cover {
-    background: no-repeat 0 0 #f3f3f3;
+    background: no-repeat 0 0 transparent;
     background-size: 100% auto;
-    border: 1px solid #030303;
     display: block;
     float: left;
     height: 150px;
@@ -201,9 +166,13 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
     margin: 1rem 0 0;
 }
 
-.search-results p {
-    font-size: 1.3em;
-    line-height: 1.6em;
+[data-type="list"] li p, [data-type="list"] li p:first-of-type {
+    color: #fff;
+    font-size: 1.2em;
+}
+
+[data-type="list"] li.search-result {
+    border-bottom-color: #212121;
 }
 
 .search-results .podcast-cover {
@@ -221,8 +190,9 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
 /** Player (BOTTOM OF SCREEN) */
 
 #player {
-    background: #e7e7e7;
-    border-top: 1px solid #030303;
+    background: #030303;
+    border-bottom: 1px solid #f2f2f2;
+    border-top: 1px solid #212121;
     bottom: 4rem;
     font-size: .9em;
     height: 64px;
@@ -235,7 +205,7 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
 
 #player h2, #player h3 {
     font-size: 24px;
-    margin: 0 5px 5px;
+    margin: 8px 5px 5px;
 }
 
 #player p {
@@ -249,6 +219,7 @@ animation: appDeeperHeaderIn 0.4s forwards ease-in;
     background: url(../img/button-pause.png) center;
     float: right;
     height: 60px;
+    margin-right: 20px;
     position: relative;
     width: 60px;
     z-index: 1001;
