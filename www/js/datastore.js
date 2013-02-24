@@ -40,6 +40,9 @@ define(function(require) {
 
     databaseConnect.onerror = function(event) {
       console.error('Error connecting to IndexedDB. Podcasts will fail.');
+      // TODO: If this happens, it might be because localStorage and IndexedDB
+      // are out of sync. This usually only happens during development, but
+      // even a prompt for "reset db" might be handy?
     };
 
     databaseConnect.onsuccess = function(event) {
@@ -87,11 +90,15 @@ define(function(require) {
     };
   }
 
-  // Destroy a blob based on it's id key.
-  // TODO: Write this sucker!
-  function destroy(id) {
+  // Destroy a blob based on its id key.
+  function destroy(id, callback) {
     var trans = db.transaction([window.GLOBALS.DATABASE_NAME], 'readwrite');
     var store = trans.objectStore(window.GLOBALS.OBJECT_STORE_NAME);
+    var request = store.delete(id);
+
+    if (callback) {
+      request.addEventListener('success', callback);
+    }
   }
 
   // Get blob data based on a simple, string key. Sends the request event

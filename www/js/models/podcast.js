@@ -33,7 +33,7 @@ define([
                 e.destroy();
             });
 
-            this.trigger('destroyed');
+            DataStore.destroy('podcastCover-{id}'.format({id: this.get('id')}));
 
             return Backbone.Model.prototype.destroy.call(this, options);
         },
@@ -72,7 +72,7 @@ define([
         loadImage: function() {
             var self = this;
 
-            DataStore.get('podcastCover-' + this.id, function(blob) {
+            DataStore.get('podcastCover-' + this.get('id'), function(blob) {
                 if (!blob || !blob.file) {
                     return;
                 }
@@ -92,7 +92,7 @@ define([
 
             // TODO: Setup a separate "table" for different item types in the
             // datastore.
-            DataStore.set('podcastCover-' + this.id, blob, function() {
+            DataStore.set('podcastCover-' + this.get('id'), blob, function() {
                 self.trigger('image:downloaded');
             });
         },

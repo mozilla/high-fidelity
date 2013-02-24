@@ -27,20 +27,20 @@ define([
         initialize: function() {
             var self = this;
 
-            _(this).bindAll('hideEpisodes', 'showEpisodes');
+            _(this).bindAll('destroy', 'hideEpisodes', 'showEpisodes');
 
             if (!this.model.get('id')) {
                 Podcasts.add(this.model);
                 this.model.save();
             }
 
-            this.model.on('destroyed', function() {
-                self.remove();
+            this.model.on('destroy', function() {
+                self.destroy();
             });
 
             this.model.on('image:available', function() {
                 self.render();
-            })
+            });
 
             this.model.on('updated', function() {
                 self.render();
@@ -56,8 +56,8 @@ define([
             });
 
             var podcast = this.$el.children('#podcast-{id}'.format({
-                id: this.model.get('id')}
-            ));
+                id: this.model.get('id')
+            }));
 
             if (podcast.length) {
                 podcast.replaceWith(html);
@@ -66,22 +66,32 @@ define([
             }
         },
 
+        destroy: function() {
+            this.$el = this.$el.children('#podcast-{id}'.format({
+                id: this.model.get('id')
+            }));
+
+            this.remove();
+        },
+
+        hideEpisodes: function() {
+            $('#back,#podcast-details').hide();
+            $('#podcasts').show();
+
+            this.episodesView.remove();
+        },
+
         showEpisodes: function(event) {
             if ($(event.currentTarget).data('podcastid') !== this.model.get('id')) {
                 return;
             }
 
             this.episodesView = new PodcastView({
-                model: this.model
+                model: this.model,
+                parentView: this
             });
             $('#podcasts').hide();
             $('#back,#podcast-details').show();
-        },
-
-        hideEpisodes: function() {
-            $('#back,#podcast-details').hide();
-            $('#podcasts').show();
-            this.episodesView.remove();
         }
     });
 
@@ -99,7 +109,9 @@ define([
         initialize: function() {
             var self = this;
 
-            this.model.on('destroyed', function() {
+            _(this).bindAll('destroy');
+
+            this.model.on('destroy', function() {
                 self.remove();
             });
 
@@ -131,9 +143,9 @@ define([
         },
 
         destroy: function(event) {
-            if ($(event.originalTarget).data('podcastid') === this.model.get('id')) {
-                this.model.destroy();
-            }
+            window.app.goBack();
+
+            this.model.destroy();
         }
     });
 

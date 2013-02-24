@@ -2,4 +2,6 @@
   <header><%= podcast.get('name') %></header>
 
   <ul class="episodes" data-podcastid="<%= podcast.get('id') %>"></ul>
+
+  <a href="#podcast/<%= podcast.get('id') %>" class="danger destroy" role="button" data-podcastid="<%= podcast.get('id') %>">Remove this Podcast</a>
 </section>

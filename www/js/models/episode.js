@@ -33,7 +33,7 @@ define([
         // Extend Backbone's default destroy method so we also delete the
         // podcast blob in indexedDB.
         destroy: function(options) {
-            DataStore.destroy(this.id);
+            DataStore.destroy('e{id}'.format({id: this.get('id')}));
 
             return Backbone.Model.prototype.destroy.call(this, options);
         },

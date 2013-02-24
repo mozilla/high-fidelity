@@ -80,8 +80,12 @@ body {
     display: block;
 }
 
+.podcast-cover.has-image {
+    background-color: transparent;
+}
+
 .podcast-cover {
-    background: no-repeat 0 0 transparent;
+    background: no-repeat 0 0 #d2d2d2;
     background-size: 100% auto;
     display: block;
     float: left;

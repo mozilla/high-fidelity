@@ -38,16 +38,7 @@ define([
         }
 
         DataStore.load(function() {
-            // Garbage data collection.
-            Podcasts.fetch({
-                success: function() {
-                    Podcasts.where({searchResult: true}).forEach(function(p) {
-                        p.destroy();
-                    });
-
-                    window.app = new AppView();
-                }
-            });
+            window.app = new AppView();
         });
     }
 
