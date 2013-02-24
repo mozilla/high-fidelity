@@ -32,7 +32,7 @@ define([
             var self = this;
 
             _(this).bindAll('getEpisode', 'playPause', 'savePlaybackPosition',
-                            'setPlaybackPosition',
+                            'setPlaybackPosition', '_adjustPlayerSizeAndText',
                             '_savePlaybackPositionTimer',
                             '_startSoftwarePlayer');
 
@@ -104,40 +104,8 @@ define([
                 this.setPlaybackPosition(this.playPause);
             }
 
-            // Scale size of text to fit in the player element.
-            function resize(element) {
-                if (!element || !element.parentNode) {
-                    return;
-                }
-
-                var episodeWidth = element.offsetWidth;
-                var maxWidth = element.parentNode.offsetWidth;
-                // TODO: 70 should be the width of the play/pause button.
-                var scaleFactor = Math.min(1, (maxWidth - 70) / episodeWidth);
-                element.style.transform = 'scale(' + scaleFactor + ')';
-                element.style.MozTransform = 'scale(' + scaleFactor + ')';
-                element.style.WebkitTransform = 'scale(' + scaleFactor + ')';
-            }
-
-            var episodeTitle = this.$el.find('h3')[0];
-            var podcastTitle = this.$el.find('h2')[0];
-            resize(episodeTitle);
-            resize(podcastTitle);
-
-            // TODO: Wire this up to CSS transitions and such.
-            function transitionTitles() {
-                self.playerTimeout = setTimeout(function() {
-                    $(episodeTitle).toggleClass('hide');
-                    $(podcastTitle).toggleClass('hide');
-                    resize(episodeTitle);
-                    resize(podcastTitle);
-                    transitionTitles();
-                }, 4000);
-            }
-
-            if (episodeTitle && podcastTitle) {
-                transitionTitles();
-            }
+            // TODO: Better name for this? lulz
+            this._adjustPlayerSizeAndText();
         },
 
         // Extract an Object URI for this episode and insert it into the audio
@@ -220,6 +188,46 @@ define([
 
                     callback();
                 });
+            }
+        },
+
+        _adjustPlayerSizeAndText: function() {
+            var self = this;
+
+            // Scale size of text to fit in the player element.
+            // TODO: Make this a global function. It's hella useful.
+            function resize(element) {
+                if (!element || !element.parentNode) {
+                    return;
+                }
+
+                var episodeWidth = element.offsetWidth;
+                var maxWidth = element.parentNode.offsetWidth;
+                // TODO: 70 should be the width of the play/pause button.
+                var scaleFactor = Math.min(1, (maxWidth - 70) / episodeWidth);
+                element.style.transform = 'scale(' + scaleFactor + ')';
+                element.style.MozTransform = 'scale(' + scaleFactor + ')';
+                element.style.WebkitTransform = 'scale(' + scaleFactor + ')';
+            }
+
+            var episodeTitle = this.$el.find('h3')[0];
+            var podcastTitle = this.$el.find('h2')[0];
+            resize(episodeTitle);
+            resize(podcastTitle);
+
+            // TODO: Wire this up to CSS transitions and such.
+            function transitionTitles() {
+                self.playerTimeout = setTimeout(function() {
+                    $(episodeTitle).toggleClass('hide');
+                    $(podcastTitle).toggleClass('hide');
+                    resize(episodeTitle);
+                    resize(podcastTitle);
+                    transitionTitles();
+                }, 4000);
+            }
+
+            if (episodeTitle && podcastTitle) {
+                transitionTitles();
             }
         },
 
