@@ -9,10 +9,11 @@ define([
     'app',
     'collections/podcasts',
     'models/podcast',
+    'views/dialogs',
     'views/episode',
     'text!templates/podcasts/cover.ejs',
     'text!templates/podcasts/details.ejs'
-], function($, _, Backbone, App, Podcasts, Podcast, EpisodeView, PodcastCoverTemplate, PodcastDetailsTemplate) {
+], function($, _, Backbone, App, Podcasts, Podcast, DialogViews, EpisodeView, PodcastCoverTemplate, PodcastDetailsTemplate) {
     var PodcastItemView = Backbone.View.extend({
         className: 'podcast',
         el: '#podcasts',
@@ -103,7 +104,7 @@ define([
         template: _.template(PodcastDetailsTemplate),
 
         events: {
-            'click .destroy': 'destroy'
+            'click .destroy': 'destroyPrompt'
         },
 
         initialize: function() {
@@ -142,10 +143,26 @@ define([
             this.$el.addClass('active');
         },
 
-        destroy: function(event) {
+        destroy: function() {
             window.app.goBack();
 
             this.model.destroy();
+        },
+
+        destroyPrompt: function(event) {
+            var self = this;
+
+            var dialog = new DialogViews.DeletePodcast({
+                confirm: function() {
+                    self.destroy();
+                },
+                templateData: _.defaults({
+                    description: null
+                }, {
+                    imageURL: self.model.coverImage,
+                    podcast: self.model
+                })
+            });
         }
     });
 

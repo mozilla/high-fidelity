@@ -111,9 +111,7 @@ define([
         },
 
         render: function() {
-            var html = this.template({
-                
-            });
+            var html = this.template();
 
             this.$el.html(html);
 
