@@ -97,7 +97,10 @@ define([
             if (this.options.blobURL) {
                 // HACK: Attach model to audio player, because this.model
                 // gets fucked halfway through for some reason.
-                $('audio')[0]._model = this.model;
+                if ($('audio')[0]) {
+                    $('audio')[0]._model = this.model;
+                }
+
                 this.setPlaybackPosition(this.playPause);
             }
 
@@ -162,7 +165,7 @@ define([
         playPause: function(event) {
             var audioPlayer = $('#audio')[0];
             if (window._player) {
-                window._player.setPlaying();
+                window._player.setPlaying(!window._player.playing);
             } else if (audioPlayer) {
                 if (audioPlayer.paused) {
                     audioPlayer.play();
@@ -208,6 +211,7 @@ define([
 
             if (window._player) {
                 // TOOD: Implement this in software decoding mode.
+                callback();
                 return;
             } else if (audioPlayer) {
                 $(audioPlayer).on('canplay', function() {
@@ -242,6 +246,8 @@ define([
             }
 
             player.setPlaying(true);
+            $('#play-pause').removeClass('paused');
+
             window._player = player;
         }
     });
