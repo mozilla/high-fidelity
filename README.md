@@ -18,6 +18,11 @@ please do so in [Bugzilla](https://bugzilla.mozilla.org/enter_bug.cgi?product=Ma
 Yes, it sucks, but it's where the rest of the bugs for Mozilla's reference
 apps are and it's nice to only have to use *one* issue tracker.
 
+## Build Status ##
+
+Continuous integration tests for high-fidelity are run on the awesome
+[Travis CI](http://travis-ci.org): [![Build Status](https://secure.travis-ci.org/mozilla/high-fidelity.png?branch=master)](http://travis-ci.org/mozilla/high-fidelity)
+
 # License #
 
 This program is free software; it is distributed under an
