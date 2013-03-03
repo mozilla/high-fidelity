@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
 
+    <!-- TODO: Localize title -->
     <title>Podcasts</title>
     <meta name="description" content="HTML5-powered Podcasts App">
     <meta name="viewport" content="width=device-width">
@@ -14,9 +15,12 @@
     <!-- The player that contains the actual audio file we're playing. -->
     <div id="player"></div>
 
+    <!-- Placeholder/main content div; gets populated by the app.ejs template -->
     <div id="content"></div>
 
+    <!-- Monkeypatch for ''.format() variable interpolation -->
     <script src="js/string.js"></script>
+    <!-- Let's load 'er up! -->
     <script data-main="js/main.js" src="js/lib/require.js"></script>
   </body>
 </html>

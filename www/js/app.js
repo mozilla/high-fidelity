@@ -5,12 +5,13 @@
 define([
     'zepto',
     'datastore',
+    'jed',
     'collections/episodes',
     'collections/podcasts',
     'models/episode',
     'models/podcast',
     'views/app'
-], function($, DataStore, Episodes, Podcasts, Episode, Podcast, AppView) {
+], function($, DataStore, Jed, Episodes, Podcasts, Episode, Podcast, AppView) {
     var GLOBALS = {
         DATABASE_NAME: 'podcasts',
         HAS: {
@@ -26,6 +27,7 @@ define([
                 return 'WebkitOverflowScrolling' in window.document.createElement('div').style;
             })()
         },
+        LANGUAGE: window.navigator.language, // HACK: Better way for this, I assume?
         MAX_DOWNLOADS: 2, // Maximum number of podcast downloads at one time.
         OBJECT_STORE_NAME: 'podcasts',
         TIME_TO_UPDATE: 3600 * 5 // Update podcasts every five hours
@@ -38,7 +40,9 @@ define([
         }
 
         DataStore.load(function() {
-            window.app = new AppView();
+            setLanguage(function() {
+                window.app = new AppView();
+            });
         });
     }
 
@@ -60,6 +64,43 @@ define([
         });
     }
     window.formatTime = formatTime;
+
+    // Set the language of the app and retrieve the proper localization files.
+    // This could be improved, but for now works fine.
+    // TODO: Allow an override argument for testing, etc.
+    function setLanguage(callback, override) {
+        var request = new window.XMLHttpRequest();
+
+        request.open('GET', 'locale/{lang}.json'.format({
+            lang: GLOBALS.LANGUAGE
+        }), true);
+
+        request.addEventListener('load', function(event) {
+            if (request.status === 200) {
+                // Alias _ for gettext-style l10n jazz.
+                var l10n = new Jed({
+                    locale_data: JSON.parse(request.response)
+                });
+
+                // TODO: This seems a bit hacky; maybe we can do better?
+                window._l10n = l10n;
+                window.l = function(key) {
+                    return l10n.gettext(key);
+                };
+            } else {
+                window._l10n = null;
+                window.l = function(key) {
+                    return key;
+                }
+            }
+
+            if (callback) {
+                callback();
+            }
+        });
+
+        request.send();
+    }
 
     function timestamp(date) {
         if (!date) {
