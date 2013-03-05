@@ -6,25 +6,25 @@ define([
   'localstorage',
   'models/podcast'
 ], function(_, Backbone, Store, Podcast) {
-  var PodcastsCollection = Backbone.Collection.extend({
-    model: Podcast,
+    var PodcastsCollection = Backbone.Collection.extend({
+        model: Podcast,
 
-    localStorage: new Store('Podcasts'),
+        localStorage: new Store('Podcasts'),
 
-    // Sort podcasts by their published date.
-    comparator: function(podcast) {
-      return podcast.get('name');
-    },
+        // Sort podcasts by their published date.
+        comparator: function(podcast) {
+            return podcast.get('name');
+        },
 
-    // Easy way to delete all episodes, including their blob data in indexedDB.
-    // deleteAll: function() {
-    //   this.models.forEach(function(model) {
-    //     model.destroy();
-    //   });
+        // Easy way to delete all episodes, including their blob data in indexedDB.
+        deleteAll: function() {
+            this.models.forEach(function(model) {
+                model.destroy();
+            });
 
-    //   this.reset();
-    // }
-  });
+            this.reset();
+        }
+    });
 
-  return new PodcastsCollection();
-})
+    return new PodcastsCollection();
+});
