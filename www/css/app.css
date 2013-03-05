@@ -199,9 +199,10 @@ body {
     border-top: 1px solid #212121;
     bottom: 4rem;
     font-size: .9em;
-    height: 64px;
+    height: 84px;
     left: 0;
     overflow: hidden;
+    padding-top: .3rem;
     position: fixed;
     width: 100%;
     z-index: 1000;
@@ -231,6 +232,38 @@ body {
 
 #play-pause.paused {
     background-image: url(../img/button-play.png);
+}
+
+#time-info {
+    height: 16px;
+    width: 100%;
+}
+
+#audio-progress {
+    display: block;
+    margin: 0 auto;
+    width: calc(100% - 140px);
+}
+
+#time-elapsed {
+    float: left;
+    height: .3rem;
+    margin: -4px 5px 0;
+    text-align: right;
+    width: 60px;
+}
+
+#time-remaining::before {
+    content: "-";
+    display: inline;
+}
+
+#time-remaining {
+    float: right;
+    height: .3rem;
+    margin: -4px 5px 0;
+    text-align: left;
+    width: 60px;
 }
 
 /** Tabs */

@@ -25,16 +25,22 @@ define([
         template: _.template(PlayerTemplate),
 
         events: {
+            'mousedown #audio-progress': 'progressMouseDown',
+            'mousemove #audio-progress': 'progressMouseMove',
+            'mouseup #audio-progress': 'progressMouseUp',
             'click #play-pause': 'playPause'
         },
 
         initialize: function() {
             var self = this;
 
-            _(this).bindAll('getEpisode', 'playPause', 'savePlaybackPosition',
-                            'setPlaybackPosition', '_adjustPlayerSizeAndText',
+            _(this).bindAll('getEpisode', 'playPause', 'progressMouseDown',
+                            'progressMouseMove', 'progressMouseUp', 'render',
+                            'savePlaybackPosition', 'seekTo',
+                            'setPlaybackPosition', 'updateProgress',
+                            '_adjustPlayerSizeAndText',
                             '_savePlaybackPositionTimer',
-                            '_startSoftwarePlayer');
+                            '_startSoftwarePlayer', '_updateElements');
 
             // It's possible to have an empty player, so we check to see if
             // there's an episode loaded; if not, don't bother with much.
@@ -53,6 +59,16 @@ define([
                 window._player.setPlaying(false);
                 delete window._player;
             }
+
+            // HTML elements we use throughout this view.
+            this.audio = null;
+            this.$playPause = null;
+            this.progressBar = null;
+            this.$timeElapsed = null;
+            this.$timeRemaining = null;
+
+            // Store current dragging state of time scrubber (progress element).
+            this._isScrubberDragging = false;
 
             // Variables used to store timeouts that run to save position
             // and change titles that appear.
@@ -95,10 +111,14 @@ define([
             // Set the start time of this podcast (in case it's been played
             // before).
             if (this.options.blobURL) {
+                // Make sure we're referencing the right elements.
+                this._updateElements();
+
                 // HACK: Attach model to audio player, because this.model
-                // gets fucked halfway through for some reason.
-                if ($('audio')[0]) {
-                    $('audio')[0]._model = this.model;
+                // gets fucked halfway through for some reason.                
+                if (this.audio) {
+                    this.audio._model = this.model;
+                    $(this.audio).on('timeupdate', this.updateProgress);
                 }
 
                 this.setPlaybackPosition(this.playPause);
@@ -131,15 +151,17 @@ define([
         // Play or pause the current track and update the DOM to reflect the
         // player's state.
         playPause: function(event) {
-            var audioPlayer = $('#audio')[0];
+            // HACK: Make sure elements are up-to-date.
+            this._updateElements();
+
             if (window._player) {
                 window._player.setPlaying(!window._player.playing);
-            } else if (audioPlayer) {
-                if (audioPlayer.paused) {
-                    audioPlayer.play();
+            } else if (this.audio) {
+                if (this.audio.paused) {
+                    this.audio.play();
                     this._savePlaybackPositionTimer();
                 } else {
-                    audioPlayer.pause();
+                    this.audio.pause();
                     clearTimeout(this.positionTimeout);
                     this.savePlaybackPosition();
                 }
@@ -150,11 +172,30 @@ define([
                 return;
             }
 
-            $('#play-pause').toggleClass('paused');
+            this.updateProgress();
+
+            this.$playPause.toggleClass('paused');
+        },
+
+        progressMouseDown: function(event) {
+            this._isScrubberDragging = true;
+            this.seekTo(event.pageX);
+        },
+
+        progressMouseMove: function(event) {
+            if (this._isScrubberDragging) {
+                this.seekTo(event.pageX);
+            }
+        },
+
+        progressMouseUp: function(event) {
+            if (this._isScrubberDragging) {
+                this._isScrubberDragging = false;
+                this.seekTo(event.pageX);
+            }
         },
 
         savePlaybackPosition: function() {
-            var audioPlayer = $('#audio')[0];
             if (window._player) {
                 // TODO: Implement position saving for software decoder.
                 return;
@@ -166,14 +207,33 @@ define([
                 //     playbackPosition: window._player.absoluteFrameIndex
                 // });
                 // this.model.save();
-            } else if (audioPlayer) {
-                audioPlayer._model.set({playbackPosition: audioPlayer.currentTime});
-                audioPlayer._model.save();
+            } else if (this.audio) {
+                this.audio._model.set({playbackPosition: this.audio.currentTime});
+                this.audio._model.save();
             }
         },
 
+        seekTo: function(x) {
+            var maxDuration = this.audio.duration;
+            var position = x - $(this.progressBar).offset().left;
+            var percentage = 100 * position / $(this.progressBar).width();
+
+            // Make sure that the percentage click is an actual percent!
+            if (percentage > 99) {
+                percentage = 99;
+            }
+
+            if (percentage < 0) {
+                percentage = 0;
+            }
+
+            this.audio.currentTime = maxDuration * percentage / 100;
+
+            this.savePlaybackPosition();
+            this.updateProgress();
+        },
+
         setPlaybackPosition: function(callback) {
-            var audioPlayer = $('#audio')[0];
             var playbackPosition = this.model.get('playbackPosition');
             var self = this;
 
@@ -181,14 +241,27 @@ define([
                 // TOOD: Implement this in software decoding mode.
                 callback();
                 return;
-            } else if (audioPlayer) {
-                $(audioPlayer).on('canplay', function() {
-                    audioPlayer.currentTime = playbackPosition;
-                    $(audioPlayer).off('canplay');
+            } else if (this.audio) {
+                $(this.audio).on('canplay', function() {
+                    self.audio.currentTime = playbackPosition;
 
-                    callback();
+                    $(self.audio).off('canplay');
+
+                    if (callback) {
+                        callback();
+                    }
                 });
             }
+        },
+
+        updateProgress: function() {
+            this.$timeElapsed.text(window.formatTime(this.audio.currentTime));
+
+            var timeRemaining = this.audio.duration - this.audio.currentTime;
+            this.$timeRemaining.text(window.formatTime(timeRemaining));
+
+            this.progressBar.max = this.audio.duration;
+            this.progressBar.value = this.audio.currentTime;
         },
 
         _adjustPlayerSizeAndText: function() {
@@ -254,9 +327,18 @@ define([
             }
 
             player.setPlaying(true);
-            $('#play-pause').removeClass('paused');
+            this.$playPause.removeClass('paused');
 
             window._player = player;
+        },
+
+        _updateElements: function() {
+            // Store references to commonly-used elements.
+            this.audio = $('audio')[0];
+            this.$playPause = $('#play-pause');
+            this.progressBar = $('#audio-progress')[0];
+            this.$timeElapsed = $('#time-elapsed');
+            this.$timeRemaining = $('#time-remaining');
         }
     });
 
