@@ -42,6 +42,25 @@ define([
         });
     }
 
+    // Format a time in seconds to a pretty 5:22:75 style time. Cribbed from
+    // the Gaia Music app.
+    function formatTime(secs) {
+        if (isNaN(secs)) {
+            return '--:--';
+        }
+
+        var hours = parseInt(secs / 3600, 10) % 24;
+        var minutes = parseInt(secs / 60, 10) % 60;
+        var seconds = parseInt(secs % 60, 10);
+
+        return '{hours}{minutes}:{seconds}'.format({
+            hours: hours !== 0 ? hours + ':' : '',
+            minutes: minutes < 10 ? '0' + minutes : minutes,
+            seconds: seconds < 10 ? '0' + seconds : seconds
+        });
+    }
+    window.formatTime = formatTime;
+
     function timestamp(date) {
         if (!date) {
             date = new Date();
