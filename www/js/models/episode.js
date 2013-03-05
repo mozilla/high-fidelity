@@ -12,6 +12,7 @@ define([
         collection: Episodes,
         defaults: {
             isDownloaded: false,
+            playbackPosition: 0,
             url: null
         },
 
