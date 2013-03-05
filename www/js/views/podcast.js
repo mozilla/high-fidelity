@@ -144,9 +144,9 @@ define([
         },
 
         destroy: function() {
-            window.app.goBack();
-
-            this.model.destroy();
+            this.model.destroy({
+                success: window.app.goBack
+            });
         },
 
         destroyPrompt: function(event) {
