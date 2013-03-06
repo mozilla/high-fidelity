@@ -12,7 +12,11 @@
     <header>Search Results</header>
 
     <ul>
-      <li class="loading"><progress></progress><p>Looking for podcasts...</p></li>
+      <% if (noResults) { %>
+        <li><p>No podcasts found.</p></li>
+      <% } else { %>
+        <li class="loading"><progress></progress><p>Looking for podcasts...</p></li>
+      <% } %>
     </ul>
   </section>
 <% } %>

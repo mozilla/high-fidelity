@@ -19,32 +19,44 @@ define([
 
     // Render search results from another view.
     function renderSearchResults(results, request, view) {
-        results = window.JSON.parse(results);
-
-        if (!results || !results.length) {
-            window.alert('No podcasts found!');
+        try {
+            results = window.JSON.parse(results);
+        } catch (e) {
+            results = null;
         }
 
-        results.forEach(function(r) {
-            // Ignore podcasts with no title or URL.
-            // Also be sure to ignore search result items that have
-            // the same RSS URL as a podcast we're already
-            // subscribed to.
-            if (!r.title || !r.url || Podcasts.where({rssURL: r.url}).length) {
-                return;
-            }
+        // Reset this view's results.
+        view.destroyResults();
 
-            var extraViewOptions = view.childViewOptions || {};
-            var resultView = new SearchResultView(_.defaults({
-                templateData: {
-                    imageURL: r.logo_url,
-                    name: r.title,
-                    rssURL: r.url
+        // If there aren't any results, we skip right past this part and
+        // display a "no results found" message. This is rare though; the
+        // search API we're currently using is REALLY fuzzy.
+        if (results && results.length) {
+            results.forEach(function(r) {
+                // Ignore podcasts with no title or URL.
+                // Also be sure to ignore search result items that have
+                // the same RSS URL as a podcast we're already
+                // subscribed to.
+                if (!r.title || !r.url || Podcasts.where({rssURL: r.url}).length) {
+                    return;
                 }
-            }, extraViewOptions));
 
-            view.options.resultViews.push(resultView);
-        });
+                var extraViewOptions = view.childViewOptions || {};
+                var resultView = new SearchResultView(_.defaults({
+                    templateData: {
+                        imageURL: r.logo_url,
+                        name: r.title,
+                        rssURL: r.url
+                    }
+                }, extraViewOptions));
+
+                view.options.resultViews.push(resultView);
+            });
+        }
+
+        if (!view.options.resultViews.length) {
+            view.render({noResults: true});
+        }
 
         // Scroll down to the results, pushing the search form out of
         // view. Because the header is position: fixed, we need to
@@ -105,17 +117,29 @@ define([
         initialize: function() {
             this.options.resultViews = [];
 
+            _(this).bindAll('destroyResults');
+
             this.render();
 
             top(20, renderSearchResults, this);
         },
 
-        render: function() {
-            var html = this.template();
+        render: function(templateArgs) {
+            var html = this.template(_.extend({
+                noResults: false
+            }, templateArgs));
 
             this.$el.html(html);
 
             this.options.searchResults = $('#popular-results');
+        },
+
+        destroyResults: function() {
+            this.options.resultViews.forEach(function(v) {
+                v.remove();
+            });
+
+            this.options.resultViews = [];
         }
     });
 
@@ -129,22 +153,31 @@ define([
         },
 
         initialize: function() {
-            _(this).bindAll('search');
+            _(this).bindAll('destroyResults', 'search');
 
             this.options.resultViews = [];
 
             this.render();
         },
 
-        render: function() {
-            var html = this.template({
+        render: function(templateArgs) {
+            var html = this.template(_.extend({
+                noResults: false,
                 search: this.options.searchForm ? this.options.searchForm.val() : ''
-            });
+            }, templateArgs));
 
             this.$el.html(html);
 
             this.options.searchForm = $('#podcast-search');
             this.options.searchResults = $('#search-results');
+        },
+
+        destroyResults: function() {
+            this.options.resultViews.forEach(function(v) {
+                v.remove();
+            });
+
+            this.options.resultViews = [];
         },
 
         search: function(event) {
