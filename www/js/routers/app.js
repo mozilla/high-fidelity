@@ -8,7 +8,6 @@ define([
     var appView;
     var AppRouter = Backbone.Router.extend({
         routes:{
-            // 'podcast/:id': 'podcast',
             '': 'index'
         },
 
@@ -21,12 +20,6 @@ define([
                 // Initialize the application view.
                 appView = new AppViews.Main();
             }
-        },
-
-        podcast: function(id) {
-            console.log(id);
-            // Show a podcast's episodes
-            appView.showPodcast(id);
         }
     })
 

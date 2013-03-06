@@ -7,7 +7,7 @@
 // If you supply an Object:
 //   `'Hello {world}.'.format({world: 'Earth'})` will return: 'Hello Earth.'
 String.prototype.format = function(substitutions) {
-  return this.replace(/\{([A-Za-z0-9]+)\}/g, function(match, key) {
-    return substitutions[key] !== undefined ? substitutions[key] : ''
-  })
-}
+    return this.replace(/\{([A-Za-z0-9]+)\}/g, function(match, key) {
+        return substitutions[key] !== undefined ? substitutions[key] : '';
+    });
+};
