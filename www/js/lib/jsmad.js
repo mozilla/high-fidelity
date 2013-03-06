@@ -12,7 +12,7 @@ Mad.recoverable = function (error) {
 Mad.enforceBinaryString = false;
 
 if (!Mad.enforceBinaryString && typeof(ArrayBuffer) === 'function' && typeof(Uint8Array) === 'function') {
-    console.log("Using ArrayBuffer");
+    // console.log("Using ArrayBuffer");
     Mad.Storage = {
         backing: 'arraybuffer',
 
