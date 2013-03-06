@@ -116,6 +116,12 @@ define([
             this.$el.html(html);
 
             this.options.searchResults = $('#popular-results');
+
+            if (this.options.resultViews.length) {
+                this.options.resultViews.forEach(function(v) {
+                    v.render();
+                });
+            }
         }
     });
 
@@ -145,6 +151,12 @@ define([
 
             this.options.searchForm = $('#podcast-search');
             this.options.searchResults = $('#search-results');
+
+            if (this.options.resultViews.length) {
+                this.options.resultViews.forEach(function(v) {
+                    v.render();
+                });
+            }
         },
 
         search: function(event) {

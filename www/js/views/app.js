@@ -39,6 +39,10 @@ define([
 
             this.options.podcastViews = [];
 
+            // Store whether the app has rendered the main app HTML once.
+            // We don't re-render this part.
+            this._hasRendered = false;
+
             this.render();
 
             // Refresh the podcast list view any time the podcast list is
@@ -52,10 +56,11 @@ define([
         render: function() {
             var self = this;
 
-            this.$el.html(this.template({}));
-
-            this.options.addPodcastForm = $('#add-podcast');
-            this.options.rssURLInput = $('#add-rss');
+            if (!this._hasRendered) {
+                this.$el.html(this.template());
+                this.options.addPodcastForm = $('#add-podcast');
+                this.options.rssURLInput = $('#add-rss');
+            }
 
             Podcasts.fetch({
                 success: function(podcast) {
@@ -67,8 +72,13 @@ define([
 
             // Add other tabs with their own views after the main app template
             // has been rendered.
-            this.options.popularViewTab = new SearchViews.Popular();
-            this.options.searchViewTab = new SearchViews.Search();
+            if (!this._hasRendered) {
+                this.options.popularViewTab = new SearchViews.Popular();
+                this.options.searchViewTab = new SearchViews.Search();
+            }
+
+            // Don't re-render certain parts of this page again.
+            this._hasRendered = true;
         },
 
         changeTab: function(event) {
