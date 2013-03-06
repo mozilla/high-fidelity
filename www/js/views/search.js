@@ -19,12 +19,18 @@ define([
 
     // Render search results from another view.
     function renderSearchResults(results, request, view) {
-        results = window.JSON.parse(results);
-
-        if (!results || !results.length) {
-            window.alert('No podcasts found!');
+        try {
+            results = JSON.parse(results);
+        } catch (e) {
+            console.log("Couldn't parse search results");
+            results = [];
         }
 
+        // Reset this view's results.
+        view.destroyResults();
+
+        // Create a SearchResultView for each result and add it to this view's
+        // "resultViews" array.
         results.forEach(function(r) {
             // Ignore podcasts with no title or URL.
             // Also be sure to ignore search result items that have
@@ -46,10 +52,18 @@ define([
             view.options.resultViews.push(resultView);
         });
 
+        // If there aren't any results, we display a "no results found"
+        // message. This is rare though; the search API we're currently using
+        // is REALLY fuzzy.
+        if (!view.options.resultViews.length) {
+            view.render({noResults: true});
+        }
+
         // Scroll down to the results, pushing the search form out of
         // view. Because the header is position: fixed, we need to
         // adjust the amount of pixels we scroll to.
-        var scrollTopOffset = view.options.searchResults[0].offsetTop - $('#app-header').height();
+        var scrollTopOffset = view.options.searchResults[0].offsetTop -
+                              $('#app-header').height();
         window.scrollTo(window.document.scrollLeft, scrollTopOffset);
     }
 
@@ -105,13 +119,17 @@ define([
         initialize: function() {
             this.options.resultViews = [];
 
+            _(this).bindAll('destroyResults');
+
             this.render();
 
             top(20, renderSearchResults, this);
         },
 
-        render: function() {
-            var html = this.template();
+        render: function(templateArgs) {
+            var html = this.template(_.extend({
+                noResults: false
+            }, templateArgs));
 
             this.$el.html(html);
 
@@ -122,6 +140,10 @@ define([
                     v.render();
                 });
             }
+        },
+
+        destroyResults: function() {
+            this.options.resultViews = [];
         }
     });
 
@@ -135,17 +157,18 @@ define([
         },
 
         initialize: function() {
-            _(this).bindAll('search');
+            _(this).bindAll('destroyResults', 'search');
 
             this.options.resultViews = [];
 
             this.render();
         },
 
-        render: function() {
-            var html = this.template({
+        render: function(templateArgs) {
+            var html = this.template(_.extend({
+                noResults: false,
                 search: this.options.searchForm ? this.options.searchForm.val() : ''
-            });
+            }, templateArgs));
 
             this.$el.html(html);
 
@@ -157,6 +180,10 @@ define([
                     v.render();
                 });
             }
+        },
+
+        destroyResults: function() {
+            this.options.resultViews = [];
         },
 
         search: function(event) {
