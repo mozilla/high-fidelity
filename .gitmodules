@@ -1,0 +1,3 @@
+[submodule "vendor/jed"]
+	path = vendor/jed
+	url = git://github.com/SlexAxton/Jed.git

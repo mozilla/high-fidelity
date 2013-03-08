@@ -8,7 +8,7 @@
         <progress id="audio-progress"></progress>
       </div>
     <% } %>
-    <a id="play-pause" href="#play-pause" data-paused="1" class="paused"><span class="hide">Play/Pause</span></a>
+    <a id="play-pause" href="#play-pause" data-paused="1" class="paused"><span class="hide"><%= l('Play/Pause') %></span></a>
   <% } %>
   <h2 class="podcast-title hide"><%= episode.podcast().get('name') %></h2>
   <h3 class="episode-title"><%= episode.get('title') %></h3>
@@ -16,5 +16,5 @@
     <p class="description"><%= episode.get('description') %></p>
   <% } %>
 <% } else { %>
-  <h2 class="title">Nothing playing</h2>
+  <h2 class="title"><%= l('Nothing playing') %></h2>
 <% } %>

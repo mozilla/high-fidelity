@@ -1,6 +1,6 @@
 /*global Backbone:true */
 /*!
- Podcasts | https://github.com/tofumatt/podcasts
+ Podcasts | https://github.com/mozilla/high-fidelity
 */
 'use strict';
 
@@ -9,6 +9,7 @@ require.config({
     paths: {
         backbone: 'lib/backbone',
         localstorage: 'lib/backbone.localstorage',
+        jed: 'lib/jed',
         jsmad: 'lib/jsmad',
         install: 'lib/install',
         sink: 'lib/sink',

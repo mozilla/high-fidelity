@@ -1,11 +1,11 @@
 <section data-type="list" id="popular-results" class="search-results">
-  <header>Top Podcasts</header>
+  <header><%= l('Top Podcasts') %></header>
 
   <ul>
     <% if (noResults) { %>
-      <li><p>You're already subscribed to all the top podcasts!</p></li>
+      <li><p><%= l("You're already subscribed to all the top podcasts!") %></p></li>
     <% } else { %>
-      <li class="loading"><progress></progress><p>Getting popular podcasts...</p></li>
+      <li class="loading"><progress></progress><p><%= l('Getting popular podcasts…') %></p></li>
     <% } %>
   </ul>
 </section>
