@@ -20,6 +20,11 @@
 define(function(require) {
     var indexedDB = indexedDB || window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB,
             IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction;
+
+    if (!indexedDB) {
+        indexedDB = require('indexedDB');
+    }
+
     var dbVersion = 1;
 
     // Create/open database.
@@ -53,9 +58,9 @@ define(function(require) {
             var store = trans.objectStore(window.GLOBALS.OBJECT_STORE_NAME);
 
             db.onerror = function(event) {
-                    console.log('Error creating/accessing IndexedDB database');
+                console.log('Error creating/accessing IndexedDB database');
             };
-            
+
             // Interim solution for Google Chrome to create an objectStore. Will be deprecated
             if (db.setVersion) {
                 if (db.version !== dbVersion) {
@@ -79,7 +84,7 @@ define(function(require) {
     function clearAll() {
         window.localStorage.clear();
         var objectStore = db.transaction(window.GLOBALS.DATABASE_NAME, 'readwrite').objectStore(window.GLOBALS.OBJECT_STORE_NAME);
- 
+
         objectStore.openCursor().onsuccess = function(event) {
             var cursor = event.target.result;
             if (cursor) {
