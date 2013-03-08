@@ -11,6 +11,7 @@ require.config({
         localstorage: 'lib/backbone.localstorage',
         jed: 'lib/jed',
         jsmad: 'lib/jsmad',
+        indexedDB: 'lib/indexeddb',
         install: 'lib/install',
         sink: 'lib/sink',
         text: 'lib/require.text',
@@ -32,6 +33,9 @@ require.config({
                 'sink'
             ],
             exports: 'Mad'
+        },
+        'indexedDB': {
+            exports: 'indexedDB'
         },
         'sink': {
             exports: 'Sink'

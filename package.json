@@ -1,5 +1,16 @@
 {
-  "name": "podcasts",
+  "name": "high-fidelity",
+  "author": "Mozilla",
+  "description": "HTML5 podcasts!",
+  "version": "0.0.1",
+  "homepage": "https://github.com/mozilla/high-fidelity",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mozilla/high-fidelity.git"
+  },
+  "scripts": {
+    "test": "make test"
+  },
   "version": "0.0.1",
   "dependencies": {
     "volo-ghdeploy": "0.0.3",
@@ -10,13 +21,16 @@
     "po2json": "0.0.6"
   },
   "amd": {},
+  "devDependencies": {
+    "express": "~2.5.0",
+    "mocha": "1.2.2",
+    "nock": ">= 0.13.3",
+    "should": ">= 0.0.1",
+    "supertest": ">= 0.1.1"
+  },
   "volo": {
     "dependencies": {
-      "zepto": "github:madrobby/zepto/v0.8",
-      "underscore": "github:amdjs/underscore/1.4.1",
-      "backbone": "github:amdjs/backbone/0.9.2",
-      "backbone.statemanager": "github:crashlytics/backbone.statemanager/master"
     },
-    "baseUrl": "www/js/lib"
+    "baseUrl": "www/js"
   }
 }
