@@ -214,6 +214,9 @@ define([
         },
 
         seekTo: function(x) {
+            // HACK: make sure we're referencing the right elements.
+            this._updateElements();
+
             var maxDuration = this.audio.duration;
             var position = x - $(this.progressBar).offset().left;
             var percentage = 100 * position / $(this.progressBar).width();
