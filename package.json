@@ -15,7 +15,8 @@
   "dependencies": {
     "volo-ghdeploy": "0.0.3",
     "connect": "~2.4.4",
-    "less-middleware": "~0.1.5"
+    "less-middleware": "~0.1.5",
+    "po2json": "0.0.6"
   },
   "devDependencies": {
     "po2json": "0.0.6"
