@@ -1,12 +1,12 @@
 # high-fidelity #
 
 high-fidelity is an offline-capable, entirely HTML5/JS podcasts app. It's
-chiefly designed for FirefoxOS, but support for other platforms and browsers
+chiefly designed for Firefox OS, but support for other platforms and browsers
 is an eventual design goal. It requires a datastore that supports large files;
 currently, we just use IndexedDB.
 
-The app requires elevated XmlHttpRequest priviledges to fetch podcast files.
-In FirefoxOS, this currently means being installed as a packaged app. Details
+The app requires elevated XMLHttpRequest privileges to fetch podcast files.
+In Firefox OS, this currently means being installed as a packaged app. Details
 for other platforms forthcoming.
 
 # Bugs, Feature Requests, and Love Notes #
