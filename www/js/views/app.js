@@ -13,12 +13,12 @@ define([
     'views/player',
     'views/podcast',
     'views/search',
-    'text!templates/app.ejs'
+    'tpl!templates/app.ejs'
 ], function($, _, Backbone, App, Episodes, Podcasts, Podcast, PlayerView, PodcastViews, SearchViews, AppTemplate) {
     var AppView = Backbone.View.extend({
         el: '#content',
         $el: $('#content'),
-        template: _.template(AppTemplate),
+        template: AppTemplate,
 
         events: {
             // 'click #add-podcast-button': 'showNewPodcastForm',

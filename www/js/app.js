@@ -65,6 +65,15 @@ define([
     }
     window.formatTime = formatTime;
 
+    // Return gettext-style strings as they were supplied. An easy way to mock
+    // out gettext calls, in case no locale data is available.
+    function mockL10n() {
+        window._l10n = null;
+        window.l = function(key) {
+            return key;
+        }
+    }
+
     // Set the language of the app and retrieve the proper localization files.
     // This could be improved, but for now works fine.
     // TODO: Allow an override argument for testing, etc.
@@ -88,10 +97,7 @@ define([
                     return l10n.gettext(key);
                 };
             } else {
-                window._l10n = null;
-                window.l = function(key) {
-                    return key;
-                }
+                mockL10n();
             }
 
             if (callback) {
@@ -99,7 +105,12 @@ define([
             }
         });
 
-        request.send();
+        try {
+            request.send();
+        } catch (e) {
+            console.log(e);
+            mockL10n();
+        }
     }
 
     function timestamp(date) {

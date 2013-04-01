@@ -4,13 +4,13 @@
 
 /* @import "install-button.css"; */
 /* @import "layouts.css"; */
-@import "../shared/style/buttons.css";
-@import "../shared/style/confirm.css";
-@import "../shared/style/headers.css";
-@import "../shared/style/input_areas.css";
-@import "../shared/style_unstable/progress_activity.css";
-@import "../shared/style_unstable/lists.css";
-@import "../shared/style_unstable/tabs.css";
+@import "../gaia/style/buttons.css";
+@import "../gaia/style/confirm.css";
+@import "../gaia/style/headers.css";
+@import "../gaia/style/input_areas.css";
+@import "../gaia/style_unstable/progress_activity.css";
+@import "../gaia/style_unstable/lists.css";
+@import "../gaia/style_unstable/tabs.css";
 
 /* Your styles here */
 body {

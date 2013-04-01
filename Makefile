@@ -4,6 +4,19 @@ test:
 	kill `cat ./test.pid`
 	rm ./test.pid
 
+build:
+	- rm -rf www-built
+	node ./node_modules/requirejs/bin/r.js -o optimizeCss='standard.keeplines' cssIn=./www/css/app.css out=./www-built/css/app.built.css
+	node node_modules/requirejs/bin/r.js -o build.js
+	mkdir -p www-built/js/lib/
+	cp -R www/js/string.js www-built/js/string.js
+	cp -R www/js/lib/require.js www-built/js/lib/require.js
+	cp -R www/img www-built/img
+	cp -R www/locale www-built/locale
+	cp -R www/*.* www-built/
+	mv www-built/css/app.built.css www-built/css/app.css
+	mv www-built/js/main.built.js www-built/js/main.js
+
 extract_strings:
 	./node_modules/ajs-xgettext/bin/ajs-xgettext --append --function=l --output=locales/templates/LC_MESSAGES/messages.pot `find www/js/templates -type f -name "*.ejs"`
 

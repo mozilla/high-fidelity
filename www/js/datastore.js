@@ -22,7 +22,7 @@ define(function(require) {
             IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction;
 
     if (!indexedDB) {
-        indexedDB = require('indexedDB');
+        // indexedDB = require('indexedDB');
     }
 
     var dbVersion = 1;

@@ -10,11 +10,11 @@ require.config({
         backbone: 'lib/backbone',
         localstorage: 'lib/backbone.localstorage',
         jed: 'lib/jed',
-        jsmad: 'lib/jsmad',
-        indexedDB: 'lib/indexeddb',
+        // jsmad: 'lib/jsmad',
+        // indexedDB: 'lib/indexeddb',
         install: 'lib/install',
-        sink: 'lib/sink',
-        text: 'lib/require.text',
+        // sink: 'lib/sink',
+        tpl: 'lib/tpl',
         underscore: 'lib/lodash',
         zepto: 'lib/zepto'
     },
@@ -28,18 +28,18 @@ require.config({
             ],
             exports: 'Backbone'
         },
-        'jsmad': {
-            deps: [
-                'sink'
-            ],
-            exports: 'Mad'
-        },
-        'indexedDB': {
-            exports: 'indexedDB'
-        },
-        'sink': {
-            exports: 'Sink'
-        },
+        // 'jsmad': {
+        //     deps: [
+        //         'sink'
+        //     ],
+        //     exports: 'Mad'
+        // },
+        // 'indexedDB': {
+        //     exports: 'indexedDB'
+        // },
+        // 'sink': {
+        //     exports: 'Sink'
+        // },
         'underscore': {
             exports: '_'
         },
