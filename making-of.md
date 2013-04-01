@@ -15,6 +15,8 @@ Turns out, I needed:
 For me, this was IndexedDB; it's fast and can store tonnes of binary data. The only issue was the API isn't that sexy, especially when I really just wanted to use it as a key/value storage for blob data (other app data is stored in localStorage using a [Backbone.js localStorage adapter](https://github.com/mozilla/high-fidelity/blob/9646bdc79f1c7b0fb9c33e8b365ad4d815922349/www/js/lib/backbone.localstorage.js))
 * **the ability to make cross-origin requests**
 CORS gets you so far here, but many CDNs or even feed hosts don't support it. I needed to be able to make AJAX requests not only to get podcast XML data, but also to download the audio files themselves.
+* **compiled JavaScript templates**
+Thanks to Firefox OS's [rather strict CSP rules](https://developer.mozilla.org/en-US/docs/Apps/CSP), my templates needed to be compiled. This is a good performance boost and should be a best practice for any client-side app, but it is _required_ for privileged apps on Firefox OS.
 * **decoding of common podcast audio formats**
 Basically: MP3 support. Firefox OS has this built-in. For in-browser testing, I use JSMad, a pure JS MP3 decoder.
 * **a way to parse podcast feeds (Atom and RSS)**
@@ -26,6 +28,12 @@ That's the short list of stuff I needed. So, how did it come together?
 
 ### The Easy Parts ###
 
+#### Don't be `eval()` ####
+
+Basically all JavaScript templating libraries will `eval()` templates and turn them into executable code. This is fine when debugging, but slow in production. Still, modern browsers being what they are, many apps could never pre-compile their templates and probably make out alright.
+
+For privileged apps, a strict set of CSP rules are enforced, and _any_ `eval()` or `new Function` calls will cause the app to fail. I [include a fancy RequireJS template loader](https://github.com/mozilla/high-fidelity/blob/fb606df7fe956394e8efc71b7503a3342db6ad65/www/js/lib/tpl.js) and pre-compile my templates into my `main.built.js` file to solve this problem.
+
 #### HTTP requests ####
 
 Turns out, **cross-origin HTTP requests** are simple on Firefox OS. All it takes is requesting the `systemXHR` permission in your [web app's manifest](https://developer.mozilla.org/en-US/docs/Apps/Manifest) and initializing all your XHR requests with a special argument:
@@ -33,10 +41,6 @@ Turns out, **cross-origin HTTP requests** are simple on Firefox OS. All it takes
     var request = new window.XMLHttpRequest({mozSystem: true});
 
 I'm sure you could subclass `XMLHttpRequest` if that's too much typing for you.
-
-What's even cooler is that you can add similar permissions to a page using Firefox's error console.
-
-    **TODO: Add info about enabling systemXHR in the error console.**
 
 There's also a Firefox add-on, [Force CORS](https://addons.mozilla.org/en-us/firefox/addon/forcecors/), that allows you to temporary enable/disable non-same-origin requests in Firefox. Be careful with this add-on though: it affects _the entire browser_ so you're effectively disabling a huge part of JavaScript security in using it. I actually plan on submitting a patch that allows developers to specify on which domains they want it enabled, which should keep things more secure!
 
