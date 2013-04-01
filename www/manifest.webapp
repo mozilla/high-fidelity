@@ -18,14 +18,8 @@
   },
   "launch_path": "/index.html",
   "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
+  "type": "privileged",
   "permissions": {
-    "network-http": {
-      "description": "Required to download podcasts."
-    },
-    "storage": {
-      "access": "readcreate",
-      "description": "Required to store podcast files and metadata."
-    },
     "systemXHR": {
       "description": "Required to download podcasts."
     }

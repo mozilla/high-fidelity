@@ -6,8 +6,8 @@ define([
     'zepto',
     'underscore',
     'backbone',
-    'text!templates/podcasts/delete-dialog.ejs',
-    'text!templates/subscribe-dialog.ejs'
+    'tpl!templates/podcasts/delete-dialog.ejs',
+    'tpl!templates/subscribe-dialog.ejs'
 ], function($, _, Backbone, DeletePodcastDialogTemplate, SubscribeDialogTemplate) {
     // TODO: Base a base dialog class that can be extended to reduce code
     // copying.
@@ -16,7 +16,7 @@ define([
     var DeletePodcastDialogView = Backbone.View.extend({
         el: '#modal-dialog',
         $el: $('#modal-dialog'),
-        template: _.template(DeletePodcastDialogTemplate),
+        template: DeletePodcastDialogTemplate,
 
         events: {
             'click menu button': 'action'
@@ -52,7 +52,7 @@ define([
     var SubscribeDialogView = Backbone.View.extend({
         el: '#modal-dialog',
         $el: $('#modal-dialog'),
-        template: _.template(SubscribeDialogTemplate),
+        template: SubscribeDialogTemplate,
 
         events: {
             'click menu button': 'action'

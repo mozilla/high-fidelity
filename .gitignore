@@ -1,6 +1,10 @@
 # Ignore generated JSON versions of gettext PO files
 www/locale/
 
+# Ignore require.js built stuff
+www/css/app.built.css
+www/js/main.built.js
+
 # Generic node stuff
 .DS_Store
 lib-cov

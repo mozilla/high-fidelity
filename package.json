@@ -14,16 +14,19 @@
   "version": "0.0.1",
   "dependencies": {
     "volo-ghdeploy": "0.0.3",
+    "can-compile": "0.2.0",
     "connect": "~2.4.4",
     "less-middleware": "~0.1.5",
-    "po2json": "0.0.6"
-  },
-  "devDependencies": {
     "po2json": "0.0.6"
   },
   "amd": {},
   "devDependencies": {
     "express": "~2.5.0",
+    "grunt": "0.4.0",
+    "grunt-cli": "0.1.6",
+    "grunt-lib-contrib": "0.5.3",
+    "grunt-contrib-jst": "~0.5",
+    "po2json": "0.0.6",
     "mocha": "1.2.2",
     "nock": ">= 0.13.3",
     "should": ">= 0.0.1",

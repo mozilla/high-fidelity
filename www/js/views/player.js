@@ -11,9 +11,9 @@ define([
     'collections/podcasts',
     'models/episode',
     'models/podcast',
-    'text!templates/player.ejs',
-    'jsmad'
-], function($, _, Backbone, App, Episodes, Podcasts, Episode, Podcast, PlayerTemplate, JSMad) {
+    'tpl!templates/player.ejs'/*,
+    'jsmad'*/
+], function($, _, Backbone, App, Episodes, Podcasts, Episode, Podcast, PlayerTemplate/*, JSMad*/) {
     // Save audio position every five seconds.
     var SAVE_POSITION_TIMER = 5000;
 
@@ -22,7 +22,7 @@ define([
         el: '#player',
         $el: $('#player'),
         model: Episode,
-        template: _.template(PlayerTemplate),
+        template: PlayerTemplate,
 
         events: {
             'mousedown #audio-progress': 'progressMouseDown',
