@@ -10,9 +10,9 @@ define([
     'collections/podcasts',
     'models/podcast',
     'views/dialogs',
-    'text!templates/search/index.ejs',
-    'text!templates/search/popular.ejs',
-    'text!templates/search/result.ejs'
+    'tpl!templates/search/index.ejs',
+    'tpl!templates/search/popular.ejs',
+    'tpl!templates/search/result.ejs'
 ], function($, _, Backbone, App, Podcasts, Podcast, DialogViews, SearchTemplate, PopularPodcastsTemplate, SearchResultTemplate) {
     // TODO: Extract this into a "Podcasts search" library.
     var GPODDER_API = 'https://gpodder.net/';
@@ -114,7 +114,7 @@ define([
         },
         el: '#popular-tab-container',
         $el: $('#popular-tab-container'),
-        template: _.template(PopularPodcastsTemplate),
+        template: PopularPodcastsTemplate,
 
         initialize: function() {
             this.options.resultViews = [];
@@ -150,7 +150,7 @@ define([
     var SearchView = Backbone.View.extend({
         el: '#search-tab-container',
         $el: $('#search-tab-container'),
-        template: _.template(SearchTemplate),
+        template: SearchTemplate,
 
         events: {
             'submit #podcast-search-form': 'search'
@@ -198,7 +198,7 @@ define([
     var SearchResultView = Backbone.View.extend({
         el: '#search-results ul',
         $el: $('#search-results ul'),
-        template: _.template(SearchResultTemplate),
+        template: SearchResultTemplate,
 
         events: {
             'click .subscribe': 'subscribe'

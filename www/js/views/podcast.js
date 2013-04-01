@@ -11,15 +11,15 @@ define([
     'models/podcast',
     'views/dialogs',
     'views/episode',
-    'text!templates/podcasts/cover.ejs',
-    'text!templates/podcasts/details.ejs'
+    'tpl!templates/podcasts/cover.ejs',
+    'tpl!templates/podcasts/details.ejs'
 ], function($, _, Backbone, App, Podcasts, Podcast, DialogViews, EpisodeView, PodcastCoverTemplate, PodcastDetailsTemplate) {
     var PodcastItemView = Backbone.View.extend({
         className: 'podcast',
         el: '#podcasts',
         $el: $('#podcasts'),
         model: Podcast,
-        template: _.template(PodcastCoverTemplate),
+        template: PodcastCoverTemplate,
 
         events: {
             'click .reveal': 'showEpisodes'
@@ -101,7 +101,7 @@ define([
         el: '#podcast-details',
         $el: $('#podcast-details'),
         model: Podcast,
-        template: _.template(PodcastDetailsTemplate),
+        template: PodcastDetailsTemplate,
 
         events: {
             'click .destroy': 'destroyPrompt'

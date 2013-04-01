@@ -10,7 +10,7 @@ define([
     'collections/episodes',
     'models/episode',
     'views/player',
-    'text!templates/episodes/list-item.ejs',
+    'tpl!templates/episodes/list-item.ejs',
 ], function($, _, Backbone, App, Episodes, Episode, PlayerView, EpisodeTemplate) {
     var EpisodeView = Backbone.View.extend({
         className: 'episode',
@@ -18,7 +18,7 @@ define([
         $el: $('#podcasts'),
         model: Episode,
         tagName: 'li',
-        template: _.template(EpisodeTemplate),
+        template: EpisodeTemplate,
 
         events: {
             'click .download': 'download',
