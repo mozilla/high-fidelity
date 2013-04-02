@@ -20,6 +20,10 @@
   "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
   "type": "privileged",
   "permissions": {
+    "storage": {
+      "access": "readcreate",
+      "description": "Required to store podcast audio files and images."
+    },  
     "systemXHR": {
       "description": "Required to download podcasts."
     }
