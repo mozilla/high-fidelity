@@ -2,11 +2,7 @@
 
 ## Description ##
 
-high-fidelity is an offline-capable, entirely HTML5/JS podcasts app. It's chiefly designed for Firefox OS, but support for other platforms and browsers is an eventual design goal. It requires a datastore that supports large files; currently, we just use IndexedDB.
-
-The app requires elevated XMLHttpRequest privileges to fetch podcast files. In Firefox OS, this currently means being installed as a packaged app.
-
-The app also parses Atom/RSS feeds for podcasts offline and uses IndexedDB as a datastore. Both of these functions were abstracted into libraries available (in alpha!) on GitHub ([IndexedDB](https://github.com/tofumatt/localForage) and [Feed Parser](https://github.com/mozilla/hungry-js)).
+high-fidelity is an offline-capable, entirely HTML5/JS podcasts app. It's chiefly designed for Firefox OS, but support for other platforms and browsers is an eventual design goal. It allows users to subscribe to any podcast and listen to it right from their Firefox OS device!
 
 [Read the full developer walkthrough](https://github.com/mozilla/high-fidelity/blob/master/making-of.md)
 
@@ -25,3 +21,5 @@ The app also parses Atom/RSS feeds for podcasts offline and uses IndexedDB as a 
    The lightweight jQuery-like library simplifies common tasks such as DOM manipulation.
  * **backbone.js**
    Backbone lets us do data-binding and MVC-style coding, making the app a lot easier to develop.
+
+The app also parses Atom/RSS feeds for podcasts offline and uses IndexedDB as a datastore. Both of these functions were abstracted into libraries available (in alpha!) on GitHub ([IndexedDB](https://github.com/tofumatt/localForage) and [Feed Parser](https://github.com/mozilla/hungry-js)).
