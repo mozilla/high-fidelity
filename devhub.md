@@ -2,7 +2,7 @@
 
 ## Description ##
 
-high-fidelity is an offline-capable, entirely HTML5/JS podcasts app. It's chiefly designed for Firefox OS, but support for other platforms and browsers is an eventual design goal. It allows users to subscribe to any podcast and listen to it right from their Firefox OS device!
+Podcasts is an offline-capable, entirely HTML5/JS audio app. It's chiefly designed for Firefox OS, but support for other platforms and browsers is an eventual design goal. It allows users to subscribe to any podcast and listen to it right from their Firefox OS device!
 
 [Read the full developer walkthrough](https://github.com/mozilla/high-fidelity/blob/master/making-of.md)
 
