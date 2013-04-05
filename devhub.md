@@ -9,11 +9,11 @@ Podcasts is an offline-capable, entirely HTML5/JS audio app. It's chiefly design
 ## Web API Usage ##
 
  * **localStorage**
-   Used to store settings and basic podcast metadata. NOT used for podcast audio files or cover art.
+   Used to store settings and basic podcast metadata. Not used for podcast audio files or cover art.
  * **IndexedDB**
-   Asynchronous, big, and fast datastore. Ideally the entire app would use IndexedDB for storage, but not all browsers even support it, and the API is more taxing. Still, podcast audio and image covers are stored in IndexedDB for a smooth experience.
+   An asynchronous and fast datastore for storing podcast audio and images.
  * **systemXHR**
-   We download every straight from client-side Javascript, so we have to be able to make requests to third-party servers. On Firefox OS, systemXHR lets us do this.
+   Allows cross-domain requests on Firefox OS without CORS.
 
 ## Third-party Libraries ##
 
@@ -23,3 +23,9 @@ Podcasts is an offline-capable, entirely HTML5/JS audio app. It's chiefly design
    Backbone lets us do data-binding and MVC-style coding, making the app a lot easier to develop.
 
 The app also parses Atom/RSS feeds for podcasts offline and uses IndexedDB as a datastore. Both of these functions were abstracted into libraries available (in alpha!) on GitHub ([IndexedDB](https://github.com/tofumatt/localForage) and [Feed Parser](https://github.com/mozilla/hungry-js)).
+
+## Screenshots ##
+
+ 1. http://cl.ly/image/0O3R3811101z
+ 2. http://cl.ly/image/2c2U2P19421r
+ 3. http://cl.ly/image/0d0B0I3h1n2u
