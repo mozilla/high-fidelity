@@ -21,7 +21,6 @@
   "type": "privileged",
   "permissions": {
     "storage": {
-      "access": "readcreate",
       "description": "Required to store podcast audio files and images."
     },  
     "systemXHR": {
