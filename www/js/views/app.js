@@ -10,22 +10,23 @@ define([
     'collections/episodes',
     'collections/podcasts',
     'models/podcast',
+    'views/dialogs',
     'views/player',
     'views/podcast',
     'views/search',
     'tpl!templates/app.ejs'
-], function($, _, Backbone, App, Episodes, Podcasts, Podcast, PlayerView, PodcastViews, SearchViews, AppTemplate) {
+], function($, _, Backbone, App, Episodes, Podcasts, Podcast, DialogViews, PlayerView, PodcastViews, SearchViews, AppTemplate) {
     var AppView = Backbone.View.extend({
         el: '#content',
         $el: $('#content'),
         template: AppTemplate,
 
         events: {
-            // 'click #add-podcast-button': 'showNewPodcastForm',
-            // 'click #add-rss-cancel': 'hideNewPodcastForm',
+            'click #add-podcast-button': 'showNewPodcastForm',
+            'click #add-rss-cancel': 'hideNewPodcastForm',
             'click #back': 'goBack',
             'click #tabs a': 'changeTab',
-            'submit #add-podcast': 'subscribe'
+            'submit #add-podcast': 'addFromMenuBar'
         },
 
         initialize: function() {
@@ -33,9 +34,9 @@ define([
                 model: null
             });
 
-            _(this).bindAll('changeTab', 'goBack', 'hideNewPodcastForm',
-                            'loadPodcasts', 'render', 'showNewPodcastForm',
-                            'subscribe');
+            _(this).bindAll('addFromMenuBar', 'changeTab', 'goBack',
+                            'hideNewPodcastForm', 'loadPodcasts', 'render',
+                            'showNewPodcastForm', 'subscribe');
 
             this.options.podcastViews = [];
 
@@ -79,6 +80,29 @@ define([
 
             // Don't re-render certain parts of this page again.
             this._hasRendered = true;
+        },
+
+        addFromMenuBar: function() {
+            var url = this.options.rssURLInput.val();
+
+            // TOOD: Make this display a dialog.
+            this.subscribe(url);
+            // var dialog = new DialogViews.Subscribe({
+            //     confirm: function() {
+            //         window.app.subscribe(url);
+
+            //         // TODO: Make this something that happens in the router
+            //         // rather than being naughty with DOM events.
+            //         // TODO: Make this navigate to the podcast detail view
+            //         // instead of the main listing view.
+            //         $('#tabs #podcasts-tab a').trigger('click');
+            //     },
+            //     templateData: _.defaults({
+            //         description: null
+            //     }, this.options.templateData)
+            // });
+
+            this.hideNewPodcastForm();
         },
 
         changeTab: function(event) {
@@ -127,9 +151,8 @@ define([
 
         subscribe: function(url) {
             var podcastViews = this.options.podcastViews;
-            url = url || this.options.rssURLInput.val();
-
             var podcast = new Podcast({rssURL: url});
+
             Podcasts.add(podcast);
             podcast.save();
 
@@ -138,8 +161,6 @@ define([
                     model: podcast
                 });
             });
-
-            this.hideNewPodcastForm();
         }
     });
 

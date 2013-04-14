@@ -15,7 +15,7 @@ define([
     'tpl!templates/search/result.ejs'
 ], function($, _, Backbone, App, Podcasts, Podcast, DialogViews, SearchTemplate, PopularPodcastsTemplate, SearchResultTemplate) {
     // TODO: Extract this into a "Podcasts search" library.
-    var GPODDER_API = 'https://gpodder.org/';
+    var GPODDER_API = 'http://gpodder.org/';
 
     // Render search results from another view.
     function renderSearchResults(results, request, view) {

@@ -16,6 +16,12 @@ lib-cov
 *.pid
 *.gz
 
+# Python stuff
+*.pyc
+
+# B2G stuff
+vendor/B2G.app/Contents/MacOS/gaia/profile
+
 pids
 logs
 results

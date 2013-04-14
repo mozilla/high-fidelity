@@ -17,7 +17,8 @@
     "can-compile": "0.2.0",
     "connect": "~2.4.4",
     "less-middleware": "~0.1.5",
-    "po2json": "0.0.6"
+    "po2json": "0.0.6",
+    "requirejs": "2.1.5"
   },
   "amd": {},
   "devDependencies": {

@@ -23,6 +23,7 @@ define(function(require) {
 
     if (!indexedDB) {
         // indexedDB = require('indexedDB');
+        console.log('Not using polyfill for now.');
     }
 
     var dbVersion = 1;

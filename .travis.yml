@@ -1,3 +1,11 @@
- language: node_js
- node_js:
-   - "0.8"
+before_install:
+  - "npm install"
+  - "sh -e /etc/init.d/xvfb start"
+  - "sleep 10" # give xvfb some time to start
+env:
+  - DISPLAY=':99.0'
+language: python
+install: "pip install -r requirements.txt --use-mirrors"
+python:
+  - "2.7"
+script: make test_on_travis

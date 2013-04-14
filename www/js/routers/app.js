@@ -8,6 +8,7 @@ define([
     var appView;
     var AppRouter = Backbone.Router.extend({
         routes:{
+            'subscribe/:feed': 'webActivitySubscribe',
             '': 'index'
         },
 
@@ -20,6 +21,11 @@ define([
                 // Initialize the application view.
                 appView = new AppViews.Main();
             }
+        },
+
+        webActivitySubscribe: function(feed) {
+            var subscribeView = new AppViews.WebActivitySubscribe();
+            subscribeView.subscribeTo(feed);
         }
     })
 

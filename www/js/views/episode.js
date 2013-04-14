@@ -64,8 +64,8 @@ define([
             });
 
             var episode = this.$el.children('#episode-{id}'.format({
-                id: this.model.get('id')}
-            ));
+                id: this.model.get('id')
+            }));
 
             if (episode.length) {
                 episode.replaceWith(html);

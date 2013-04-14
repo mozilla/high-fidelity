@@ -101,7 +101,8 @@ define([
             // TODO: Try to play any file, then search for a software decoder
             // backup if playback doesn't work (more futureproof).
             if (this.options.blobURL && !this.options.canPlayType) {
-                JSMad.Player.fromURL(this.options.blobURL, this._startSoftwarePlayer);
+                // JSMad.Player.fromURL(this.options.blobURL, this._startSoftwarePlayer);
+                window.alert('Software decoding disabled.');
             } else {
                 window._player = null;
             }

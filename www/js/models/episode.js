@@ -1,12 +1,12 @@
 'use strict';
 
 define([
-  'underscore',
-  'backbone',
-  'datastore',
-  'queue',
-  'collections/episodes',
-  'require'
+    'underscore',
+    'backbone',
+    'datastore',
+    'queue',
+    'collections/episodes',
+    'require'
 ], function(_, Backbone, DataStore, queue, Episodes, require) {
     var EpisodeModel = Backbone.Model.extend({
         collection: Episodes,
@@ -18,17 +18,17 @@ define([
 
         // Access (or set) an app's blob data in indexedDB.
         blob: function(blobDataOrCallback) {
-          if (blobDataOrCallback instanceof Function) {
-            this._getBlob(blobDataOrCallback);
-          } else {
-            this._setBlob(blobDataOrCallback);
-          }
+            if (blobDataOrCallback instanceof Function) {
+                this._getBlob(blobDataOrCallback);
+            } else {
+                this._setBlob(blobDataOrCallback);
+            }
         },
 
         // Output the published date of this podcast in a pretty way.
         date: function() {
-          var date = new Date(this.get('datePublished'));
-          return date.toLocaleDateString();
+            var date = new Date(this.get('datePublished'));
+            return date.toLocaleDateString();
         },
 
         // Extend Backbone's default destroy method so we also delete the
@@ -83,20 +83,20 @@ define([
         },
 
         _getBlob: function(callback) {
-          DataStore.get(this.id, callback);
+            DataStore.get(this.id, callback);
         },
 
         _setBlob: function(blob) {
-          var self = this;
+            var self = this;
 
-          DataStore.set(this.id, blob, function() {
-            self.set({
-              isDownloaded: true
+            DataStore.set(this.id, blob, function() {
+                self.set({
+                    isDownloaded: true
+                });
+                self.save();
+                self.trigger('downloaded');
+                self.trigger('updated');
             });
-            self.save();
-            self.trigger('downloaded');
-            self.trigger('updated');
-          });
         }
     });
 

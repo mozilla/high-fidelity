@@ -125,8 +125,8 @@ define([
             });
 
             var podcast = this.$el.children('#podcast-details-{id}'.format({
-                id: this.model.get('id')}
-            ));
+                id: this.model.get('id')
+            }));
 
             if (podcast.length) {
                 podcast.html(html);

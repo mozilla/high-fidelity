@@ -6,4 +6,7 @@
 	url = git://github.com/n1k0/casperjs.git
 [submodule "vendor/lodash"]
 	path = vendor/lodash
-	url = git@github.com:bestiejs/lodash.git
+	url = git://github.com/bestiejs/lodash.git
+[submodule "vendor/gaia"]
+	path = vendor/gaia
+	url = git://github.com/mozilla-b2g/gaia.git

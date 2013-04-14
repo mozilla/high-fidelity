@@ -1,14 +1,16 @@
 'use strict';
 
 define([
-  'underscore',
-  'backbone',
-  'localstorage',
-  'models/episode'
+    'underscore',
+    'backbone',
+    'localstorage',
+    'models/episode'
 ], function(_, Backbone, Store, Episode) {
     var EpisodesCollection = Backbone.Collection.extend({
         model: Episode,
 
+        // Custom properly sets this model to only sync with localStorage and
+        // never attempt to talk to a server.
         localStorage: new Store('Episodes'),
 
         // Sort podcasts by their published date.
