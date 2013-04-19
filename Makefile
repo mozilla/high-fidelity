@@ -2,7 +2,6 @@
 B2G_VERSION = 18
 B2G_URL = http://ftp.mozilla.org/pub/mozilla.org/b2g/nightly/latest-mozilla-b2g$(B2G_VERSION)/
 GAIA = test/.gaia
-USER_PREF = user_pref("marionette.force-local", true);
 OS := $(shell uname -s)
 URL = podcasts.gaiamobile.org
 
@@ -48,7 +47,6 @@ install_to_gaia: build
 prep_for_test:
 	rm -rf $(B2G_FOLDER)/gaia/profile
 	ln -s $(PWD)/$(GAIA)/profile $(B2G_FOLDER)/gaia/profile
-	echo '\n$(USER_PREF)' >> $(GAIA)/profile/user.js
 
 run_tests:
 	gaiatest --binary=$(B2G_BINARY) --type=b2g-antenna-bluetooth-carrier-camera-sdcard-wifi-xfail test/marionette/*.py > /dev/null

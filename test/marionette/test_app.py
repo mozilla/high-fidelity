@@ -40,7 +40,7 @@ class TestApp(GaiaTestCase):
         self.assertTrue(self.marionette.find_element(*self.popular_tab)
                                        .is_displayed(),
                         'Popular podcasts tab should appear when link is '
-                        'tapped.')
+                        'tapped')
 
     def test_search_tab_exists(self):
         """Test the Podcast search tab.
@@ -60,10 +60,10 @@ class TestApp(GaiaTestCase):
         self.wait_for_element_displayed(*self.search_tab)
         self.assertTrue(self.marionette.find_element(*self.search_tab)
                                        .is_displayed(),
-                        'Search tab should appear when link is tapped.')
+                        'Search tab should appear when link is tapped')
 
         # Search field should have a placeholder value.
         self.wait_for_element_displayed(*self.search_input)
         self.assertTrue(self.marionette.find_element(*self.search_input)
                                        .get_attribute('placeholder'),
-                        'Search field should have a placeholder.')
+                        'Search field should have a placeholder')

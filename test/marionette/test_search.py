@@ -1,8 +1,10 @@
 import urllib2
 from os import getenv
+from time import sleep
 from unittest import skipIf
 
 from gaiatest import GaiaTestCase
+from marionette.errors import NoSuchElementException
 
 
 def env_variable(name):
@@ -37,7 +39,9 @@ SKIP_NETWORK_TEST = (network_connectivity is False or
 
 class TestSearch(GaiaTestCase):
     """Test podcasts search, currently using Apple's iTunes Store API."""
+    search_button = ('id', 'podcast-search-submit')
     search_input = ('id', 'podcast-search')
+    search_results = ('css selector', '#search-results .search-result')
     search_tab = ('css selector', '#search-tab-container')
     search_tab_link = ('css selector', '#search-tab a')
 
@@ -72,13 +76,13 @@ class TestSearch(GaiaTestCase):
         self.wait_for_element_displayed(*self.search_tab)
         self.assertTrue(self.marionette.find_element(*self.search_tab)
                                        .is_displayed(),
-                        'Search tab should appear when link is tapped.')
+                        'Search tab should appear when link is tapped')
 
         # Search field should have a placeholder value.
         self.wait_for_element_displayed(*self.search_input)
         self.assertTrue(self.marionette.find_element(*self.search_input)
                                        .get_attribute('placeholder'),
-                        'Search field should have a placeholder.')
+                        'Search field should have a placeholder')
 
     @skipIf(SKIP_NETWORK_TEST, 'Skip test if user is offline.')
     def test_search_api_returns_results(self):
@@ -96,15 +100,68 @@ class TestSearch(GaiaTestCase):
         self.marionette.find_element(*self.search_input).send_keys('5by5')
 
         # Tap the search button to run the search.
-        self.marionette.tap(self.marionette.find_element(
-            'id', 'podcast-search-submit'))
+        self.marionette.tap(self.marionette.find_element(*self.search_button))
 
         # Wait for the results to load.
-        self.wait_for_element_displayed('class name', 'search-result')
-        search_results = self.marionette.find_elements('class name',
-                                                       'search-result')
+        self.wait_for_element_displayed(*self.search_results)
 
         # We should have at least one search result:
         # https://itunes.apple.com/search?media=podcast&term=5by5
-        self.assertGreater(search_results, 0,
-                           'Search API should return results.')
+        self.assertGreater(self.marionette.find_elements(*self.search_results),
+                           0, 'Search API should return results')
+
+    @skipIf(SKIP_NETWORK_TEST, 'Skip test if user is offline.')
+    def test_can_subscribe_from_search_results(self):
+        """Ensure users can subscribe to a podcast from search results."""
+        # I loves me some Dan Savage.
+        self.wait_for_element_displayed(*self.search_input)
+        self.marionette.tap(self.marionette.find_element(*self.search_input))
+        self.marionette.find_element(*self.search_input).send_keys(
+            'Savage Lovecast')
+
+        # Tap the search button to run the search.
+        self.marionette.tap(self.marionette.find_element(*self.search_button))
+
+        # Wait for the results to load.
+        self.wait_for_element_displayed(*self.search_results)
+        # Tap on the first result.
+        self.marionette.tap(self.marionette.find_element(*self.search_results))
+
+        # Wait for the subscription dialog to appear.
+        self.wait_for_element_displayed('id', 'modal-dialog')
+
+        self.assertTrue(self.marionette.find_element('id', 'modal-dialog')
+                                       .is_displayed(),
+                        'Subscription dialog should appear when a search '
+                        'result is tapped')
+
+        # Tap cancel to return to search results.
+        self.wait_for_element_displayed('css selector',
+            '#modal-dialog button[data-action=cancel]')
+        self.marionette.tap(self.marionette.find_element('css selector',
+            '#modal-dialog button[data-action=cancel]'))
+
+        sleep(1)  # Wait for dialog to close; clunky, but I've nothing else.
+        self.assertRaises(NoSuchElementException, (lambda _:
+            self.marionette.find_element('id', 'modal-dialog').is_displayed()),
+            'Dialog should disappear after cancel is tapped')
+
+        # Tap the first result again; this time we'll subscribe.
+        self.marionette.tap(self.marionette.find_element(*self.search_results))
+
+        self.wait_for_element_displayed('css selector',
+            '#modal-dialog button[data-action=confirm]')
+        self.marionette.tap(self.marionette.find_element('css selector',
+            '#modal-dialog button[data-action=confirm]'))
+
+        sleep(1)  # Wait for dialog to close; clunky, but I've nothing else.
+        self.assertRaises(NoSuchElementException, (lambda _:
+            self.marionette.find_element('id', 'modal-dialog').is_displayed()),
+            'Dialog should disappear after cancel is tapped')
+
+        # Make sure the podcast appeared in our local podcasts.
+        self.wait_for_element_displayed('css selector', '.podcast-cover')
+
+        self.assertGreater(self.marionette.find_element('css selector',
+                                                        '.podcast-cover'),
+                           0, "Podcast should appear in user's podcasts")
