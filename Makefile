@@ -3,8 +3,8 @@ B2G_VERSION = 18
 B2G_URL = http://ftp.mozilla.org/pub/mozilla.org/b2g/nightly/latest-mozilla-b2g$(B2G_VERSION)/
 GAIA = test/.gaia
 USER_PREF = user_pref("marionette.force-local", true);
-URL = podcasts.gaiamobile.org
 OS := $(shell uname -s)
+URL = podcasts.gaiamobile.org
 
 ifeq ('$(OS)','Darwin')
 B2G_DOWNLOAD = $(B2G_URL)b2g-$(B2G_VERSION).0.multi.mac64.dmg
@@ -13,7 +13,7 @@ B2G_BINARY = $(B2G_FOLDER)/b2g
 else
 B2G_LINUX_FILENAME = b2g-$(B2G_VERSION).0.multi.linux-x86_64.tar.bz2
 B2G_DOWNLOAD = $(B2G_URL)$(B2G_LINUX_FILENAME)
-B2G_FOLDER = $(PWD)/.b2g
+B2G_FOLDER = $(PWD)/tests/.b2g
 B2G_BINARY = $(B2G_FOLDER)/b2g
 endif
 
@@ -35,8 +35,7 @@ build_gaia:
 	cd $(GAIA) && make clean && make
 
 download_b2g_linux:
-	wget $(B2G_DOWNLOAD)
-	tar jxf $(B2G_LINUX_FILENAME)
+	$(shell if [ ! -d "$(B2G_FOLDER)" ]; then wget $(B2G_DOWNLOAD) && tar jxf $(B2G_LINUX_FILENAME) && mv b2g $(B2G_FOLDER); fi)
 
 extract_strings:
 	./node_modules/ajs-xgettext/bin/ajs-xgettext --append --function=l --output=locales/templates/LC_MESSAGES/messages.pot `find www/js/templates -type f -name "*.ejs"`
@@ -62,7 +61,7 @@ submodules:
 
 test: setup_gaia install_to_gaia build_gaia prep_for_test run_tests
 
-test_travis: download_b2g test
+test_on_travis: download_b2g_linux test
 
 update_locale_json:
 	node ./locales/compile.js
