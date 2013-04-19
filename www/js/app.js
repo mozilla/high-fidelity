@@ -28,6 +28,7 @@ define([
             })()
         },
         LANGUAGE: window.navigator.language, // HACK: Better way for this, I assume?
+        LOWER_UI_ACTIVE: true,
         MAX_DOWNLOADS: 2, // Maximum number of podcast downloads at one time.
         OBJECT_STORE_NAME: 'podcasts',
         TIME_TO_UPDATE: 3600 * 5 // Update podcasts every five hours
@@ -121,6 +122,21 @@ define([
         return Math.round(date.getTime() / 1000);
     }
     window.timestamp = timestamp;
+
+    // Toggle lower UI elements like the "now playing" section and tabs
+    // when keyboard is activated.
+    function toggleLowerUI() {
+        var $lowerUI = $('#player,#tabs');
+
+        if (window.GLOBALS.LOWER_UI_ACTIVE) {
+            window.GLOBALS.LOWER_UI_ACTIVE = false;
+            $lowerUI.hide();
+        } else {
+            window.GLOBALS.LOWER_UI_ACTIVE = true;
+            $lowerUI.show();
+        }
+    }
+    window.toggleLowerUI = toggleLowerUI;
 
     return {
         initialize: initialize

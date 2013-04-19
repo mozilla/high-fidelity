@@ -44,6 +44,9 @@ define([
             // We don't re-render this part.
             this._hasRendered = false;
 
+            // Are "lower UI" elements like tabs visible? Defaults to true.
+            this._lowerIUEnabled = true;
+
             this.render();
 
             // Refresh the podcast list view any time the podcast list is

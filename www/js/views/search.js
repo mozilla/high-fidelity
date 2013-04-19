@@ -234,6 +234,13 @@ define([
                     v.render();
                 });
             }
+
+            this.options.searchForm.on('blur', function() {
+                window.toggleLowerUI();
+            });
+            this.options.searchForm.on('focus', function() {
+                window.toggleLowerUI();
+            });
         },
 
         destroyResults: function() {
