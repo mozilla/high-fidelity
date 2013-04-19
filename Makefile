@@ -1,4 +1,3 @@
-# B2G_BINARY = './vendor/B2G.app/Contents/MacOS/b2g'
 B2G_VERSION = 18
 B2G_URL = http://ftp.mozilla.org/pub/mozilla.org/b2g/nightly/latest-mozilla-b2g$(B2G_VERSION)/
 GAIA = test/.gaia
@@ -63,5 +62,3 @@ test_on_travis: download_b2g_linux test
 
 update_locale_json:
 	node ./locales/compile.js
-
-.PHONY: test
