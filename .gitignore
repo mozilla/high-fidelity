@@ -20,7 +20,7 @@ lib-cov
 *.pyc
 
 # B2G stuff
-vendor/B2G.app/Contents/MacOS/gaia/profile
+test/.gaia
 
 pids
 logs
