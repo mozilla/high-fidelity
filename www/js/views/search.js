@@ -127,16 +127,6 @@ define([
         request.send(null);
     }
 
-    // Return normalized data for use in templates that use data directly from
-    // the GPodder API.
-    function _templateData(podcast) {
-        return {
-            imageURL: podcast.logo_url,
-            name: podcast.title,
-            rssURL: podcast.url
-        }
-    }
-
     var PopularPodcastsView = Backbone.View.extend({
         childViewOptions: {
             el: '#popular-results ul',
