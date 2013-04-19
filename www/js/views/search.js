@@ -21,11 +21,14 @@ define([
 
     // Render search results from another view.
     function renderSearchResults(results, request, view) {
-        try {
-            results = JSON.parse(results);
-        } catch (e) {
-            console.log("Couldn't parse search results");
-            results = [];
+        // If the results are a string, make sure to convert them to JSON.
+        if (typeof(results) === 'string') {
+            try {
+                results = JSON.parse(results);
+            } catch (e) {
+                console.log("Couldn't parse search results");
+                results = [];
+            }
         }
 
         // Reset this view's results.
@@ -78,7 +81,18 @@ define([
         }), true);
 
         request.addEventListener('load', function(event) {
-            callback(request.response, request, view);
+            var podcasts = JSON.parse(request.response).results;
+            var results = [];
+
+            podcasts.forEach(function(p) {
+                results.push({
+                    logo_url: p['artworkUrl100'],
+                    url: p.feedUrl,
+                    title: p.trackName
+                });
+            });
+
+            callback(results, request, view);
         });
 
         request.send(null);

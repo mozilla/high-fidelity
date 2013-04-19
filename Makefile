@@ -51,7 +51,7 @@ prep_for_test:
 	echo '\n$(USER_PREF)' >> vendor/gaia/profile/user.js
 
 run_tests:
-	gaiatest --binary=$(B2G_BINARY) --type=b2g-antenna-bluetooth-carrier-camera-sdcard-wifi-xfail test/marionette/*.py
+	gaiatest --binary=$(B2G_BINARY) --type=b2g-antenna-bluetooth-carrier-camera-sdcard-wifi-xfail test/marionette/*.py > /dev/null
 
 submodules:
 	git submodule update --init --recursive
