@@ -74,7 +74,7 @@ define([
             // Add other tabs with their own views after the main app template
             // has been rendered.
             if (!this._hasRendered) {
-                this.options.popularViewTab = new SearchViews.Popular();
+                // this.options.popularViewTab = new SearchViews.Popular();
                 this.options.searchViewTab = new SearchViews.Search();
             }
 

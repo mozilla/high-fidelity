@@ -7,15 +7,17 @@ define([
     'underscore',
     'backbone',
     'app',
+    'rss',
     'collections/podcasts',
     'models/podcast',
     'views/dialogs',
     'tpl!templates/search/index.ejs',
     'tpl!templates/search/popular.ejs',
     'tpl!templates/search/result.ejs'
-], function($, _, Backbone, App, Podcasts, Podcast, DialogViews, SearchTemplate, PopularPodcastsTemplate, SearchResultTemplate) {
+], function($, _, Backbone, App, RSS, Podcasts, Podcast, DialogViews, SearchTemplate, PopularPodcastsTemplate, SearchResultTemplate) {
     // TODO: Extract this into a "Podcasts search" library.
-    var GPODDER_API = 'http://gpodder.org/';
+    var API = 'https://itunes.apple.com/search?media=podcast';
+    var TOP_RSS = 'https://itunes.apple.com/us/rss/toppodcasts/limit=25/explicit=true/xml';
 
     // Render search results from another view.
     function renderSearchResults(results, request, view) {
@@ -70,8 +72,8 @@ define([
     function search(query, callback, view) {
         var request = new window.XMLHttpRequest({mozSystem: true});
 
-        request.open('GET', '{apiURL}search.json?q={search}'.format({
-            apiURL: GPODDER_API,
+        request.open('GET', '{apiURL}&term={search}'.format({
+            apiURL: API,
             search: window.encodeURIComponent(query)
         }), true);
 
@@ -85,13 +87,27 @@ define([
     function top(query, callback, view) {
         var request = new window.XMLHttpRequest({mozSystem: true});
 
-        request.open('GET', '{apiURL}toplist/{number}.json'.format({
-            apiURL: GPODDER_API,
-            number: window.encodeURIComponent(query)
-        }), true);
+        request.open('GET', TOP_RSS, true);
 
         request.addEventListener('load', function(event) {
             callback(request.response, request, view);
+        });
+
+        request.send(null);
+    }
+
+    // Cheeky function that gets the actual podcast RSS URL from iTunes by
+    // spoofing User-Agent and making an HTTP request to iTunes. Inspired by
+    // http://www.zerologic.com/Blog/How-to-get-the-original-RSS-feed-for-a-podcast-in-iTunes.html
+    function _getPodcastURLFromiTunes(podcastID) {
+        var baseURL = 'https://itunes.apple.com/podcast/id/'
+
+        var request = new window.XMLHttpRequest({mozSystem: true});
+
+        request.open('GET', baseURL + podcastID, true);
+
+        request.addEventListener('load', function(event) {
+            console.log($(request.response).find('button'));
         });
 
         request.send(null);
@@ -123,7 +139,41 @@ define([
 
             this.render();
 
-            top(20, renderSearchResults, this);
+            top(20, this.convertiTunesRSS, this);
+        },
+
+        convertiTunesRSS: function(rss, request, view) {
+            var podcasts = [];
+            var topPodcasts = RSS.xmlToJSON(rss);
+
+            console.log(topPodcasts);
+
+            topPodcasts.feed.entry.forEach(function(p) {
+                var imageURL;
+
+                // Get the largest image URL for this podcast, if available.
+                if (p['im:image']) {
+                    var biggestImageIndex = 0;
+                    var size = 0;
+
+                    p['im:image'].forEach(function(i, index) {
+                        if (i['@attributes'].height > size) {
+                            biggestImageIndex = index;
+                        }
+                    });
+
+                    imageURL = p['im:image'][biggestImageIndex]['#text'];
+                }
+
+                console.log('test!', p['id']['@attributes']['im:id']);
+                _getPodcastURLFromiTunes(p['id']['@attributes']['im:id']);
+
+                // podcasts.push({
+                //     logo_url: imageURL,
+                //     title: p.name['#text'],
+                //     url: ''
+                // });
+            });
         },
 
         render: function(templateArgs) {
