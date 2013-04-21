@@ -28,6 +28,7 @@ build:
 	cp -R www/*.* www-built/
 	mv www-built/css/app.built.css www-built/css/app.css
 	mv www-built/js/main.built.js www-built/js/main.js
+	rm www-built/gaia/style/action_menu/index.html
 
 build_gaia:
 	cd $(GAIA) && make clean && make
@@ -66,4 +67,5 @@ update_locale_json:
 	node ./locales/compile.js
 
 zip:
-	zip -r Podcasts.zip www-built/
+	- rm Podcasts.zip
+	cd www-built && zip -r ../Podcasts.zip *
