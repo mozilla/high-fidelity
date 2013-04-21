@@ -22,6 +22,10 @@ body {
 }
 
 .hide {
+    display: none;
+}
+
+.off-screen {
     position: absolute;
     text-indent: -9999px;
     top: 0;

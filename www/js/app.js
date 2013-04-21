@@ -130,10 +130,10 @@ define([
 
         if (window.GLOBALS.LOWER_UI_ACTIVE) {
             window.GLOBALS.LOWER_UI_ACTIVE = false;
-            $lowerUI.hide();
+            $lowerUI.addClass('hide');
         } else {
             window.GLOBALS.LOWER_UI_ACTIVE = true;
-            $lowerUI.show();
+            $lowerUI.removeClass('hide');
         }
     }
     window.toggleLowerUI = toggleLowerUI;

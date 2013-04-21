@@ -58,58 +58,6 @@ class TestSearch(GaiaTestCase):
             *self.search_tab_link)
         self.marionette.tap(self.search_tab_link_element)
 
-    def test_search_tab_exists(self):
-        """Test the Podcast search tab.
-
-        Make sure activating the search tab works and that the appropriate
-        DOM elements are in place.
-        """
-        # Make sure the search tab exists.
-        self.assertEqual(self.search_tab_link_element.text, 'Search',
-                         'Search tab link should exist')
-
-        # Activate a different tab first.
-        self.marionette.tap(self.marionette.find_element(
-            'css selector', '#podcasts-tab a'))
-        # Clicking on the search tab link should open the search tab.
-        self.marionette.tap(self.search_tab_link_element)
-        self.wait_for_element_displayed(*self.search_tab)
-        self.assertTrue(self.marionette.find_element(*self.search_tab)
-                                       .is_displayed(),
-                        'Search tab should appear when link is tapped')
-
-        # Search field should have a placeholder value.
-        self.wait_for_element_displayed(*self.search_input)
-        self.assertTrue(self.marionette.find_element(*self.search_input)
-                                       .get_attribute('placeholder'),
-                        'Search field should have a placeholder')
-
-    @skipIf(SKIP_NETWORK_TEST, 'Skip test if user is offline.')
-    def test_search_api_returns_results(self):
-        """Test integration with iTunes Store Search API.
-
-        This test requires (decent) network connectivity, thus it can be
-        disabled by running the tests with INTERNET=false or NETWORK=false
-        environment variables; however, we do need to test this in case iTunes'
-        API changes or whatnot.
-        """
-        # Search for "5by5"; it's a podcast network so we should get a decent
-        # amount of results.
-        self.wait_for_element_displayed(*self.search_input)
-        self.marionette.tap(self.marionette.find_element(*self.search_input))
-        self.marionette.find_element(*self.search_input).send_keys('5by5')
-
-        # Tap the search button to run the search.
-        self.marionette.tap(self.marionette.find_element(*self.search_button))
-
-        # Wait for the results to load.
-        self.wait_for_element_displayed(*self.search_results)
-
-        # We should have at least one search result:
-        # https://itunes.apple.com/search?media=podcast&term=5by5
-        self.assertGreater(self.marionette.find_elements(*self.search_results),
-                           0, 'Search API should return results')
-
     @skipIf(SKIP_NETWORK_TEST, 'Skip test if user is offline.')
     def test_can_subscribe_from_search_results(self):
         """Ensure users can subscribe to a podcast from search results."""
@@ -165,3 +113,80 @@ class TestSearch(GaiaTestCase):
         self.assertGreater(self.marionette.find_element('css selector',
                                                         '.podcast-cover'),
                            0, "Podcast should appear in user's podcasts")
+
+    @skipIf(SKIP_NETWORK_TEST, 'Skip test if user is offline.')
+    def test_search_api_returns_results(self):
+        """Test integration with iTunes Store Search API.
+
+        This test requires (decent) network connectivity, thus it can be
+        disabled by running the tests with INTERNET=false or NETWORK=false
+        environment variables; however, we do need to test this in case iTunes'
+        API changes or whatnot.
+        """
+        # Search for "5by5"; it's a podcast network so we should get a decent
+        # amount of results.
+        self.wait_for_element_displayed(*self.search_input)
+        self.marionette.tap(self.marionette.find_element(*self.search_input))
+        self.marionette.find_element(*self.search_input).send_keys('5by5')
+
+        # Tap the search button to run the search.
+        self.marionette.tap(self.marionette.find_element(*self.search_button))
+
+        # Wait for the results to load.
+        self.wait_for_element_displayed(*self.search_results)
+
+        # We should have at least one search result:
+        # https://itunes.apple.com/search?media=podcast&term=5by5
+        self.assertGreater(self.marionette.find_elements(*self.search_results),
+                           0, 'Search API should return results')
+
+    def test_search_tab_exists(self):
+        """Test the Podcast search tab.
+
+        Make sure activating the search tab works and that the appropriate
+        DOM elements are in place.
+        """
+        # Make sure the search tab exists.
+        self.assertEqual(self.search_tab_link_element.text, 'Search',
+                         'Search tab link should exist')
+
+        # Activate a different tab first.
+        self.marionette.tap(self.marionette.find_element(
+            'css selector', '#podcasts-tab a'))
+        # Clicking on the search tab link should open the search tab.
+        self.marionette.tap(self.search_tab_link_element)
+        self.wait_for_element_displayed(*self.search_tab)
+        self.assertTrue(self.marionette.find_element(*self.search_tab)
+                                       .is_displayed(),
+                        'Search tab should appear when link is tapped')
+
+        # Search field should have a placeholder value.
+        self.wait_for_element_displayed(*self.search_input)
+        self.assertTrue(self.marionette.find_element(*self.search_input)
+                                       .get_attribute('placeholder'),
+                        'Search field should have a placeholder')
+
+    def test_search_input_hides_lower_ui(self):
+        """Ensure lower UI elements are hidden during search text input.
+
+        Gaia's keyboard pushes elements with `position: fixed` CSS up into the
+        search field and are useless during user input anyway, so we hide them.
+        This test makes sure those elements are hidden and shown properly.
+        """
+        # Tapping the search input should be enough to hide the UI.
+        self.wait_for_element_displayed(*self.search_input)
+        self.marionette.tap(self.marionette.find_element(*self.search_input))
+        self.wait_for_element_displayed('id', 'tabs')
+
+        sleep(1)
+        self.assertTrue('hide' in self.marionette.find_element('id', 'tabs')
+                                                 .get_attribute('class'),
+                        'Tabs should not be visible when search input active')
+
+        # Tap somewhere else to blur the search input.
+        self.marionette.tap(self.marionette.find_element('tag name', 'body'))
+
+        self.assertTrue('hide' not in self.marionette.find_element('id',
+                                                                   'tabs')
+                                                     .is_displayed(),
+                        'Tabs should be visible once search input is inactive')

@@ -235,11 +235,13 @@ define([
                 });
             }
 
-            this.options.searchForm.on('blur', function() {
+            this.options.searchForm.on('blur', function(event) {
                 window.toggleLowerUI();
+                event.preventDefault();
             });
-            this.options.searchForm.on('focus', function() {
+            this.options.searchForm.on('focus', function(event) {
                 window.toggleLowerUI();
+                event.preventDefault();
             });
         },
 
