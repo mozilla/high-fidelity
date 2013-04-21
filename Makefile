@@ -43,6 +43,8 @@ install_to_gaia: build
 	mkdir $(GAIA)/apps/podcasts
 	cp -r www-built/ $(GAIA)/apps/podcasts
 
+marketplace: build zip
+
 prep_for_test:
 	rm -rf $(B2G_FOLDER)/gaia/profile
 	ln -s $(PWD)/$(GAIA)/profile $(B2G_FOLDER)/gaia/profile
@@ -62,3 +64,6 @@ test_on_travis: download_b2g_linux test
 
 update_locale_json:
 	node ./locales/compile.js
+
+zip:
+	zip -r Podcasts.zip www-built/

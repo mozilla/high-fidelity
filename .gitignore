@@ -5,6 +5,10 @@ www/locale/
 www/css/app.built.css
 www/js/main.built.js
 
+# Ignore build products
+Podcasts.zip
+www-built/
+
 # Generic node stuff
 .DS_Store
 lib-cov
@@ -47,7 +51,3 @@ profile
 *.moved-aside
 DerivedData
 .idea/
-
-# volo stuff
-www-built
-www-ghdeploy
