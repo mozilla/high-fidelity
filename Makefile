@@ -17,8 +17,8 @@ endif
 
 build:
 	- rm -rf www-built
-	node ./node_modules/requirejs/bin/r.js -o optimizeCss='standard.keeplines' cssIn=./www/css/app.css out=./www-built/css/app.built.css
-	node node_modules/requirejs/bin/r.js -o build.js
+	node ./node_modules/requirejs/bin/r.js -o build-css.js
+	node node_modules/requirejs/bin/r.js -o build-js.js
 	mkdir -p www-built/js/lib/
 	cp -R www/js/string.js www-built/js/string.js
 	cp -R www/js/lib/require.js www-built/js/lib/require.js
