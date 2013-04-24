@@ -61,8 +61,6 @@ submodules:
 
 test: setup_gaia install_to_gaia build_gaia prep_for_test run_tests
 
-test_on_travis: download_b2g_linux test
-
 update_locale_json:
 	node ./locales/compile.js
 
