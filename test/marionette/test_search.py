@@ -10,6 +10,7 @@ from marionette.errors import NoSuchElementException
 def env_variable(name):
     """Check an environment variable for truth."""
     return getenv(name) is not None and (getenv(name).lower() == 'false' or
+                                         getenv(name).lower() == 'no' or
                                          getenv(name).lower() == 'skip' or
                                          getenv(name) == '1')
 
