@@ -8,17 +8,17 @@
     <meta name="description" content="HTML5-powered Podcasts App">
     <meta name="viewport" content="width=device-width">
 
-    <!-- App CSS, compiled with volo. -->
+    <!-- App CSS, compiled with require.js. -->
     <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
     <!-- The player that contains the actual audio file we're playing. -->
     <div id="player"></div>
 
-    <!-- Placeholder/main content div; gets populated by the app.ejs template -->
+    <!-- Placeholder/main content div; gets populated by the app.ejs template. -->
     <div id="content"></div>
 
-    <!-- Monkeypatch for ''.format() variable interpolation -->
+    <!-- Monkeypatch for ''.format() variable interpolation. -->
     <script src="js/string.js"></script>
     <!-- Let's load 'er up! -->
     <script data-main="js/main" src="js/lib/require.js"></script>
