@@ -34,8 +34,8 @@ def network_connectivity():
 # connection, i.e. downloads, search API tests, etc. Doesn't apply to local
 # resources, so download procedures can still be tested using a
 # manually-added RSS feed with local files.
-SKIP_NETWORK_TEST = (network_connectivity is False or
-                     env_variable('INTERNET') or env_variable('NETWORK'))
+SKIP_NETWORK_TEST = (env_variable('INTERNET') or env_variable('NETWORK') or
+                     network_connectivity is False)
 
 
 class TestSearch(GaiaTestCase):
