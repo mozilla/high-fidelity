@@ -26,5 +26,17 @@
     "systemXHR": {
       "description": "Required to download podcasts."
     }
+  },
+  "activities": {
+    "view": {
+      "href": "/index.html/#/subscribeFromWebActivity",
+      "filters": {
+        "type": "url",
+        "url": {
+          "required": true,
+          "regexp": "/.*\\.(atom|xml)(\\?.*)?/i"
+        }
+      }
+    }
   }
 }
