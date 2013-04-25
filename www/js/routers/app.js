@@ -3,12 +3,14 @@
 define([
     'backbone',
     'app',
-    'views/app'
-], function(Backbone, App, AppViews) {
+    'views/app',
+    'views/webactivities'
+], function(Backbone, App, AppView, WebActivityViews) {
     var appView;
+
     var AppRouter = Backbone.Router.extend({
         routes:{
-            'subscribe/:feed': 'webActivitySubscribe',
+            'subscribeFromWebActivity': 'webActivitySubscribe',
             '': 'index'
         },
 
@@ -18,13 +20,14 @@ define([
 
         index: function() {
             if (!appView) {
-                // Initialize the application view.
-                appView = new AppViews.Main();
+                // Initialize the application view and assign it as a global.
+                appView = new AppView();
+                window.app = appView;
             }
         },
 
         webActivitySubscribe: function(feed) {
-            var subscribeView = new AppViews.WebActivitySubscribe();
+            var subscribeView = new WebActivityViews.Subscribe();
             subscribeView.subscribeTo(feed);
         }
     })
