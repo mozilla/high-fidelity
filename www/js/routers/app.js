@@ -3,14 +3,12 @@
 define([
     'backbone',
     'app',
-    'views/app',
-    'views/webactivities'
-], function(Backbone, App, AppView, WebActivityViews) {
+    'views/app'
+], function(Backbone, App, AppView) {
     var appView;
 
     var AppRouter = Backbone.Router.extend({
         routes:{
-            'subscribeFromWebActivity': 'webActivitySubscribe',
             '': 'index'
         },
 
@@ -24,11 +22,6 @@ define([
                 appView = new AppView();
                 window.app = appView;
             }
-        },
-
-        webActivitySubscribe: function(feed) {
-            var subscribeView = new WebActivityViews.Subscribe();
-            subscribeView.subscribeTo(feed);
         }
     })
 
