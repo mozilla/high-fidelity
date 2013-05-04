@@ -23,7 +23,7 @@ define([
                 window.app = appView;
             }
         }
-    })
+    });
 
     return AppRouter;
 });
