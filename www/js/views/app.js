@@ -24,7 +24,6 @@ define([
         events: {
             'click #add-podcast-button': 'showNewPodcastForm',
             'click #add-rss-cancel': 'hideNewPodcastForm',
-            'click #back': 'goBack',
             'submit #add-podcast': 'addFromMenuBar'
         },
 
@@ -33,7 +32,7 @@ define([
                 model: null
             });
 
-            _(this).bindAll('addFromMenuBar', 'activateTab', 'goBack',
+            _(this).bindAll('addFromMenuBar', 'activateTab',
                             'hideNewPodcastForm', 'render',
                             'showNewPodcastForm', 'subscribe');
 
@@ -68,15 +67,21 @@ define([
         // Activate a particular tab, usually called from the router when a
         // tab is tapped.
         activateTab: function(tab) {
+            // Reset which tab is considered "active".
             var tabToLoad = $('#{tab}-tab-container'.format({tab: tab}));
             $('#tabs a').removeClass('active');
             $('#{tab}-tab a'.format({tab: tab})).addClass('active');
+
+            // Set the active body tab; this is used for some CSS magic,
+            // usually regarding the back button.
+            $('body').data('active-tab', tab);
 
             // If the tab view responds to _activate(), call it.
             if (this.tabs[tab]._activate) {
                 this.tabs[tab]._activate();
             }
 
+            // Hide all tabs and show only the active one.
             $('.tab').hide();
             $(tabToLoad).show();
         },
@@ -108,11 +113,6 @@ define([
         hideNewPodcastForm: function() {
             this.options.rssURLInput.val('');
             this.options.addPodcastForm.hide();
-        },
-
-        goBack: function(event) {
-            this.options.podcastViews[$('#podcast-details .episodes').data('podcastid')].hideEpisodes();
-            this.render();
         },
 
         // Show the "add podcast" sheet, allowing the user to subscribe to

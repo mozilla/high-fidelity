@@ -9,7 +9,7 @@ define([
 
     var AppRouter = Backbone.Router.extend({
         routes:{
-            'podcast/:uid': 'podcastDetails',
+            'podcasts/:uid': 'podcastDetails',
             'podcasts/add': 'podcastsAdd',
             'podcasts': 'podcastsList',
             'search': 'search',
@@ -30,7 +30,6 @@ define([
         // In the future, a "first run" screen could be displayed here.
         // TODO: Add "first run" screen?
         index: function() {
-            console.log(window.location.hash);
             this.navigate('podcasts', {trigger: true});
         },
 
@@ -38,7 +37,9 @@ define([
         // where the user can download more episodes manually, play an episode,
         // and unsubscribe to the podcast.
         podcastDetails: function(uid) {
-            console.log(window.location.hash);
+            window.app.activateTab('podcasts');
+
+            window.app.tabs.podcasts.showEpisodes(uid);
         },
 
         // The modal, manual "add" input form used to subscribe to a podcast
@@ -50,14 +51,15 @@ define([
         // The standard screen; a list of podcast covers a user can scroll
         // through.
         podcastsList: function() {
-            console.log(window.location.hash);
             window.app.activateTab('podcasts');
+
+            // If the episodes/podcast details view exists, hide it.
+            window.app.tabs.podcasts.hideEpisodes();
         },
 
         // Search input screen, where a user can search the iTunes podcasts
         // database for podcasts to subscribe to.
         search: function() {
-            console.log(window.location.hash);
             window.app.activateTab('search');
         }
     });

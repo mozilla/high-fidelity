@@ -44,6 +44,10 @@ body, section[role="region"] > header:first-child h1, [data-type="list"], button
     display: none;
 }
 
+body[data-active-tab=podcasts][data-podcast-details=on] #back {
+    display: block;
+}
+
 /** Panels */
 #popular-tab-container, #search-tab-container {
     display: none;
@@ -129,7 +133,6 @@ body, section[role="region"] > header:first-child h1, [data-type="list"], button
 
 /** Podcast Modal */
 #podcast-details {
-    display: none;
     transition: 300ms ease-in all;
 }
 
@@ -299,4 +302,8 @@ body, section[role="region"] > header:first-child h1, [data-type="list"], button
 #modal-dialog img {
     height: 45px;
     width: 45px;
+}
+
+#modal-dialog button {
+    font-size: 1.5rem;
 }
