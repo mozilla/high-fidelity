@@ -282,7 +282,7 @@ body, section[role="region"] > header:first-child h1, [data-type="list"], button
     z-index: 10000;
 }
 
-#tabs a.active {
+#tabs .active {
     color: rgb(98, 198, 245);
 }
 

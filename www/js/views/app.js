@@ -25,7 +25,6 @@ define([
             'click #add-podcast-button': 'showNewPodcastForm',
             'click #add-rss-cancel': 'hideNewPodcastForm',
             'click #back': 'goBack',
-            'click #tabs a': 'changeTab',
             'submit #add-podcast': 'addFromMenuBar'
         },
 
@@ -34,15 +33,9 @@ define([
                 model: null
             });
 
-            _(this).bindAll('addFromMenuBar', 'changeTab', 'goBack',
-                            'hideNewPodcastForm', 'loadPodcasts', 'render',
+            _(this).bindAll('addFromMenuBar', 'activateTab', 'goBack',
+                            'hideNewPodcastForm', 'render',
                             'showNewPodcastForm', 'subscribe');
-
-            this.options.podcastViews = [];
-
-            // Store whether the app has rendered the main app HTML once.
-            // We don't re-render this part.
-            this._hasRendered = false;
 
             // Are "lower UI" elements like tabs visible? Defaults to true.
             this._lowerIUEnabled = true;
@@ -58,31 +51,34 @@ define([
         },
 
         render: function() {
-            var self = this;
-
-            if (!this._hasRendered) {
-                this.$el.html(this.template());
-                this.options.addPodcastForm = $('#add-podcast');
-                this.options.rssURLInput = $('#add-rss');
-            }
-
-            Podcasts.fetch({
-                success: function(podcast) {
-                    Episodes.fetch({
-                        success: self.loadPodcasts
-                    });
-                }
-            });
+            this.$el.html(this.template());
+            this.options.addPodcastForm = $('#add-podcast');
+            this.options.rssURLInput = $('#add-rss');
 
             // Add other tabs with their own views after the main app template
             // has been rendered.
-            if (!this._hasRendered) {
-                // this.options.popularViewTab = new SearchViews.Popular();
-                this.options.searchViewTab = new SearchViews.Search();
+            // TODO: Fix popular search tab.
+            // this.options.popularViewTab = new SearchViews.Popular();
+            this.tabs = {
+                podcasts: new PodcastViews.List(),
+                search: new SearchViews.Search()
+            }
+        },
+
+        // Activate a particular tab, usually called from the router when a
+        // tab is tapped.
+        activateTab: function(tab) {
+            var tabToLoad = $('#{tab}-tab-container'.format({tab: tab}));
+            $('#tabs a').removeClass('active');
+            $('#{tab}-tab a'.format({tab: tab})).addClass('active');
+
+            // If the tab view responds to _activate(), call it.
+            if (this.tabs[tab]._activate) {
+                this.tabs[tab]._activate();
             }
 
-            // Don't re-render certain parts of this page again.
-            this._hasRendered = true;
+            $('.tab').hide();
+            $(tabToLoad).show();
         },
 
         addFromMenuBar: function() {
@@ -108,25 +104,6 @@ define([
             this.hideNewPodcastForm();
         },
 
-        changeTab: function(event) {
-            var tabToLoad = $(event.currentTarget).attr('href') + '-container';
-            $('#tabs a').removeClass('active');
-            $(event.currentTarget).addClass('active');
-
-            $('.tab').hide();
-            $(tabToLoad).show();
-        },
-
-        loadPodcasts: function() {
-            var podcastViews = this.options.podcastViews;
-
-            Podcasts.forEach(function(podcast) {
-                podcastViews[podcast.get('id')] = new PodcastViews.cover({
-                    model: podcast
-                });
-            });
-        },
-
         // Hide the "add podcast" sheet and reset the form info.
         hideNewPodcastForm: function() {
             this.options.rssURLInput.val('');
@@ -145,15 +122,13 @@ define([
         },
 
         subscribe: function(url) {
-            var podcastViews = this.options.podcastViews;
             var podcast = new Podcast({rssURL: url});
+            var podcastsView = this.tabs.podcasts;
 
             Podcasts.create(podcast);
 
             podcast.on('updated', function() {
-                podcastViews[podcast.get('id')] = new PodcastViews.cover({
-                    model: podcast
-                });
+                podcastsView.add(podcast);
             });
         }
     });

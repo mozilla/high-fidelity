@@ -4,8 +4,9 @@ define([
     'underscore',
     'backbone',
     'localstorage',
+    'collections/episodes',
     'models/podcast'
-], function(_, Backbone, Store, Podcast) {
+], function(_, Backbone, Store, Episodes, Podcast) {
     var PodcastsCollection = Backbone.Collection.extend({
         model: Podcast,
 
@@ -25,6 +26,18 @@ define([
             });
 
             this.reset();
+        },
+
+        // Load all podcasts and episodes, making sure anything new is in the
+        // collection.
+        loadAll: function(callback) {
+            this.fetch({
+                success: function(podcast) {
+                    Episodes.fetch({
+                        success: callback
+                    });
+                }
+            });
         }
     });
 
