@@ -14,6 +14,10 @@ define([
     'tpl!templates/podcasts/cover.ejs',
     'tpl!templates/podcasts/details.ejs'
 ], function($, _, Backbone, App, Podcasts, Podcast, DialogViews, EpisodeView, PodcastCoverTemplate, PodcastDetailsTemplate) {
+    // We access the body a fair bit here; cache the object for all views in
+    // this file.
+    var $body = $('body');
+
     var PodcastItemView = Backbone.View.extend({
         className: 'podcast',
         el: '#podcasts',
@@ -130,7 +134,7 @@ define([
             // we've left the details view.
             this.$podcastsTabLink.attr('href', this.$podcastsTabLink.data('original-href'));
 
-            $('body').data('podcast-details', 'off');
+            $body.data('podcast-details', 'off');
             this.$el.show();
 
             this.episodesView.remove();
@@ -159,7 +163,7 @@ define([
                 parentView: this
             });
 
-            $('body').data('podcast-details', 'on');
+            $body.data('podcast-details', 'on');
             this.$el.hide();
         },
 
