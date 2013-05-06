@@ -32,10 +32,22 @@ define([
         // collection.
         loadAll: function(callback) {
             this.fetch({
-                success: function(podcast) {
+                success: function(podcasts) {
                     Episodes.fetch({
-                        success: callback
+                        success: callback,
+                        error: function(podcasts) {
+                            // TODO: Obviously, make this better.
+                            window.alert('Error loading podcasts data. Contact support: tofumatt@mozilla.com');
+                        }
                     });
+                },
+                // If a user manually messed with localStorage data or
+                // something else very bad happened the collection data could
+                // be corrupted.
+                // TODO: Reset collection data when this happens?
+                error: function(podcasts) {
+                    // TODO: Obviously, make this better.
+                    window.alert('Error loading podcasts data. Contact support: tofumatt@mozilla.com');
                 }
             });
         }
