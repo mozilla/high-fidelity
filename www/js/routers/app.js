@@ -10,7 +10,6 @@ define([
     var AppRouter = Backbone.Router.extend({
         routes:{
             'podcasts/:uid': 'podcastDetails',
-            'podcasts/add': 'podcastsAdd',
             'podcasts': 'podcastsList',
             'search': 'search',
             '': 'index'
@@ -40,12 +39,6 @@ define([
             window.app.activateTab('podcasts');
 
             window.app.tabs.podcasts.showEpisodes(uid);
-        },
-
-        // The modal, manual "add" input form used to subscribe to a podcast
-        // manually using a feed URL.
-        podcastsAdd: function() {
-            console.log(window.location.hash);
         },
 
         // The standard screen; a list of podcast covers a user can scroll
