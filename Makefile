@@ -11,7 +11,7 @@ B2G_BINARY = $(B2G_FOLDER)/b2g
 else
 B2G_LINUX_FILENAME = b2g-$(B2G_VERSION).0.multi.linux-x86_64.tar.bz2
 B2G_DOWNLOAD = $(B2G_URL)$(B2G_LINUX_FILENAME)
-B2G_FOLDER = $(PWD)/tests/.b2g
+B2G_FOLDER = $(PWD)/b2g
 B2G_BINARY = $(B2G_FOLDER)/b2g
 endif
 
@@ -48,6 +48,7 @@ marketplace: build zip
 
 prep_for_test:
 	rm -rf $(B2G_FOLDER)/gaia/profile
+	mkdir $(B2G_FOLDER)/gaia
 	ln -s $(PWD)/$(GAIA)/profile $(B2G_FOLDER)/gaia/profile
 
 run_tests:

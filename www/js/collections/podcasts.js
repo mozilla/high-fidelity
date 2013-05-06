@@ -4,8 +4,9 @@ define([
     'underscore',
     'backbone',
     'localstorage',
+    'collections/episodes',
     'models/podcast'
-], function(_, Backbone, Store, Podcast) {
+], function(_, Backbone, Store, Episodes, Podcast) {
     var PodcastsCollection = Backbone.Collection.extend({
         model: Podcast,
 
@@ -25,6 +26,30 @@ define([
             });
 
             this.reset();
+        },
+
+        // Load all podcasts and episodes, making sure anything new is in the
+        // collection.
+        loadAll: function(callback) {
+            this.fetch({
+                success: function(podcasts) {
+                    Episodes.fetch({
+                        success: callback,
+                        error: function(podcasts) {
+                            // TODO: Obviously, make this better.
+                            window.alert('Error loading podcasts data. Contact support: tofumatt@mozilla.com');
+                        }
+                    });
+                },
+                // If a user manually messed with localStorage data or
+                // something else very bad happened the collection data could
+                // be corrupted.
+                // TODO: Reset collection data when this happens?
+                error: function(podcasts) {
+                    // TODO: Obviously, make this better.
+                    window.alert('Error loading podcasts data. Contact support: tofumatt@mozilla.com');
+                }
+            });
         }
     });
 

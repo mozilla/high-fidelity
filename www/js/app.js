@@ -10,8 +10,8 @@ define([
     'collections/podcasts',
     'models/episode',
     'models/podcast',
-    'views/app'
-], function($, DataStore, Jed, Episodes, Podcasts, Episode, Podcast, AppView) {
+    'routers/app'
+], function($, DataStore, Jed, Episodes, Podcasts, Episode, Podcast, AppRouter) {
     var GLOBALS = {
         DATABASE_NAME: 'podcasts',
         HAS: {
@@ -35,14 +35,14 @@ define([
     };
     window.GLOBALS = GLOBALS;
 
-    function initialize(callback) {
+    function initialize(loadAppCallback) {
         if (GLOBALS.HAS.nativeScroll) {
             $('body').addClass('native-scroll');
         }
 
         DataStore.load(function() {
             setLanguage(function() {
-                window.app = new AppView();
+                loadAppCallback();
             });
         });
     }

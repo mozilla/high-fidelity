@@ -1,7 +1,9 @@
-<section data-type="list" id="podcast-details-<%= podcast.get('id') %>" class="podcast-details">
-  <header><%= podcast.get('name') %></header>
+<div id="podcast-details">
+  <section data-type="list" id="podcast-details-<%= podcast.get('id') %>" class="podcast-details">
+    <header><%= podcast.get('name') %></header>
 
-  <ul class="episodes" data-podcastid="<%= podcast.get('id') %>"></ul>
+    <ul class="episodes" data-podcastid="<%= podcast.get('id') %>"></ul>
 
-  <a href="#podcast/<%= podcast.get('id') %>" class="danger destroy" role="button" data-podcastid="<%= podcast.get('id') %>"><%= l('Remove this Podcast') %></a>
-</section>
+    <button class="danger destroy" data-podcastid="<%= podcast.get('id') %>"><%= l('Remove this Podcast') %></button>
+  </section>
+</div>

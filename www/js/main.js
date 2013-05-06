@@ -56,6 +56,7 @@ require([
     function init() {
         // Initialize routing and start Backbone.history()
         var router = new AppRouter();
+        window.router = router;
 
         Backbone.history.start();
     }
