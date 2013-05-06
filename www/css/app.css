@@ -285,6 +285,10 @@ body[data-active-tab=podcasts][data-podcast-details=on] #back {
     z-index: 10000;
 }
 
+#tabs a {
+    outline: 0;
+}
+
 #tabs .active {
     color: rgb(98, 198, 245);
 }
