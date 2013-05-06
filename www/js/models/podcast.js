@@ -105,7 +105,9 @@ define([
             var self = this;
 
             RSS.download(this.get('rssURL'), function(result) {
-                if (!result) {
+                if (!result || !result.items || !result.items.length) {
+                    self.destroy();
+                    window.alert('Error downloading podcast feed.');
                     return;
                 }
 

@@ -39,7 +39,7 @@ body {
     width: 100%;
 }
 
-#app-header header {
+#title-header {
     background-color: rgb(26, 36, 37);
 }
 
@@ -54,10 +54,22 @@ body {
 }
 
 /** ADD PODCAST SHEET */
+#add-podcast::before {
+    background: rgba(3, 3, 3, .75);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
 #add-podcast {
     animation-duration: 1s;
     animation-name: appDeeperHeaderIn;
     display: none;
+    position: relative;
+    z-index: 11001;
 }
 
 #add-podcast::after {

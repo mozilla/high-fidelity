@@ -144,20 +144,11 @@ define([
             this.options.addPodcastForm.show();
         },
 
-        // Show a Podcast's info including artwork and episodes.
-        showPodcast: function(id) {
-            console.log(id);
-            // PodcastView({
-            //     model: podcast
-            // });
-        },
-
         subscribe: function(url) {
             var podcastViews = this.options.podcastViews;
             var podcast = new Podcast({rssURL: url});
 
-            Podcasts.add(podcast);
-            podcast.save();
+            Podcasts.create(podcast);
 
             podcast.on('updated', function() {
                 podcastViews[podcast.get('id')] = new PodcastViews.cover({
