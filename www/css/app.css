@@ -16,7 +16,7 @@
 body {
     background-color: #030303;
     color: #f2f2f2;
-    font-family: "MozTT", sans-serif;
+    font-family: "MozTT", "Open Sans", "Helvetica Neue", Helvetica, sans-serif;
     margin: 5rem 0 0;
     padding: 0 0 130px;
 }
