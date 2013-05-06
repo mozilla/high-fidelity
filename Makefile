@@ -47,7 +47,8 @@ install_to_gaia: build
 marketplace: build zip
 
 prep_for_test:
-	rm -rf $(B2G_FOLDER)/gaia/profile
+	- rm -rf $(B2G_FOLDER)/gaia/profile
+	- mkdir $(B2G_FOLDER)/gaia
 	ln -s $(PWD)/$(GAIA)/profile $(B2G_FOLDER)/gaia/profile
 
 run_tests:
