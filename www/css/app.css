@@ -1,9 +1,3 @@
-
-/* Tip: Use "@import" to add styles instead of adding <link>'s in your
-   HTML, and volo will inline it when building for production */
-
-/* @import "install-button.css"; */
-/* @import "layouts.css"; */
 @import "../gaia/style/buttons.css";
 @import "../gaia/style/confirm.css";
 @import "../gaia/style/headers.css";
@@ -12,13 +6,16 @@
 @import "../gaia/style_unstable/lists.css";
 @import "../gaia/style_unstable/tabs.css";
 
-/* Your styles here */
 body {
     background-color: #030303;
     color: #f2f2f2;
-    font-family: "MozTT", "Open Sans", "Helvetica Neue", Helvetica, sans-serif;
     margin: 5rem 0 0;
     padding: 0 0 130px;
+}
+
+/** Override some seriously weird FxOS font choices. Fuuuuuuuuck. */
+body, section[role="region"] > header:first-child h1, [data-type="list"], button, a[role="button"], input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="search"], input[type="url"], textarea {
+    font-family: "MozTT", "Open Sans", "Helvetica Neue", Helvetica, sans-serif;
 }
 
 .hide {
