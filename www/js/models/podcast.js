@@ -106,6 +106,8 @@ define([
 
             RSS.download(this.get('rssURL'), function(result) {
                 if (!result || !result.items || !result.items.length) {
+                    // If we can't make sense of this podcast's feed, we delete
+                    // it and inform the user of the error.
                     self.destroy();
                     window.alert('Error downloading podcast feed.');
                     return;
@@ -151,8 +153,7 @@ define([
                             podcastID: self.get('id')
                         }, episode));
 
-                        Episodes.add(episodeInstance);
-                        episodeInstance.save();
+                        Episodes.create(episodeInstance);
                     }
                 });
 
