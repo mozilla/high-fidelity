@@ -67,9 +67,14 @@ define([
             request.addEventListener('load', function(event) {
                 // TODO: Make this better.
                 // Assume "mpeg" = MP3, for now. Kinda hacky.
-                var type = request.response.type.split('/')[1]
+                var type;
+                try {
+                    type = request.response.type.split('/')[1];
 
-                if (type === 'mpeg') {
+                    if (type === 'mpeg') {
+                        type = 'mp3';
+                    }
+                } catch (e) {
                     type = 'mp3';
                 }
 
@@ -77,6 +82,10 @@ define([
                 self.save();
                 self.blob(request.response);
                 queue.done('e{id}'.format({id: self.get('id')}));
+            });
+
+            request.addEventListener('error', function(event) {
+                window.alert('Error downloading this episode. Please try again.');
             });
 
             request.send(null);

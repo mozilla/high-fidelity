@@ -179,6 +179,10 @@ body[data-active-tab=podcasts][data-podcast-details=on] #back {
     margin: 1rem 0 0;
 }
 
+[data-type="list"] li {
+    height: auto;
+}
+
 [data-type="list"] li p, [data-type="list"] li p:first-of-type {
     color: #fff;
     font-size: 1.2em;
