@@ -43,8 +43,8 @@ define([
         // can display this information in the UI.
         // TODO: Hook the above into the UI.
         download: function() {
-            queue.add('e{id}'.format({id: this.get('id')}), this);
             this.trigger('download:queued');
+            queue.add('e{id}'.format({id: this.get('id')}), this);
         },
 
         podcast: function() {
@@ -86,6 +86,8 @@ define([
 
             request.addEventListener('error', function(event) {
                 window.alert('Error downloading this episode. Please try again.');
+
+                self.trigger('download:cancel');
             });
 
             request.send(null);
