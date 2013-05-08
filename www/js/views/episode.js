@@ -37,6 +37,8 @@ define([
             });
             this.$el = $(this.el);
 
+            this.model.on('download:cancel', self.render);
+
             this.model.on('download:queued', function() {
                 self.render({isQueued: true});
             });
