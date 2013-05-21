@@ -27,6 +27,7 @@ define([
 
         initialize: function() {
             var self = this;
+
             if (!this.model.get('id')) {
                 Episodes.add(this.model);
                 this.model.save();
