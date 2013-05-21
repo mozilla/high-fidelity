@@ -15,7 +15,7 @@ B2G_FOLDER = $(PWD)/b2g
 B2G_BINARY = $(B2G_FOLDER)/b2g
 endif
 
-build:
+build: update_locale_json
 	- rm -rf www-built
 	node ./node_modules/requirejs/bin/r.js -o build-css.js
 	node node_modules/requirejs/bin/r.js -o build-js.js
