@@ -20,14 +20,19 @@ apps are and it's nice to only have to use *one* issue tracker.
 
 ## Try it out! ##
 
-Clone the project, cd to its directory and run:
+Clone the project and run:
 
-```
-sudo npm install
-make
-```
+    npm install
+    make
 
-Then add the www-built folder to the Firefox OS simulator.
+Then add the `www-built` folder to the [Firefox OS Simulator](https://addons.mozilla.org/en-US/firefox/addon/firefox-os-simulator/).
+
+Note that because software decoding is currently disabled, if you're using the
+simulator you'll need to add a podcast with files your machine can decode. On
+Mac and Linux (and possibly Windows too) this means Ogg Vorbis or WAV. MP3s
+will work on all physical Firefox OS devices. Just use the [preview version](https://hacks.mozilla.org/2013/03/firefox-os-simulator-previewing-version-3-0/)
+of the simulator's "push to device" functionality to try this app out on your
+phone.
 
 ## Build Status ##
 
