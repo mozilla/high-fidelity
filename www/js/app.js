@@ -81,12 +81,11 @@ define([
 
     // Set the language of the app and retrieve the proper localization files.
     // This could be improved, but for now works fine.
-    // TODO: Allow an override argument for testing, etc.
     function setLanguage(callback, override) {
         var request = new window.XMLHttpRequest();
 
         request.open('GET', 'locale/{lang}.json'.format({
-            lang: GLOBALS.LANGUAGE
+            lang: override || GLOBALS.LANGUAGE
         }), true);
 
         request.addEventListener('load', function(event) {
