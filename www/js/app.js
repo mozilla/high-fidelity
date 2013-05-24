@@ -12,6 +12,7 @@ define([
     'models/podcast',
     'routers/app'
 ], function($, DataStore, Jed, Episodes, Podcasts, Episode, Podcast, AppRouter) {
+    // Globals used throughout the app, accessible via window.GLOBALS.
     var GLOBALS = {
         DATABASE_NAME: 'podcasts',
         HAS: {
@@ -35,6 +36,9 @@ define([
     };
     window.GLOBALS = GLOBALS;
 
+    // Called by main.js to kick off the app loading. We make sure IndexedDB is
+    // available, load up our locale files, then actually start loading in
+    // views.
     function initialize(loadAppCallback) {
         if (GLOBALS.HAS.nativeScroll) {
             $('body').addClass('native-scroll');
@@ -114,6 +118,8 @@ define([
         }
     }
 
+    // Return a timestamp from a JavaScript Date object. If no argument is
+    // supplied, return the timestamp for "right now".
     function timestamp(date) {
         if (!date) {
             date = new Date();
