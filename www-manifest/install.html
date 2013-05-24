@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Podcasts for Firefox OS</title>
+  </head>
+  <body>
+    <h1>Install <a href="https://github.com/mozilla/high-fidelity">Podcasts for Firefox OS</a> (Development Version)</h1>
+    <script>
+      // This URL must be a full url.
+      var manifestUrl = 'http://mozilla.github.io/high-fidelity/manifest.webapp';
+      var req = navigator.mozApps.installPackage(manifestUrl);
+      req.onsuccess = function() {
+        alert('Podcasts installed! (' + this.result.origin + ')');
+      };
+      req.onerror = function() {
+        alert(this.error.name);
+      };
+    </script>
+  </body>
+</html>

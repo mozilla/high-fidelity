@@ -1,0 +1,22 @@
+{
+  "package_path": "http://localhost:8181/Podcasts.zip",
+  "version": "0.1",
+  "name": "Podcasts",
+  "description": "Listen to your favourite podcasts on your HTML5-powered device or browser.",
+  "icons": {
+    "16": "/img/icon-16.png",
+    "30": "/img/icon-30.png",
+    "32": "/img/icon-32.png",
+    "48": "/img/icon-48.png",
+    "60": "/img/icon-60.png",
+    "64": "/img/icon-64.png",
+    "128": "/img/icon-128.png",
+    "256": "/img/icon-256.png"
+  },
+  "developer": {
+    "name": "Mozilla",
+    "url": "http://mozilla.org/"
+  },
+  "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
+  "type": "privileged"
+}
