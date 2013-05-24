@@ -21,6 +21,7 @@
   },
   "amd": {},
   "devDependencies": {
+    "coffee-script": "1.6.2",
     "express": "~2.5.0",
     "po2json": "0.0.6",
     "mocha": "1.2.2",
