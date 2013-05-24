@@ -8,6 +8,7 @@ www/js/main.built.js
 # Ignore build products
 Podcasts.zip
 www-built/
+www-manifest/Podcasts.zip
 
 # Generic node stuff
 .DS_Store
