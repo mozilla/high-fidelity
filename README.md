@@ -20,10 +20,10 @@ apps are and it's nice to only have to use *one* issue tracker.
 
 ## Try it out! ##
 
-Note: You'll probably need `gettext` installed on your system to build Podcasts.
-I'm not sure if the GNU version is required, but it's what I use. On a Mac, you
-can get it with `brew install gettext && brew link gettext`. It's probably
-the default on Linux/UNIX.
+**Note:** You'll probably need `gettext` installed to build Podcasts. I'm not
+sure if the GNU version is required, but it's what I use. On a Mac, you can get
+it with `brew install gettext && brew link gettext`. It's probably the default
+on Linux/UNIX.
 
 Clone the project and run:
 
