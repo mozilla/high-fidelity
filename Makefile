@@ -44,10 +44,6 @@ install_to_gaia: build
 	mkdir $(GAIA)/apps/podcasts
 	cp -r www-built/ $(GAIA)/apps/podcasts
 
-mini_manifest: zip
-	- rm www-manifest/Podcasts.zip
-	cp Podcasts.zip www-manifest/
-
 prep_for_test:
 	rm -rf $(B2G_FOLDER)/gaia/profile
 	mkdir $(B2G_FOLDER)/gaia
