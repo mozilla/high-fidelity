@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-07 19:51-0500\n"
+"POT-Creation-Date: 2013-05-27 23:45-0400\n"
 "PO-Revision-Date: 2013-03-07 19:53-0500\n"
 "Last-Translator: Matthew Riley MacPherson <>\n"
 "Language-Team: French\n"
@@ -25,11 +25,11 @@ msgstr "Revenir"
 msgid "Podcasts"
 msgstr "Podcasts"
 
-#: www/js/templates/app.ejs:46
+#: www/js/templates/app.ejs:47
 msgid "Popular"
 msgstr "Populaire"
 
-#: www/js/templates/app.ejs:50
+#: www/js/templates/app.ejs:52
 msgid "Search"
 msgstr "Recherche"
 
@@ -63,7 +63,7 @@ msgstr "Annuler"
 msgid "Delete"
 msgstr "Effacer"
 
-#: www/js/templates/podcasts/details.ejs:6
+#: www/js/templates/podcasts/details.ejs:7
 msgid "Remove this Podcast"
 msgstr "Effacer ce podcast"
 

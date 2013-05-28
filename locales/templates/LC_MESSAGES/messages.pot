@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013 Mozilla
-# This file is distributed under the same license as the high-fidelity package.
-# tofumatt <tofumatt@mozilla.com>, 2013.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-07 19:51-0500\n"
+"POT-Creation-Date: 2013-05-27 23:45-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "Podcasts"
 msgstr ""
 
-#: www/js/templates/app.ejs:46
+#: www/js/templates/app.ejs:47
 msgid "Popular"
 msgstr ""
 
-#: www/js/templates/app.ejs:50
+#: www/js/templates/app.ejs:52
 msgid "Search"
 msgstr ""
 
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: www/js/templates/podcasts/details.ejs:6
+#: www/js/templates/podcasts/details.ejs:7
 msgid "Remove this Podcast"
 msgstr ""
 
