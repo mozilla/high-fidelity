@@ -36,9 +36,6 @@ build_gaia:
 download_b2g_linux:
 	$(shell if [ ! -d "$(B2G_FOLDER)" ]; then wget $(B2G_DOWNLOAD) && tar jxf $(B2G_LINUX_FILENAME) && mv b2g $(B2G_FOLDER); fi)
 
-extract_strings:
-	./node_modules/ajs-xgettext/bin/ajs-xgettext --append --function=l --output=locales/templates/LC_MESSAGES/messages.pot `find www/js/templates -type f -name "*.ejs"`
-
 install_to_gaia: build
 	- rm -rf $(GAIA)/apps/podcasts
 	mkdir $(GAIA)/apps/podcasts
@@ -57,7 +54,11 @@ setup_gaia:
 
 test: setup_gaia install_to_gaia build_gaia prep_for_test run_tests
 
-update_locale_json:
+update_locale:
+	./locales/extract.sh
+	./locales/merge.sh locales
+
+update_locale_json: update_locale
 	node ./locales/compile.js
 
 zip: build
