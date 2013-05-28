@@ -21,7 +21,6 @@
   },
   "amd": {},
   "devDependencies": {
-    "ajs-xgettext": "0.1.0",
     "coffee-script": "1.6.2",
     "express": "~2.5.0",
     "po2json": "0.0.6",
