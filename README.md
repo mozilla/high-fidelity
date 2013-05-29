@@ -22,8 +22,8 @@ apps are and it's nice to only have to use *one* issue tracker.
 
 **Note:** You'll probably need `gettext` installed to build Podcasts. I'm not
 sure if the GNU version is required, but it's what I use. On a Mac, you can get
-it with `brew install gettext && brew link gettext`. It's probably the default
-on Linux/UNIX.
+it with `brew install gettext && brew link --force gettext`. It's probably the
+default on Linux/UNIX.
 
 Clone the project and run:
 
