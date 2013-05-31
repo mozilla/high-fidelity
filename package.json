@@ -13,20 +13,11 @@
   },
   "version": "0.0.1",
   "dependencies": {
-    "can-compile": "0.2.0",
-    "connect": "~2.4.4",
     "less-middleware": "~0.1.5",
-    "po2json": "0.0.6",
     "requirejs": "2.1.5"
   },
   "amd": {},
   "devDependencies": {
-    "coffee-script": "1.6.2",
-    "express": "~2.5.0",
     "po2json": "0.0.6",
-    "mocha": "1.2.2",
-    "nock": ">= 0.13.3",
-    "should": ">= 0.0.1",
-    "supertest": ">= 0.1.1"
   }
 }
