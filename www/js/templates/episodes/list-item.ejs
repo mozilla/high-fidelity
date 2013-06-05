@@ -5,7 +5,7 @@
     <% if (true || isDownloading) { %>
       <progress></progress>
     <% } %>
-    <p class="queued title"><%= episode.get('title') %><br><small><%= episode.date() %></small></p>
+    <p class="queued title <% if (isDownloading || isQueued) { %>downloading<% }%>"><%= episode.get('title') %><% if (isDownloading || isQueued) { %><br><strong><%= l('Downloading now') %></strong><% }%><br><small><%= episode.date() %></small></p>
   <% } else { %>
     <a href="#download" class="title download" data-episodeid="<%= episode.get('id') %>"><p><%= episode.get('title') %><br><small><%= episode.date() %></small></p></a>
   <% } %>
