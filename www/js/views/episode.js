@@ -27,6 +27,7 @@ define([
 
         initialize: function() {
             var self = this;
+
             if (!this.model.get('id')) {
                 Episodes.add(this.model);
                 this.model.save();
@@ -36,6 +37,8 @@ define([
                 id: this.model.get('podcastID') ? this.model.get('podcastID') : 'no-id'
             });
             this.$el = $(this.el);
+
+            this.model.on('download:cancel', self.render);
 
             this.model.on('download:queued', function() {
                 self.render({isQueued: true});

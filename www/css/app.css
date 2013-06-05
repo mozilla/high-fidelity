@@ -169,6 +169,10 @@ body[data-active-tab=podcasts][data-podcast-details=on] #back {
     float: right;
 }
 
+#podcast-details .downloading strong {
+    color: #f3f3f3;
+}
+
 /** Search */
 .search-results {
     margin: 0 0 170px;

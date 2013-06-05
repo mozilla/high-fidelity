@@ -102,7 +102,7 @@ define([
             // backup if playback doesn't work (more futureproof).
             if (this.options.blobURL && !this.options.canPlayType) {
                 // JSMad.Player.fromURL(this.options.blobURL, this._startSoftwarePlayer);
-                window.alert('Software decoding disabled.');
+                window.alert('Cannot play this episode; software decoding is disabled.');
             } else {
                 window._player = null;
             }
@@ -135,9 +135,9 @@ define([
             var self = this;
 
             this.model.blob(function(podcast) {
-                if (podcast && podcast.file) {
+                if (podcast) {
                     try {
-                        self.options.blobURL = window.URL.createObjectURL(podcast.file);
+                        self.options.blobURL = window.URL.createObjectURL(podcast);
                     } catch (e) {
                         console.log('ERROR', e);
                     }
