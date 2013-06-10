@@ -1,7 +1,7 @@
 <% if (episode.id) { %>
   <% if (blobURL) { %>
     <% if (!softwareDecode) { %>
-      <audio id="audio" src="<%= blobURL %>" episode="<%= episode.get('id') %>" autoload></audio>
+      <audio id="audio" src="<%= blobURL %>" data-episodeid="<%= episode.get('id') %>" autoload></audio>
       <div id="time-info">
         <span id="time-elapsed"></span>
         <span id="time-remaining"></span>
