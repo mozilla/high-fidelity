@@ -1,5 +1,3 @@
-'use strict';
-
 // A very simple, key/value-based DeviceStorage library for storing binary data
 // on Firefox OS. Used because Podcasts needs to store large binary files (
 // podcast image covers and audio files) but can't use Appcache or localStorage.
@@ -18,6 +16,8 @@
 //     // And to destroy data:
 //     DataStore.destroy('some-key', callback)
 define(function(require) {
+    'use strict';
+
     // Create/open database.
     var deviceStorage = window.navigator.getDeviceStorage('sdcard');
 

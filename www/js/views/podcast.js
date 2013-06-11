@@ -1,7 +1,4 @@
-/*global _:true, App:true, Backbone:true */
 /*jshint forin:false, plusplus:false, sub:true */
-'use strict';
-
 define([
     'zepto',
     'underscore',
@@ -14,6 +11,8 @@ define([
     'tpl!templates/podcasts/cover.ejs',
     'tpl!templates/podcasts/details.ejs'
 ], function($, _, Backbone, App, Podcasts, Podcast, DialogViews, EpisodeView, PodcastCoverTemplate, PodcastDetailsTemplate) {
+    'use strict';
+
     // We access the body a fair bit here; cache the object for all views in
     // this file.
     var $body = $('body');

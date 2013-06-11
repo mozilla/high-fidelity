@@ -1,7 +1,7 @@
 /*jshint forin:false, plusplus:false, sub:true */
-'use strict';
-
 define(function(require) {
+    'use strict';
+
     // Constants for use in the queue.
     var DOWNLOAD_ACTIVE = 1;
 
@@ -57,7 +57,7 @@ define(function(require) {
         this.add = function(id, object) {
             queue.push([id, object ? object : DOWNLOAD_ACTIVE]);
             next();
-        }
+        };
 
         this.done = function(id) {
             var index = null;
@@ -74,7 +74,7 @@ define(function(require) {
             });
             queue.splice(index, 1);
             next();
-        }
+        };
 
         return this;
     }

@@ -1,8 +1,6 @@
-/*global Backbone:true */
 /*!
  Podcasts | https://github.com/mozilla/high-fidelity
 */
-'use strict';
 
 // Require.js allows us to configure shortcut alias
 require.config({
@@ -53,6 +51,8 @@ require([
     'app',
     'routers/app'
 ], function(App, AppRouter) {
+    'use strict';
+
     function init() {
         // Initialize routing and start Backbone.history()
         var router = new AppRouter();

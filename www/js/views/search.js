@@ -1,7 +1,4 @@
-/*global _:true, App:true, Backbone:true */
 /*jshint forin:false, plusplus:false, sub:true */
-'use strict';
-
 define([
     'zepto',
     'underscore',
@@ -15,6 +12,8 @@ define([
     'tpl!templates/search/popular.ejs',
     'tpl!templates/search/result.ejs'
 ], function($, _, Backbone, App, RSS, Podcasts, Podcast, DialogViews, SearchTemplate, PopularPodcastsTemplate, SearchResultTemplate) {
+    'use strict';
+
     // TODO: Extract this into a "Podcasts search" library.
     var API = 'https://itunes.apple.com/search?media=podcast';
     var TOP_RSS = 'https://itunes.apple.com/us/rss/toppodcasts/limit=25/explicit=true/xml';

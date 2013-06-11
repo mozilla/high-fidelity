@@ -1,5 +1,4 @@
-'use strict';
-
+/*jshint forin:false, plusplus:false, sub:true */
 define([
     'underscore',
     'backbone',
@@ -7,6 +6,9 @@ define([
     'collections/episodes',
     'models/podcast'
 ], function(_, Backbone, Store, Episodes, Podcast) {
+    'use strict';
+
+    // The user's single collection of Podcasts, loaded into the main app tab.
     var PodcastsCollection = Backbone.Collection.extend({
         model: Podcast,
 

@@ -1,7 +1,4 @@
-/*global _:true, App:true, Backbone:true */
 /*jshint forin:false, plusplus:false, sub:true */
-'use strict';
-
 define([
     'zepto',
     'underscore',
@@ -12,6 +9,12 @@ define([
     'views/player',
     'tpl!templates/episodes/list-item.ejs',
 ], function($, _, Backbone, App, Episodes, Episode, PlayerView, EpisodeTemplate) {
+    'use strict';
+
+    // Episode view, used in the podcast detail view for any episode, whether
+    // downloaded or not. Users can manually deleted an episode (even if they
+    // have yet to download it), but otherwise an episode appears in a list in
+    // a variety of states (available, downloading, saving, or ready to play).
     var EpisodeView = Backbone.View.extend({
         className: 'episode',
         el: '#podcasts',

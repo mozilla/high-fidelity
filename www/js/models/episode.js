@@ -1,6 +1,4 @@
-/* jshint plusplus: false */
-'use strict';
-
+/*jshint forin:false, plusplus:false, sub:true */
 define([
     'underscore',
     'backbone',
@@ -9,6 +7,8 @@ define([
     'collections/episodes',
     'require'
 ], function(_, Backbone, DataStore, queue, Episodes, require) {
+    'use strict';
+
     var EpisodeModel = Backbone.Model.extend({
         // Keep track of how many chunks of data we receive and how many
         // we've saved, so we know when we have all data. These values are

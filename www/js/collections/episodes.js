@@ -1,11 +1,13 @@
-'use strict';
-
+/*jshint forin:false, plusplus:false, sub:true */
 define([
     'underscore',
     'backbone',
     'localstorage',
     'models/episode'
 ], function(_, Backbone, Store, Episode) {
+    'use strict';
+
+    // A collection of episodes; all episodes will belong to a Podcast.
     var EpisodesCollection = Backbone.Collection.extend({
         model: Episode,
 

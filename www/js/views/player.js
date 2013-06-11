@@ -1,7 +1,4 @@
-/*global _:true, App:true, Backbone:true */
 /*jshint forin:false, plusplus:false, sub:true */
-'use strict';
-
 define([
     'zepto',
     'underscore',
@@ -14,6 +11,8 @@ define([
     'tpl!templates/player.ejs'/*,
     'jsmad'*/
 ], function($, _, Backbone, App, Episodes, Podcasts, Episode, Podcast, PlayerTemplate/*, JSMad*/) {
+    'use strict';
+
     // Save audio position every five seconds.
     var SAVE_POSITION_TIMER = 5000;
 

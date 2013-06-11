@@ -1,10 +1,11 @@
-'use strict';
-
+/*jshint forin:false, plusplus:false, sub:true */
 define([
     'backbone',
     'app',
     'views/app'
 ], function(Backbone, App, AppView) {
+    'use strict';
+
     var appView;
 
     var AppRouter = Backbone.Router.extend({

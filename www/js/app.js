@@ -1,7 +1,4 @@
-/*global _:true, App:true, Backbone:true */
 /*jshint forin:false, plusplus:false, sub:true */
-'use strict';
-
 define([
     'zepto',
     'datastore',
@@ -12,6 +9,8 @@ define([
     'models/podcast',
     'routers/app'
 ], function($, DataStore, Jed, Episodes, Podcasts, Episode, Podcast, AppRouter) {
+    'use strict';
+
     // Globals used throughout the app, accessible via window.GLOBALS.
     var GLOBALS = {
         DATABASE_NAME: 'podcasts',

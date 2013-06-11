@@ -1,5 +1,4 @@
-'use strict';
-
+/*jshint forin:false, plusplus:false, sub:true */
 define([
     'underscore',
     'backbone',
@@ -8,6 +7,8 @@ define([
     'collections/podcasts',
     'require'
 ], function(_, Backbone, DataStore, RSS, Podcasts, require) {
+    'use strict';
+
     var PodcastModel = Backbone.Model.extend({
         collection: Podcasts,
         defaults: {

@@ -1,7 +1,4 @@
-/*global _:true, App:true, Backbone:true */
 /*jshint forin:false, plusplus:false, sub:true */
-'use strict';
-
 define([
     'zepto',
     'underscore',
@@ -9,80 +6,60 @@ define([
     'tpl!templates/podcasts/delete-dialog.ejs',
     'tpl!templates/subscribe-dialog.ejs'
 ], function($, _, Backbone, DeletePodcastDialogTemplate, SubscribeDialogTemplate) {
-    // TODO: Base a base dialog class that can be extended to reduce code
-    // copying.
-    var CANCEL= 'cancel';
+    'use strict';
 
-    var DeletePodcastDialogView = Backbone.View.extend({
+    // Base dialog class, used across the app for all modal dialogs/prompts.
+    var DialogView = Backbone.View.extend({
         el: '#modal-dialog',
         $el: $('#modal-dialog'),
-        template: DeletePodcastDialogTemplate,
 
         events: {
             'click menu button': 'action'
         },
 
         initialize: function() {
+            var $modal = $(this.el);
+
             _(this).bindAll('action');
 
-            if ($('#modal-dialog').length) {
-                $('#modal-dialog').remove();
+            // If there's another dialog present, even if only in the DOM:
+            // remove it.
+            if ($modal.length) {
+                $modal.remove();
             }
 
             this.render();
 
-            this.$el = $('#modal-dialog');
+            this.$el = $(this.el);
         },
 
         render: function() {
             $('body').append(this.template(this.options.templateData));
         },
 
+        // Method used to run whatever action was selected by the user. By
+        // default any action simply closes and removes the dialog modal,
+        // returning the user to their previous state. A developer can supply
+        // a function to run after the dialog is cleared.
         action: function(event) {
+            // Determine the right method to run from the button tapped.
             var action = $(event.currentTarget).data('action');
+
+            // The modal is always removed after any action button is tapped.
+            this.remove();
+
             if (action && this.options[action]) {
-                this.remove();
                 this.options[action]();
-            } else if (action && action === CANCEL) {
-                this.remove();
             }
         }
     });
 
-    var SubscribeDialogView = Backbone.View.extend({
-        el: '#modal-dialog',
-        $el: $('#modal-dialog'),
-        template: SubscribeDialogTemplate,
+    var DeletePodcastDialogView = DialogView.extend({
+        template: DeletePodcastDialogTemplate
+    });
 
-        events: {
-            'click menu button': 'action'
-        },
-
-        initialize: function() {
-            _(this).bindAll('action');
-
-            if ($('#modal-dialog').length) {
-                $('#modal-dialog').remove();
-            }
-
-            this.render();
-
-            this.$el = $('#modal-dialog');
-        },
-
-        render: function() {
-            $('body').append(this.template(this.options.templateData));
-        },
-
-        action: function(event) {
-            var action = $(event.currentTarget).data('action');
-            if (action && this.options[action]) {
-                this.remove();
-                this.options[action]();
-            } else if (action && action === CANCEL) {
-                this.remove();
-            }
-        }
+    var SubscribeDialogView = DialogView.extend({
+        template: SubscribeDialogTemplate
     });
 
     return {

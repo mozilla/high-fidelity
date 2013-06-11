@@ -1,5 +1,3 @@
-'use strict';
-
 // A very simple, key/value-based IndexedDB library for storing binary data
 // in IndexedDB. Used because Podcasts needs to store large binary files (
 // podcast image covers and audio files) but can't use Appcache or localStorage.
@@ -18,6 +16,8 @@
 //     // And to destroy data:
 //     DataStore.destroy('some-key', callback)
 define(function(require) {
+    'use strict';
+
     var indexedDB = indexedDB || window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB,
             IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction;
 
