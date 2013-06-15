@@ -28,7 +28,7 @@ define([
                 return 'WebkitOverflowScrolling' in window.document.createElement('div').style;
             })()
         },
-        LANGUAGE: window.navigator.language, // HACK: Better way for this, I assume?
+        LANGUAGE: 'fr' || window.navigator.language, // HACK: Better way for this, I assume?
         LOWER_UI_ACTIVE: true,
         MAX_DOWNLOADS: 2, // Maximum number of podcast downloads at one time.
         OBJECT_STORE_NAME: 'podcasts',
@@ -100,6 +100,12 @@ define([
                 window.l = function(key) {
                     return l10n.gettext(key);
                 };
+
+                // HACK: This should be automated with a data attribute for
+                // extensibility, but for now this is fine.
+                // Set the title tag of the page (it's the only thing we don't
+                // load in with JS templating).
+                $('title').text(window.l($('title').text()));
             } else {
                 mockL10n();
             }
