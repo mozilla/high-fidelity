@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-27 23:45-0400\n"
+"POT-Creation-Date: 2013-06-15 01:33-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,10 @@ msgstr ""
 
 #: www/js/templates/app.ejs:52
 msgid "Search"
+msgstr ""
+
+#: www/js/templates/episodes/list-item.ejs:8
+msgid "Downloading now"
 msgstr ""
 
 #: www/js/templates/player.ejs:11
