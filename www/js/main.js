@@ -2,22 +2,19 @@
  Podcasts | https://github.com/mozilla/high-fidelity
 */
 
-// Require.js allows us to configure shortcut alias
+// Require.js shortcuts to our libraries.
 require.config({
     paths: {
+        asyncStorage: 'asyncStorage',
         backbone: 'lib/backbone',
         localstorage: 'lib/backbone.localstorage',
         jed: 'lib/jed',
-        // jsmad: 'lib/jsmad',
-        // indexedDB: 'lib/indexeddb',
-        install: 'lib/install',
-        // sink: 'lib/sink',
         tpl: 'lib/tpl',
         underscore: 'lib/lodash',
         zepto: 'lib/zepto'
     },
     // The shim config allows us to configure dependencies for
-    // scripts that do not call define() to register a module
+    // scripts that do not call define() to register a module.
     shim: {
         'backbone': {
             deps: [
@@ -26,18 +23,6 @@ require.config({
             ],
             exports: 'Backbone'
         },
-        // 'jsmad': {
-        //     deps: [
-        //         'sink'
-        //     ],
-        //     exports: 'Mad'
-        // },
-        // 'indexedDB': {
-        //     exports: 'indexedDB'
-        // },
-        // 'sink': {
-        //     exports: 'Sink'
-        // },
         'underscore': {
             exports: '_'
         },
@@ -53,6 +38,7 @@ require([
 ], function(App, AppRouter) {
     'use strict';
 
+    // Load the router; we're off to the races!
     function init() {
         // Initialize routing and start Backbone.history()
         var router = new AppRouter();
