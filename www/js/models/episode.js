@@ -1,12 +1,12 @@
 /*jshint forin:false, plusplus:false, sub:true */
 define([
     'underscore',
+    'async_storage',
     'backbone',
-    'datastore',
     'queue',
     'collections/episodes',
     'require'
-], function(_, Backbone, DataStore, queue, Episodes, require) {
+], function(_, AsyncStorage, Backbone, queue, Episodes, require) {
     'use strict';
 
     var EpisodeModel = Backbone.Model.extend({
@@ -43,7 +43,7 @@ define([
         // Extend Backbone's default destroy method so we also delete the
         // podcast blob in indexedDB.
         destroy: function(options) {
-            DataStore.destroy('e{id}'.format({id: this.get('id')}));
+            AsyncStorage.remove('e{id}'.format({id: this.get('id')}));
 
             return Backbone.Model.prototype.destroy.call(this, options);
         },
@@ -76,7 +76,10 @@ define([
             request.addEventListener('load', this._setAudioTypeFromEvent);
 
             request.addEventListener('progress', function(event) {
-                self._saveChunk(self._chunkCount, request.response);
+                AsyncStorage.set('_chunk-episode-{id}-{chunk}'.format({
+                    chunk: self._chunkCount,
+                    id: this.get('id')
+                }), request.response, self._incrementChunkSaveCount);
 
                 // Increment our internal data chunk count.
                 self._chunkCount++;
@@ -119,11 +122,11 @@ define([
                 }
 
                 if (chunkID < chunkCount) {
-                    DataStore.get('_chunk-episode-{id}-{chunk}'.format({
+                    AsyncStorage.get('_chunk-episode-{id}-{chunk}'.format({
                         chunk: chunkID,
                         id: self.get('id')
                     }), function(data) {
-                        audioBlobs.push(data.file);
+                        audioBlobs.push(data);
                         _walkChunks(chunkID + 1);
                     });
                 } else {
@@ -153,13 +156,6 @@ define([
                 this.trigger('downloaded');
                 this.trigger('updated');
             }
-        },
-
-        _saveChunk: function(chunk, arrayBuffer) {
-            DataStore.set('_chunk-episode-{id}-{chunk}'.format({
-                chunk: chunk,
-                id: this.get('id')
-            }), arrayBuffer, this._incrementChunkSaveCount);
         },
 
         // Set the audio type based on the responseType (or filename) of this
