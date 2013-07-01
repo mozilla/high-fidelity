@@ -83,11 +83,6 @@ define([
             });
         },
 
-        // Simply return the RSS data for this podcast.
-        rss: function() {
-            return this.get('rssData') ? JSON.parse(this.get('rssData')) : null;
-        },
-
         saveImage: function(blob) {
             var self = this;
 
