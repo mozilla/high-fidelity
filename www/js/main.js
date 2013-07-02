@@ -5,7 +5,7 @@
 // Require.js shortcuts to our libraries.
 require.config({
     paths: {
-        asyncStorage: 'asyncStorage',
+        async_storage: 'lib/async_storage',
         backbone: 'lib/backbone',
         localstorage: 'lib/backbone.localstorage',
         jed: 'lib/jed',
@@ -33,19 +33,9 @@ require.config({
 });
 
 require([
-    'app',
-    'routers/app'
-], function(App, AppRouter) {
+    'app'
+], function(App) {
     'use strict';
 
-    // Load the router; we're off to the races!
-    function init() {
-        // Initialize routing and start Backbone.history()
-        var router = new AppRouter();
-        window.router = router;
-
-        Backbone.history.start();
-    }
-
-    App.initialize(init);
+    App.initialize();
 });

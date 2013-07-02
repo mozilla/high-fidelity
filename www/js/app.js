@@ -45,7 +45,11 @@ define([
 
         DataStore.load(function() {
             setLanguage(function() {
-                loadAppCallback();
+                // Load the router; we're off to the races!
+                var router = new AppRouter();
+                window.router = router;
+
+                Backbone.history.start();
             });
         });
     }
