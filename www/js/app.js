@@ -79,7 +79,7 @@ define([
         window._l10n = null;
         window.l = function(key) {
             return key;
-        }
+        };
     }
 
     // Set the language of the app and retrieve the proper localization files.
