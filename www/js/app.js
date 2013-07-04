@@ -104,11 +104,11 @@ define([
                     return l10n.gettext(key);
                 };
 
-                // HACK: This should be automated with a data attribute for
-                // extensibility, but for now this is fine.
-                // Set the title tag of the page (it's the only thing we don't
-                // load in with JS templating).
-                $('title').text(window.l($('title').text()));
+                // Localize any data not rendered by EJS templates, eg. stuff
+                // in index.html (currently just the <title> tag).
+                $('[data-l10n]').each(function() {
+                    $(this).text(window.l($(this).data('l10n')));
+                });
             } else {
                 mockL10n();
             }
