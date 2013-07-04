@@ -106,6 +106,9 @@ define([
 
                 // Localize any data not rendered by EJS templates, eg. stuff
                 // in index.html (currently just the <title> tag).
+                // TODO: Allow our localization files to pickup on these
+                // attributes, which currently we just get lucky with as they
+                // are found elsewhere.
                 $('[data-l10n]').each(function() {
                     $(this).text(window.l($(this).data('l10n')));
                 });
