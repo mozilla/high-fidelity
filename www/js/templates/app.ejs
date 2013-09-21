@@ -12,11 +12,11 @@
   <header id="add-podcast">
     <form action="#podcasts/create">
       <p>
-        <input id="add-rss" type="text" required="" placeholder="Enter a podcast URL">
+        <input id="add-rss" type="text" required="" placeholder="RSS URL">
         <button type="reset">Clear</button>
 
-        <a id="add-rss-cancel" role="button" class="actions">Cancel</a>
-        <button id="add-rss-submit" class="actions recommend">Subscribe</button>
+        <a id="add-rss-cancel" role="button" class="actions"><%= l('Cancel') %></a>
+        <button id="add-rss-submit" class="actions recommend"><%= l('Subscribe') %></button>
       </p>
     </form>
   </header>
