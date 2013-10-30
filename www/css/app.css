@@ -302,6 +302,10 @@ body[data-active-tab=podcasts][data-podcast-details=on] #back {
 }
 
 /** Dialogs */
+#modal-dialog:empty {
+    display: none;
+}
+
 #modal-dialog {
     position: fixed;
     z-index: 1000000;

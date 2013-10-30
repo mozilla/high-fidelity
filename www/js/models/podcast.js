@@ -2,11 +2,11 @@
 define([
     'underscore',
     'backbone',
-    'datastore',
+    'localforage',
     'rss',
     'collections/podcasts',
     'require'
-], function(_, Backbone, DataStore, RSS, Podcasts, require) {
+], function(_, Backbone, localForage, RSS, Podcasts, require) {
     'use strict';
 
     var PodcastModel = Backbone.Model.extend({
@@ -34,7 +34,7 @@ define([
                 e.destroy();
             });
 
-            DataStore.destroy('podcastCover-{id}'.format({id: this.get('id')}));
+            localForage.removeItem('podcastCover-{id}'.format({id: this.get('id')}));
 
             return Backbone.Model.prototype.destroy.call(this, options);
         },
@@ -73,7 +73,7 @@ define([
         loadImage: function() {
             var self = this;
 
-            DataStore.get('podcastCover-' + this.get('id'), function(blob) {
+            localForage.getItem('podcastCover-' + this.get('id'), function(blob) {
                 if (!blob || !blob.file) {
                     return;
                 }
@@ -88,7 +88,7 @@ define([
 
             // TODO: Setup a separate "table" for different item types in the
             // datastore.
-            DataStore.set('podcastCover-' + this.get('id'), blob, function() {
+            localForage.setItem('podcastCover-' + this.get('id'), blob, function() {
                 self.trigger('image:downloaded');
             });
         },

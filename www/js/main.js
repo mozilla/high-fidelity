@@ -7,7 +7,8 @@ require.config({
     paths: {
         async_storage: 'lib/async_storage',
         backbone: 'lib/backbone',
-        localstorage: 'lib/backbone.localstorage',
+        backbone_store: 'lib/backbone.localforage',
+        localforage: 'lib/localforage',
         jed: 'lib/jed',
         tpl: 'lib/tpl',
         underscore: 'lib/lodash',
@@ -16,6 +17,9 @@ require.config({
     // The shim config allows us to configure dependencies for
     // scripts that do not call define() to register a module.
     shim: {
+        'async_storage': {
+            exports: 'asyncStorage'
+        },
         'backbone': {
             deps: [
                 'underscore',

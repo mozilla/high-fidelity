@@ -2,7 +2,7 @@
 define([
     'underscore',
     'backbone',
-    'localstorage',
+    'backbone_store',
     'models/episode'
 ], function(_, Backbone, Store, Episode) {
     'use strict';

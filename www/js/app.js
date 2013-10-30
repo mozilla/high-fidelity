@@ -1,19 +1,17 @@
 /*jshint forin:false, plusplus:false, sub:true */
 define([
     'zepto',
-    'datastore',
     'jed',
     'collections/episodes',
     'collections/podcasts',
     'models/episode',
     'models/podcast',
     'routers/app'
-], function($, DataStore, Jed, Episodes, Podcasts, Episode, Podcast, AppRouter) {
+], function($, Jed, Episodes, Podcasts, Episode, Podcast, AppRouter) {
     'use strict';
 
     // Globals used throughout the app, accessible via window.GLOBALS.
     var GLOBALS = {
-        DATABASE_NAME: 'podcasts',
         HAS: {
             audioSupportMP3: (function() {
                 var a = window.document.createElement('audio');
@@ -27,10 +25,9 @@ define([
                 return 'WebkitOverflowScrolling' in window.document.createElement('div').style;
             })()
         },
-        LANGUAGE: 'fr' || window.navigator.language, // HACK: Better way for this, I assume?
+        LANGUAGE: window.navigator.language, // HACK: Better way for this, I assume?
         LOWER_UI_ACTIVE: true,
         MAX_DOWNLOADS: 2, // Maximum number of podcast downloads at one time.
-        OBJECT_STORE_NAME: 'podcasts',
         TIME_TO_UPDATE: 3600 * 5 // Update podcasts every five hours
     };
     window.GLOBALS = GLOBALS;
@@ -43,14 +40,12 @@ define([
             $('body').addClass('native-scroll');
         }
 
-        DataStore.load(function() {
-            setLanguage(function() {
-                // Load the router; we're off to the races!
-                var router = new AppRouter();
-                window.router = router;
+        setLanguage(function() {
+            // Load the router; we're off to the races!
+            var router = new AppRouter();
+            window.router = router;
 
-                Backbone.history.start();
-            });
+            Backbone.history.start();
         });
     }
 

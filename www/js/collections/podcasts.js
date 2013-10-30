@@ -2,7 +2,7 @@
 define([
     'underscore',
     'backbone',
-    'localstorage',
+    'backbone_store',
     'collections/episodes',
     'models/podcast'
 ], function(_, Backbone, Store, Episodes, Podcast) {

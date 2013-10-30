@@ -121,7 +121,9 @@ define([
                     $(this.audio).on('timeupdate', this.updateProgress);
                 }
 
-                this.setPlaybackPosition(this.playPause);
+                this.setPlaybackPosition();
+
+                this.playPause();
             }
 
             // TODO: Better name for this? lulz

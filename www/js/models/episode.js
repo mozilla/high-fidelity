@@ -1,12 +1,12 @@
 /*jshint forin:false, plusplus:false, sub:true */
 define([
     'underscore',
-    'async_storage',
+    'localforage',
     'backbone',
     'queue',
     'collections/episodes',
     'require'
-], function(_, AsyncStorage, Backbone, queue, Episodes, require) {
+], function(_, localForage, Backbone, queue, Episodes, require) {
     'use strict';
 
     var EpisodeModel = Backbone.Model.extend({
@@ -43,7 +43,7 @@ define([
         // Extend Backbone's default destroy method so we also delete the
         // podcast blob in indexedDB.
         destroy: function(options) {
-            AsyncStorage.remove('e{id}'.format({id: this.get('id')}));
+            localForage.removeItem('e{id}'.format({id: this.get('id')}));
 
             return Backbone.Model.prototype.destroy.call(this, options);
         },
@@ -76,9 +76,9 @@ define([
             request.addEventListener('load', this._setAudioTypeFromEvent);
 
             request.addEventListener('progress', function(event) {
-                AsyncStorage.set('_chunk-episode-{id}-{chunk}'.format({
+                localForage.setItem('_chunk-episode-{id}-{chunk}'.format({
                     chunk: self._chunkCount,
-                    id: this.get('id')
+                    id: self.get('id')
                 }), request.response, self._incrementChunkSaveCount);
 
                 // Increment our internal data chunk count.
@@ -122,7 +122,7 @@ define([
                 }
 
                 if (chunkID < chunkCount) {
-                    AsyncStorage.get('_chunk-episode-{id}-{chunk}'.format({
+                    localForage.getItem('_chunk-episode-{id}-{chunk}'.format({
                         chunk: chunkID,
                         id: self.get('id')
                     }), function(data) {

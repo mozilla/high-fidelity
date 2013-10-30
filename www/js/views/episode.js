@@ -60,7 +60,7 @@ define([
 
         render: function(args) {
             if (!args) {
-                args = {}
+                args = {};
             }
 
             var html = this.template({

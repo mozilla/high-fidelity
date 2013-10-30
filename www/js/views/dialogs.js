@@ -14,7 +14,7 @@ define([
         $el: $('#modal-dialog'),
 
         events: {
-            'click menu button': 'action'
+            'click button': 'action'
         },
 
         initialize: function() {
@@ -27,6 +27,8 @@ define([
             if ($modal.length) {
                 $modal.remove();
             }
+
+            this.el = '#modal-dialog';
 
             this.render();
 
