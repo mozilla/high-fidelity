@@ -237,12 +237,26 @@ body[data-active-tab=podcasts][data-podcast-details=on] #back {
     width: 50%;
 }
 
+#quicker {
+    position: relative;
+    float: right;
+    color: white;
+    padding: 12px;
+    margin-right: 2px;
+    margin-top: 8px;
+    text-decoration: none;
+}
+
+#quicker.selected {
+    color: rgb(98, 198, 245);
+}
+
 #play-pause {
     background: url(../img/button-pause.png) center;
     float: right;
-    height: 60px;
-    margin-right: 20px;
+    margin-right: 10px;
     position: relative;
+    height: 60px;
     width: 60px;
     z-index: 1001;
 }

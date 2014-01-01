@@ -27,7 +27,8 @@ define([
             'mousedown #audio-progress': 'progressMouseDown',
             'mousemove #audio-progress': 'progressMouseMove',
             'mouseup #audio-progress': 'progressMouseUp',
-            'click #play-pause': 'playPause'
+            'click #play-pause': 'playPause',
+            'click #quicker': 'playQuicker'
         },
 
         initialize: function() {
@@ -62,6 +63,7 @@ define([
             // HTML elements we use throughout this view.
             this.audio = null;
             this.$playPause = null;
+            this.$quicker = null;
             this.progressBar = null;
             this.$timeElapsed = null;
             this.$timeRemaining = null;
@@ -177,6 +179,20 @@ define([
             this.updateProgress();
 
             this.$playPause.toggleClass('paused');
+        },
+
+        playQuicker: function(event) {
+            this._updateElements();
+
+            if (this.audio) {
+                if (this.audio.playbackRate === 1.0) {
+                    this.audio.playbackRate = 1.25;
+                    this.$quicker.classList.add('selected');
+                } else {
+                    this.audio.playbackRate = 1.00;
+                    this.$quicker.classList.remove('selected');
+                }
+            }
         },
 
         progressMouseDown: function(event) {
@@ -341,6 +357,7 @@ define([
             // Store references to commonly-used elements.
             this.audio = $('audio')[0];
             this.$playPause = $('#play-pause');
+            this.$quicker = $('#quicker')[0];
             this.progressBar = $('#audio-progress')[0];
             this.$timeElapsed = $('#time-elapsed');
             this.$timeRemaining = $('#time-remaining');
