@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # syntax:
 # compile-mo.sh locale-dir/
