@@ -1,0 +1,1 @@
+HighFidelity.ApplicationAdapter = DS.FixtureAdapter

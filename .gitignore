@@ -1,54 +1,6 @@
-# Ignore generated JSON versions of gettext PO files
-www/locale/
-
-# Ignore require.js built stuff
-www/css/app.built.css
-www/js/main.built.js
-
-# Ignore build products
-Podcasts.zip
-www-built/
-www-manifest/Podcasts.zip
-
-# Generic node stuff
-.DS_Store
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-
-# Python stuff
-*.pyc
-
-# B2G stuff
-test/.gaia
-
-pids
-logs
-results
-
 node_modules
-npm-debug.log
-
-# Xcode
-.DS_Store
-build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-*.xcworkspace
-!default.xcworkspace
-xcuserdata
-profile
-*.moved-aside
-DerivedData
-.idea/
+temp
+dist
+.sass-cache
+.tmp
+app/bower_components

@@ -1,0 +1,23 @@
+{
+  "version": "0.0",
+  "name": "high fidelity",
+  "description": "",
+  "icons": {
+    "32": "/images/icon-32.png",
+    "60": "/images/icon-60.png",
+    "64": "/images/icon-64.png",
+    "90": "/images/icon-90.png",
+    "120": "/images/icon-120.png",
+    "128": "/images/icon-128.png",
+    "256": "/images/icon-256.png"
+  },
+  "developer": {
+    "name": "",
+    "url": ""
+  },
+  "launch_path": "/",
+  "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
+  "appcache_path": "/manifest.appcache",
+  "permissions": {
+  }
+}
