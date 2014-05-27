@@ -16,6 +16,7 @@
     "smarttabs": true,
     "globals": {
         "HighFidelity": true,
+        "$": true,
         "jQuery": true,
         "Ember": true,
         "Handlebars": true,

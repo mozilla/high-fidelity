@@ -7,6 +7,7 @@ var HighFidelity = window.HighFidelity = Ember.Application.create({
 // Order and include as you please.
 require('scripts/lib/*');
 require('scripts/l10n/*');
+require('scripts/helpers/*');
 require('scripts/controllers/*');
 require('scripts/store');
 require('scripts/models/*');

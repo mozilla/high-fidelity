@@ -5,7 +5,7 @@ HighFidelity.Episode = DS.Model.extend({
     audioURL: DS.attr('string'),
     audioLength: DS.attr('number'),
     playbackPosition: DS.attr('number'),
-    audioFile: DS.attr('blob'),
+    audioFile: DS.attr('string'),
 
     // Episode metadata from RSS.
     datePublished: DS.attr('date'),

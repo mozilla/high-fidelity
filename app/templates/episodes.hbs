@@ -1,8 +1,12 @@
 <div class="episodes">
-  {{#collection Ember.ListView content=controller height=300 rowHeight=60}}
+  {{#collection content=controller}}
     <div {{action "setEpisode" this}} class="episode">
       <div class="name">
-        <strong>Episode {{episodeId}}</strong>: {{name}}
+        {{!--
+        <strong>{{name}}</strong><br>
+        {{datePublished}}
+        --}}
+        {{name}}
       </div>
 
       <div class="actions">

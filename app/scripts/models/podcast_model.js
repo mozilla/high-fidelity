@@ -6,16 +6,8 @@ HighFidelity.Podcast = DS.Model.extend({
     lastUpdated: DS.attr('date'),
     lastPlayed: DS.attr('date'),
 
-    coverImageBlob: DS.attr('blob'),
+    coverImageBlob: DS.attr('string'),
     coverImageURL: DS.attr('string'),
-
-    // episodesSorted: function() {
-    //     var episodes = Ember.ArrayProxy.create({ content: Ember.A(this.get('episodes'))}).sortBy(function(a, b) {
-    //         return a.get('datePublished') < b.get('datePublished');
-    //     });
-    //     console.log(this.get('episodes').get('firstObject'), episodes);
-    //     return episodes;
-    // }.property('episodes'),
 
     getCoverImage: function() {
         var _this = this;
@@ -33,8 +25,78 @@ HighFidelity.Podcast = DS.Model.extend({
         request.send(null);
     },
 
-    update: function(force) {
+    // Update this podcast from the RSS feed, but don't download any
+    // new episodes by default.
+    update: function() {
+        var _this = this;
 
+        HighFidelity.RSS.get(this.get('rssURL')).then(function(result) {
+            var $xml = $(result);
+            var $items = $xml.find('item');
+
+            if (!$xml.length || !$xml.find('item').length) {
+                // If we can't make sense of this podcast's feed, we delete
+                // it and inform the user of the error.
+                // _this.destroy();
+                window.alert('Error downloading podcast feed.');
+                return;
+            }
+
+            $items.each(function(i, episode) {
+                // TODO: Handle episode saving better; for now, simply get
+                // the most recent 15 podcasts.
+                // TODO: Remove magic constant.
+                // if (i > 15) {
+                //     return;
+                // }
+                var oldImageURL = _this.get('coverImageURL');
+
+                // _this.set({
+                //     imageURL: result['itunes:image'],
+                //     name: result.title
+                // });
+                // _this.save();
+
+                // If the cover image has changed (or this podcast is new)
+                // we update the cover image.
+                if (!oldImageURL ||
+                    oldImageURL !== _this.get('coverImageURL')) {
+                    // _this.getCoverImage();
+                }
+
+                // If no episodes exist in our database, this podcast is
+                // new and we should download some!
+
+                //if (true) {
+                try {
+                    _this.get('episodes').then(function(episodes) {
+                        var e = episodes.store.createRecord('episode', {
+                            id: $(episode).find('guid').text(),
+                            audioURL: $(episode).find('enclosure').attr('url'),
+                            datePublished: $(episode).find('pubDate').text(),
+                            name: $(episode).find('title').text(),
+                            podcast: _this.get('model')
+                        });
+                        e.save();
+                        episodes.addObject(e);
+                        // console.log({
+                        //     id: $(episode).find('guid').text(),
+                        //     audioURL: $(episode).find('enclosure').attr('url'),
+                        //     datePublished: $(episode).find('pubDate').text(),
+                        //     name: $(episode).find('title').text(),
+                        //     podcast: _this.get('model')
+                        // });
+                        console.log($(episode).find('guid').text());
+                    });
+                } catch (err) {
+                    console.error(err, _this.get('episodes'));
+                }
+                //}
+            });
+
+            // _this.set('lastUpdated' window.timestamp()});
+            // _this.save();
+        });
     }
 });
 
