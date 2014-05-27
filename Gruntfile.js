@@ -1,4 +1,4 @@
-// Generated on 2014-05-01 using generator-recroom 0.0.2
+// Generated on 2014-05-23 using generator-recroom 0.0.2
 'use strict';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
@@ -28,21 +28,17 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
         watch: {
             emberTemplates: {
-                files: ['/templates/**/*.hbs','/bower_components/**/*.hbs'],
+                files: ['<%= yeoman.app %>/templates/**/*.hbs','/bower_components/**/*.hbs'],
                 tasks: ['emberTemplates']
             },
-            coffee: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-                tasks: ['coffee:dist']
-            },
-            coffeeTest: {
-                files: ['test/spec/{,*/}*.coffee'],
-                tasks: ['coffee:test']
-            },
             neuter: {
-                files: ['.tmp/scripts/{,*/}*.js',
-                        '!.tmp/scripts/combined-scripts.js'],
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
                 tasks: ['neuter']
+            },
+            stylus: {
+                files: ['<%= yeoman.app %>/styles/{,*/}*.css',
+                        '<%= yeoman.app %>/styles/{,*/}*.styl'],
+                tasks: ['stylus']
             },
             livereload: {
                 options: {
@@ -131,24 +127,15 @@ module.exports = function (grunt) {
                 }
             }
         },
-        coffee: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/scripts',
-                    src: '{,*/}*.coffee',
-                    dest: '.tmp/scripts',
-                    ext: '.js'
-                }]
-            },
-            test: {
-                files: [{
-                    expand: true,
-                    cwd: 'test/spec',
-                    src: '{,*/}*.coffee',
-                    dest: '.tmp/spec',
-                    ext: '.js'
-                }]
+        stylus: {
+            compile: {
+                options: {
+                    compress: false,
+                    paths: ['node_modules/grunt-contrib-stylus/node_modules']
+                },
+                files: {
+                    '.tmp/styles/compiled-stylus.css': ['<%= yeoman.app %>/styles/*.styl']
+                }
             }
         },
         // not used since Uglify task does concat,
@@ -283,16 +270,13 @@ module.exports = function (grunt) {
         },
         concurrent: {
             server: [
-                'emberTemplates',
-                'coffee:dist'
+                'emberTemplates'
             ],
             test: [
-                'emberTemplates',
-                'coffee'
+                'emberTemplates'
             ],
             dist: [
                 'emberTemplates',
-                'coffee',
                 'imagemin',
                 'svgmin',
                 'htmlmin'
@@ -300,7 +284,7 @@ module.exports = function (grunt) {
         },
         emberTemplates: {
             options: {
-                /* we use a regular expression to set the paths for your 
+                /* we use a regular expression to set the paths for your
                 templates in <your app name>/templates and for the fxos-ui templates that
                 are a bower dependency */
                 templateBasePath: /app\/templates\/|app\/bower_components\/fxos-ui\/templates\//
@@ -317,12 +301,11 @@ module.exports = function (grunt) {
         neuter: {
             app: {
                 options: {
-                    template: "{%= src %}",
                     filepathTransform: function (filepath) {
-                        return '.tmp/' + filepath;
+                        return yeomanConfig.app + '/' + filepath;
                     }
                 },
-                src: ['.tmp/scripts/app.js'],
+                src: '<%= yeoman.app %>/scripts/app.js',
                 dest: '.tmp/scripts/combined-scripts.js'
             }
         }
@@ -342,6 +325,7 @@ module.exports = function (grunt) {
             'clean:server',
             'replace:app',
             'concurrent:server',
+            'stylus',
             'neuter:app',
             'connect:livereload',
             'open',
@@ -354,6 +338,7 @@ module.exports = function (grunt) {
         'replace:app',
         'concurrent:test',
         'connect:test',
+        'stylus',
         'neuter:app',
         'mocha'
     ]);
@@ -363,6 +348,7 @@ module.exports = function (grunt) {
         'replace:dist',
         'useminPrepare',
         'concurrent:dist',
+        'stylus',
         'neuter:app',
         'concat',
         'cssmin',

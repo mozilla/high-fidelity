@@ -1,0 +1,11 @@
+<ul class="my-podcasts">
+ {{#each model}}
+    <li>
+      {{#link-to 'podcast' this}}
+        <img {{bind-attr src=this.coverImageURL}} {{bind-attr alt=this.name}}>
+      {{/link-to}}
+    </li>
+  {{/each}}
+</ul>
+
+{{outlet}}

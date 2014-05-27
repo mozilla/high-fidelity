@@ -1,0 +1,34 @@
+<div id="player">
+  {{#if model.audioFile}}
+    <audio id="audio" {{bind-attr src=model.audioFile}} autoload></audio>
+    <div id="time-info">
+      <span id="time-elapsed"></span>
+      <span id="time-remaining"></span>
+      <!-- <progress id="audio-progress"></progress> -->
+    </div>
+    {{#if isPlaying}}
+      <a {{action pause model}} class="play-pause"><i class="fa fa-pause"></i></a>
+    {{else}}
+      <a {{action play model}} class="play-pause"><i class="fa fa-play"></i></a>
+    {{/if}}
+    <span>{{model.name}}</span>
+  {{else}}
+    {{#if model.audioURL}}
+    <audio id="audio" {{bind-attr src=model.audioURL}} autoload></audio>
+      <div id="time-info">
+        <span id="time-elapsed"></span>
+        <span id="time-remaining"></span>
+        <!-- <progress id="audio-progress"></progress> -->
+      </div>
+      {{#if isPlaying}}
+        <a {{action pause model}} class="play-pause"><i class="fa fa-pause"></i></a>
+      {{else}}
+        <a {{action play model}} class="play-pause"><i class="fa fa-play"></i></a>
+      {{/if}}
+      <span>{{model.name}}</span>
+    {{else}}
+      <span></span>
+      <span>Nothing to play</span>
+    {{/if}}
+  {{/if}}
+</div>

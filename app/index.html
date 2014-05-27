@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 
     <!-- TODO: Localize title -->
-    <title>high fidelity</title>
+    <title>Podcasts</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -28,11 +28,12 @@
     <!-- l10n TODO: build step -->
     <link rel="resource" type="application/l10n" href="l10n/en.properties">
 
-    <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/normalize.css">
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="bower_components/brick/dist/brick.css">
-    <!-- endbuild -->
+        <!-- build:css styles/main.css -->
+        <link rel="stylesheet" href="styles/normalize.css">
+        <link rel="stylesheet" href="styles/compiled-stylus.css">
+        <link rel="stylesheet" href="bower_components/brick/dist/brick.css">
+        <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css">
+        <!-- endbuild -->
 </head>
 
   <!-- Content gets replaced by the application.hbs template. -->
@@ -44,7 +45,8 @@
         <script src="@@ember_data"></script>
         <script src="bower_components/brick/dist/brick.js"></script>
         <script src="bower_components/localforage/dist/localforage.js"></script>
-        <script src="scripts/vendor/l10n.js"></script>
+        <script src="bower_components/i18n-js/app/assets/javascripts/i18n.js"></script>
+        <script src="bower_components/scroller/src/Scroller.js"></script>
         <!-- endbuild -->
 
         <!-- build:js(.tmp) scripts/templates.js -->

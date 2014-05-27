@@ -7,7 +7,10 @@
     "ember-data": "1.0.0-beta.5",
     "brick": "1.0.1",
     "localforage": "0.7.0",
-    "fxos-ui": "0.0.1"
+    "fxos-ui": "0.0.1",
+    "i18n-js": "git://github.com/fnando/i18n-js#v3.0.0.rc5",
+    "scroller": "git://github.com/zynga/scroller#dadd850722ad2be9a865e4d84cb76c0197b68734",
+    "fontawesome": "~4.1.0"
   },
   "devDependencies": {
     "ember-mocha-adapter": "0.1.2"

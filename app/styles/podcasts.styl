@@ -1,0 +1,15 @@
+// .cover-image {
+//     display: block;
+//     width: 100%;
+// }
+
+.cover-image {
+    display: block;
+    max-height: 150px;
+
+    &::after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+}
