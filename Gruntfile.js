@@ -361,6 +361,11 @@ module.exports = function (grunt) {
         'htmlmin:deploy'
     ]);
 
+    grunt.registerTask('deploy', [
+        'build',
+        'gh-pages'
+    ]);
+
     grunt.registerTask('default', [
         'jshint',
         'test',
