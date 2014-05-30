@@ -18,6 +18,7 @@
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-watch": "~0.5.2",
     "grunt-ember-templates": "0.4.14",
+    "grunt-gh-pages": "^0.9.1",
     "grunt-mocha": "~0.4.1",
     "grunt-neuter": "~0.5.0",
     "grunt-open": "~0.2.0",

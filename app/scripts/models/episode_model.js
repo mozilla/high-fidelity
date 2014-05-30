@@ -6,6 +6,7 @@ HighFidelity.Episode = DS.Model.extend({
     audioLength: DS.attr('number'),
     playbackPosition: DS.attr('number'),
     audioFile: DS.attr('string'),
+    guid: DS.attr('string'),
 
     // Episode metadata from RSS.
     datePublished: DS.attr('date'),
@@ -36,7 +37,8 @@ HighFidelity.Episode.FIXTURES = [
         audioURL: 'http://traffic.libsyn.com/atpfm/atp65.mp3',
         playbackPosition: 0,
         datePublished: (new Date()),
-        episodeId: 65
+        episodeId: 65,
+        guid: "jojhodibjk"
     },
     {
         id: 1,
@@ -45,6 +47,7 @@ HighFidelity.Episode.FIXTURES = [
         playbackPosition: 0,
         audioFile: 'foo',
         datePublished: (new Date()),
-        episodeId: 66
+        episodeId: 66,
+        guid: "121212"
     }
 ];

@@ -1,4 +1,8 @@
 HighFidelity.ApplicationAdapter = DS.FixtureAdapter;
+// HighFidelity.ApplicationSerializer = DS.LSSerializer.extend();
+// HighFidelity.ApplicationAdapter = DS.LSAdapter.extend({
+//     namespace: 'hifi'
+// });
 
 // Add ability to query fixtures in development mode.
 if (HighFidelity.ApplicationAdapter === DS.FixtureAdapter) {

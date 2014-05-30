@@ -149,6 +149,12 @@ module.exports = function (grunt) {
         /*uglify: {
             dist: {}
         },*/
+        'gh-pages': {
+            options: {
+                base: 'dist'
+            },
+            src: ['**']
+        },
         rev: {
             dist: {
                 files: {

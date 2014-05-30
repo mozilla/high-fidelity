@@ -70,8 +70,13 @@ HighFidelity.Podcast = DS.Model.extend({
                 //if (true) {
                 try {
                     _this.get('episodes').then(function(episodes) {
+                        if (episodes.store.find('episode', {
+                            guid: $(episode).find('guid').text()
+                        })) {
+                            console.log('exists!');
+                        }
                         var e = episodes.store.createRecord('episode', {
-                            id: $(episode).find('guid').text(),
+                            guid: $(episode).find('guid').text(),
                             audioURL: $(episode).find('enclosure').attr('url'),
                             datePublished: $(episode).find('pubDate').text(),
                             name: $(episode).find('title').text(),
