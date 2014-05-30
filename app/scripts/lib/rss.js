@@ -11,7 +11,11 @@
     function getFromGoogle(url, callback) {
         return new Promise(function(resolve, reject) {
             $.ajax({
-                url: 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=?&q=' + encodeURIComponent(url) + '&num=' + 15 + '&output=json_xml',
+                url: document.location.protocol +
+                     '//ajax.googleapis.com/ajax/' +
+                     'services/feed/load?v=1.0&callback=?&q=' +
+                     encodeURIComponent(url) +
+                     '&num=' + 15 + '&output=json_xml',
                 dataType: 'json',
                 success: function(response) {
                     var xml = new DOMParser();
