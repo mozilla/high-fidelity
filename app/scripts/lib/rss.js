@@ -6,16 +6,20 @@
 (function() {
     'use strict';
 
+    var NUMBER_OF_PODCASTS_TO_GET = 1000;
+
     // Download a podcast feed from the URL specified. Execute a callback
     // (the second argument) whenever the data loads.
     function getFromGoogle(url, callback) {
         return new Promise(function(resolve, reject) {
             $.ajax({
-                url: document.location.protocol +
-                     '//ajax.googleapis.com/ajax/' +
+                url: 'https://ajax.googleapis.com/ajax/' +
                      'services/feed/load?v=1.0&callback=?&q=' +
                      encodeURIComponent(url) +
-                     '&num=' + 15 + '&output=json_xml',
+                     // TODO: Actually paginate results; for now we just get
+                     // "all" podcasts, presuming most podcasts have fewer
+                     // than 1,000 episodes.
+                     '&num=' + NUMBER_OF_PODCASTS_TO_GET + '&output=json_xml',
                 dataType: 'json',
                 success: function(response) {
                     var xml = new DOMParser();
