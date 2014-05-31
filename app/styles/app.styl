@@ -28,11 +28,24 @@ ul, dl, ol {
     padding: 0;
 }
 
-// Fixed footer
-x-layout > footer {
-    bottom: 0;
-    position: fixed;
-    width: 100%;
+// Fixed header/footer
+x-layout {
+    > header, > footer {
+        position: fixed;
+        width: 100%;
+    }
+
+    > header {
+        top: 0;
+    }
+
+    > section {
+        padding: 45px 0;
+    }
+
+    > footer {
+        bottom: 0;
+    }
 }
 
 // Tabs
@@ -42,7 +55,7 @@ x-tabbar-tab a {
 }
 
 .my-podcasts {
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
 .my-podcasts li {
