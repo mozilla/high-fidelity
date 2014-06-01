@@ -34,8 +34,11 @@ HighFidelity.Podcast = DS.Model.extend({
     update: function() {
         var _this = this;
         this.getCoverImage();
-        // this.set('lastUpdated', (new Date()));
-        // this.save();
+
+        // Update last updated time so we aren't constantly looking for new
+        // episodes ;-)
+        this.set('lastUpdated', (new Date()));
+        this.save();
 
         HighFidelity.RSS.get(this.get('rssURL')).then(function(result) {
             var $xml = $(result);
@@ -44,7 +47,6 @@ HighFidelity.Podcast = DS.Model.extend({
             if (!$xml.length || !$xml.find('item').length) {
                 // If we can't make sense of this podcast's feed, we delete
                 // it and inform the user of the error.
-                // _this.destroy();
                 window.alert('Error downloading podcast feed.');
                 return;
             }

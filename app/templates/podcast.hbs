@@ -1,14 +1,12 @@
 <div class="podcast">
   <img class="cover-image" {{bind-attr src=model.coverImageURL}} {{bind-attr alt=model.name}}>
 
-  <!-- <h1>{{model.name}}</h1> -->
   <button {{action update}}>Update Podcast</button>
+  <p>Last updated: {{lastUpdated}}</p>
 </div>
 
 <hr />
 
 {{render episodes model.episodes}}
-
- <!-- {{#link-to 'podcast.edit' model}}Change{{/link-to}} -->
 
 {{outlet}}
