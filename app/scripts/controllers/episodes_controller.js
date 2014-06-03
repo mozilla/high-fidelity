@@ -2,7 +2,7 @@ HighFidelity.EpisodesController = Ember.ArrayController.extend({
     needs: ['player'],
 
     sortAscending: false,
-    sortProperties: ['datePublished', 'episodeId'],
+    sortProperties: ['datePublished'],
 
     actions: {
         setEpisode: function(episode) {
