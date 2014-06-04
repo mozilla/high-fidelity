@@ -9,8 +9,7 @@ HighFidelity.Episode = DS.Model.extend({
     guid: DS.attr('string'),
 
     // Episode metadata from RSS.
-    datePublished: DS.attr('date'),
-    episodeId: DS.attr('number'),
+    datePublished: DS.attr('number'),
 
     isPlaying: false,
 
@@ -36,23 +35,4 @@ HighFidelity.Episode.reopen({
 
 // delete below here if you do not want fixtures
 HighFidelity.Episode.FIXTURES = [
-    {
-        id: 0,
-        name: 'The Year Of Casey',
-        audioURL: 'http://traffic.libsyn.com/atpfm/atp65.mp3',
-        playbackPosition: 0,
-        datePublished: (new Date()),
-        episodeId: 65,
-        guid: "jojhodibjk"
-    },
-    {
-        id: 1,
-        name: 'Boiling A Pretty Big Lake',
-        audioURL: 'http://traffic.libsyn.com/atpfm/atp66.mp3',
-        playbackPosition: 0,
-        audioFile: 'foo',
-        datePublished: (new Date()),
-        episodeId: 66,
-        guid: "121212"
-    }
 ];
