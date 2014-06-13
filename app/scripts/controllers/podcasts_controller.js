@@ -1,3 +1,3 @@
-HighFidelity.PodcastsController = Ember.ObjectController.extend({
-    // Implement your controller here.
+HighFidelity.PodcastsController = Ember.ArrayController.extend({
+    sortProperties: ['title']
 });

@@ -1,12 +1,18 @@
 <div class="episodes">
   {{#collection content=controller}}
-    <div {{action "setEpisode" this}} class="episode">
+    <div {{action setEpisode this}} class="episode">
       <div class="name">
-        {{!--
-        <strong>{{name}}</strong><br>
-        {{datePublished}}
-        --}}
+        {{#unless playbackPosition}}
+          {{#unless playbackCount}}
+            <strong>
+          {{/unless}}
+        {{/unless}}
         {{name}}
+        {{#unless playbackPosition}}
+          {{#unless playbackCount}}
+            </strong>
+          {{/unless}}
+        {{/unless}}
       </div>
 
       <div class="actions">

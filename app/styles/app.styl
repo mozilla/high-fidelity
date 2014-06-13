@@ -48,6 +48,28 @@ x-layout {
     }
 }
 
+// Header actions
+x-appbar h1 {
+    display: none;
+}
+x-appbar h1:last-of-type {
+    display: block;
+}
+x-appbar > a {
+    cursor: pointer;
+    padding-left: 2px;
+    padding-right: 2px;
+    min-width: 45px;
+    background: transparent;
+}
+x-appbar > a:hover {
+    background-color: #00405d;
+}
+x-appbar > a::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
 // Tabs
 x-tabbar-tab a {
     color: #fff;
@@ -56,17 +78,27 @@ x-tabbar-tab a {
 
 .my-podcasts {
     margin: 5px 0;
-}
 
-.my-podcasts li {
-    display: inline-block;
-    float: left;
-    margin: 0 2.5% 20px;
-    width: 45%;
-}
+    li {
+        display: inline-block;
+        float: left;
+        margin: 0 2.5% 20px;
+        width: 45%;
 
-.my-podcasts li img {
-    display: inline-block;
-    height: 100%;
-    width: 100%;
+        img {
+            display: inline-block;
+            height: 100%;
+            width: 100%;
+        }
+
+        .no-cover {
+            background: #dedede;
+            border: 1px solid #000;
+            color: #000;
+            font-size: 1.2em;
+            min-height: 100px;
+            padding: 30px 0 0;
+            text-align: center;
+        }
+    }
 }

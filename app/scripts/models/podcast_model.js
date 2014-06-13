@@ -1,15 +1,42 @@
 HighFidelity.Podcast = DS.Model.extend({
     episodes: DS.hasMany('episode', {async: true}),
 
-    name: DS.attr('string'),
+    title: DS.attr('string'),
+    description: DS.attr('string'),
     rssURL: DS.attr('string'),
-    lastUpdated: DS.attr('date'),
-    lastPlayed: DS.attr('date'),
+    lastUpdated: DS.attr('number'),
+    lastPlayed: DS.attr('number'),
 
     coverImageBlob: DS.attr('string'),
     coverImageURL: DS.attr('string'),
 
+    // Podcast initialization; mostly used to check for new episodes.
+    init: function() {
+        this._super();
+
+        if (!this.get('lastUpdated') ||
+            this.get('lastUpdated') + 3600 < HighFidelity.timestamp()) {
+            console.log('Updating podcast -- ', this.get('lastUpdated'));
+            // this.update();
+        }
+    },
+
+    coverImage: function() {
+        if (this.get('coverImageBlob')) {
+            return null;
+        } else if (this.get('coverImageURL')) {
+            return this.get('coverImageURL');
+        } else {
+            return null;
+        }
+    }.property('coverImageBlob', 'coverImageURL'),
+
     getCoverImage: function() {
+        if (!this.get('coverImageURL')) {
+            console.debug('No coverImageURL found; skipping.');
+            return;
+        }
+
         var _this = this;
 
         var request = new XMLHttpRequest({mozSystem: true});
@@ -33,42 +60,50 @@ HighFidelity.Podcast = DS.Model.extend({
     // new episodes by default.
     update: function() {
         var _this = this;
-        this.getCoverImage();
 
-        // Update last updated time so we aren't constantly looking for new
-        // episodes ;-)
-        this.set('lastUpdated', (new Date()));
-        this.save();
+        return new Promise(function(resolve, reject) {
+            // _this.getCoverImage();
 
-        HighFidelity.RSS.get(this.get('rssURL')).then(function(result) {
-            var $xml = $(result);
-            var $items = $xml.find('item');
+            // Update last updated time so we aren't constantly looking for new
+            // episodes ;-)
+            _this.set('lastUpdated', HighFidelity.timestamp());
 
-            if (!$xml.length || !$xml.find('item').length) {
-                // If we can't make sense of this podcast's feed, we delete
-                // it and inform the user of the error.
-                window.alert('Error downloading podcast feed.');
-                return;
-            }
+            HighFidelity.RSS.get(_this.get('rssURL')).then(function(result) {
+                var $xml = $(result);
+                var $channel = $xml.find('channel');
+                var $items = $xml.find('item');
 
-            $items.each(function(i, episode) {
-                var oldImageURL = _this.get('coverImageURL');
-
-                // _this.set({
-                //     imageURL: result['itunes:image'],
-                //     name: result.title
-                // });
-                // _this.save();
-
-                // If the cover image has changed (or this podcast is new)
-                // we update the cover image.
-                if (!oldImageURL ||
-                    oldImageURL !== _this.get('coverImageURL')) {
-                    _this.getCoverImage();
+                if (!$xml.length || !$xml.find('item').length) {
+                    // If we can't make sense of this podcast's feed, we delete
+                    // it and inform the user of the error.
+                    window.alert('Error downloading podcast feed.');
+                    return;
                 }
 
-                var _episodes;
-                try {
+                _this.set('title', $channel.find('title').eq(0).text());
+                _this.set('description', $channel.find('description')
+                                                 .eq(0).text());
+
+                $items.each(function(i, episode) {
+                    var oldImageURL = _this.get('coverImageURL');
+
+                    // Use the latest artwork for the cover image.
+                    if (i === 0) {
+                        _this.set('coverImageURL',
+                                  $(episode).find('itunes\\:image')
+                                            .attr('href'));
+                    }
+
+                    _this.save();
+
+                    // If the cover image has changed (or this podcast is new)
+                    // we update the cover image.
+                    if (!oldImageURL ||
+                        oldImageURL !== _this.get('coverImageURL')) {
+                        _this.getCoverImage();
+                    }
+
+                    var _episodes;
                     _this.get('episodes').then(function(episodes) {
                         _episodes = episodes;
 
@@ -78,14 +113,16 @@ HighFidelity.Podcast = DS.Model.extend({
                         if (episodeExists) {
                             // An episode with the same guid already exists,
                             // so don't save this one.
-                            console.log('exists');
+                            console.debug('Episodes already exists.');
                             return;
                         }
 
                         var e = _episodes.store.createRecord('episode', {
                             guid: $(episode).find('guid').text(),
                             audioURL: $(episode).find('enclosure').attr('url'),
-                            datePublished: $(episode).find('pubDate').text(),
+                            datePublished: HighFidelity.timestamp(
+                                $(episode).find('pubDate').text()
+                            ),
                             name: $(episode).find('title').text(),
                             podcast: _this.get('model')
                         });
@@ -94,10 +131,10 @@ HighFidelity.Podcast = DS.Model.extend({
                         // Add this episode to the list of objects; this will
                         // cause it to appear in any existing lists.
                         _episodes.addObject(e);
-                    });
-                } catch (err) {
-                    console.error(err, _this.get('episodes'));
-                }
+                    }).then(resolve);
+                });
+            }, function(error) {
+                console.log(error);
             });
         });
     }
@@ -121,19 +158,19 @@ HighFidelity.Podcast.reopen({
 HighFidelity.Podcast.FIXTURES = [
     {
         id: 0,
-        name: 'Accidental Tech Podcast',
+        title: 'Accidental Tech Podcast',
         rssURL: 'http://atp.fm/episodes?format=rss',
-        lastUpdated: (new Date()),
-        lastPlayed: (new Date()),
+        lastUpdated: 234,
+        lastPlayed: 200,
         coverImageURL: 'http://static.squarespace.com/static/513abd71e4b0fe58c655c105/t/52c45a37e4b0a77a5034aa84/1388599866232/1500w/Artwork.jpg',
-        episodes: []
+        episodes: [0]
     },
     {
         id: 1,
-        name: 'The Cracked Podcast',
+        title: 'The Cracked Podcast',
         rssURL: 'http://rss.earwolf.com/the-cracked-podcast',
-        lastUpdated: (new Date()),
-        lastPlayed: (new Date()),
+        lastUpdated: 247724,
+        lastPlayed: 24742,
         coverImageURL: 'http://cdn.earwolf.com/wp-content/uploads/2013/08/EAR_CrackedPodcast_1600x1600_Cover_Final.jpg',
         episodes: []
     }

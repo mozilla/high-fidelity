@@ -22,10 +22,15 @@
                      '&num=' + NUMBER_OF_PODCASTS_TO_GET + '&output=json_xml',
                 dataType: 'json',
                 success: function(response) {
+                    if (!response || !response.responseData) {
+                        console.error('Bad response', response);
+                        return;
+                    }
                     var xml = new DOMParser();
                     var xmlString = response.responseData.xmlString;
                     var xmlDoc = xml.parseFromString(xmlString, 'text/xml');
 
+                    console.log(xmlDoc, response);
                     if (callback) {
                         callback(xmlDoc);
                     }
@@ -38,7 +43,7 @@
         });
     }
 
-    HighFidelity.RSS = window.RSS = {
+    HighFidelity.RSS = {
         get: getFromGoogle
     };
 })();

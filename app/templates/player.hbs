@@ -1,34 +1,24 @@
 <div id="player">
-  {{#if model.audioFile}}
-    <audio id="audio" {{bind-attr src=model.audioFile}} autoload></audio>
+  {{#if audio}}
     <div id="time-info">
-      <span id="time-elapsed"></span>
-      <span id="time-remaining"></span>
-      <!-- <progress id="audio-progress"></progress> -->
+      <span id="time-elapsed">{{timeElapsed}}</span>
+      <progress id="audio-progress" {{bind-attr max=progressBar.max}}
+                                    {{bind-attr value=progressBar.value}}>
+      </progress>
+      <span id="time-remaining">{{timeTotal}}</span>
     </div>
     {{#if isPlaying}}
-      <a {{action pause model}} class="play-pause"><i class="fa fa-pause"></i></a>
+      <a {{action pause model}} class="play-pause">
+        <i class="fa fa-pause"></i>
+      </a>
     {{else}}
-      <a {{action play model}} class="play-pause"><i class="fa fa-play"></i></a>
+      <a {{action play model}} class="play-pause">
+        <i class="fa fa-play"></i>
+      </a>
     {{/if}}
-    <span>{{model.name}}</span>
+    <span>{{name}}</span>
   {{else}}
-    {{#if model.audioURL}}
-    <audio id="audio" {{bind-attr src=model.audioURL}} autoload></audio>
-      <div id="time-info">
-        <span id="time-elapsed"></span>
-        <span id="time-remaining"></span>
-        <!-- <progress id="audio-progress"></progress> -->
-      </div>
-      {{#if isPlaying}}
-        <a {{action pause model}} class="play-pause"><i class="fa fa-pause"></i></a>
-      {{else}}
-        <a {{action play model}} class="play-pause"><i class="fa fa-play"></i></a>
-      {{/if}}
-      <span>{{model.name}}</span>
-    {{else}}
-      <span></span>
-      <span>Nothing to play</span>
-    {{/if}}
+    <span></span>
+    <span>Nothing to play</span>
   {{/if}}
 </div>

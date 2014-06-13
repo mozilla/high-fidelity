@@ -1,11 +1,15 @@
 <ul class="my-podcasts">
- {{#each model}}
+ {{#collection content=controller}}
     <li>
-      {{#link-to 'podcast' this}}
-        <img {{bind-attr src=this.coverImageURL}} {{bind-attr alt=this.name}}>
+      {{#link-to 'podcast' this class="cover"}}
+        {{#if this.coverImage}}
+          <img {{bind-attr src=this.coverImage}} {{bind-attr alt=this.title}}>
+        {{else}}
+          <span class="no-cover">{{this.title}}</span>
+        {{/if}}
       {{/link-to}}
     </li>
-  {{/each}}
+  {{/collection}}
 </ul>
 
 {{outlet}}
