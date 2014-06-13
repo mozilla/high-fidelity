@@ -32,6 +32,7 @@ HighFidelity.Podcast = DS.Model.extend({
     }.property('coverImageBlob', 'coverImageURL'),
 
     getCoverImage: function() {
+        return;
         if (!this.get('coverImageURL')) {
             console.debug('No coverImageURL found; skipping.');
             return;
