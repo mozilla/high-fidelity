@@ -12,32 +12,34 @@
     // (the second argument) whenever the data loads.
     function getFromGoogle(url, callback) {
         return new Promise(function(resolve, reject) {
+            var jsonpCallback = HighFidelity.isPackaged ? '' : '&callback=?';
+
             $.ajax({
                 url: 'https://ajax.googleapis.com/ajax/' +
-                     'services/feed/load?v=1.0&callback=?&q=' +
-                     encodeURIComponent(url) +
+                     'services/feed/load?v=1.0' + jsonpCallback +
                      // TODO: Actually paginate results; for now we just get
                      // "all" podcasts, presuming most podcasts have fewer
                      // than 1,000 episodes.
-                     '&num=' + NUMBER_OF_PODCASTS_TO_GET + '&output=json_xml',
+                     '&num=' + NUMBER_OF_PODCASTS_TO_GET + '&output=json_xml' +
+                     '&q=' + encodeURIComponent(url),
                 dataType: 'json',
-                success: function(response) {
+                success: function(response, xhr) {
                     if (!response || !response.responseData) {
                         console.error('Bad response', response);
-                        return;
+                        return reject(xhr);
                     }
+
                     var xml = new DOMParser();
                     var xmlString = response.responseData.xmlString;
                     var xmlDoc = xml.parseFromString(xmlString, 'text/xml');
 
-                    console.log(xmlDoc, response);
                     if (callback) {
                         callback(xmlDoc);
                     }
                     resolve(xmlDoc);
                 },
-                error: function() {
-                    reject();
+                error: function(error) {
+                    reject(error);
                 }
             });
         });

@@ -4,6 +4,19 @@ var HighFidelity = window.HighFidelity = Ember.Application.create({
     LOG_TRANSITIONS: true
 });
 
+// TODO: Check this somehow?
+HighFidelity.isPackaged = false;
+
+if (HighFidelity.isPackaged) {
+    jQuery.ajaxSettings.xhr = function() {
+        try {
+            return new XMLHttpRequest({mozSystem: true});
+        } catch(e) {
+            console.error(e);
+        }
+    };
+}
+
 // Order and include as you please.
 require('scripts/lib/*');
 require('scripts/l10n/*');

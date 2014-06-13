@@ -16,7 +16,7 @@
         "name": "Mozilla",
         "url": "https://mozilla.org/"
     },
-    "launch_path": "/",
+    "launch_path": "/index.html",
     "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
     "appcache_path": "/manifest.appcache",
     "type": "privileged",

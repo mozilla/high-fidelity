@@ -134,7 +134,8 @@ HighFidelity.Podcast = DS.Model.extend({
                     }).then(resolve);
                 });
             }, function(error) {
-                console.log(error);
+                console.error('Could not download podcast:', error);
+                _this.destroyRecord();
             });
         });
     }
