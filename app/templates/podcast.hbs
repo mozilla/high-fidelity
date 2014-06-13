@@ -1,0 +1,17 @@
+<div class="podcast">
+  <img class="cover-image" {{bind-attr src=coverImageURL}}
+                           {{bind-attr alt=title}}>
+
+  <p>{{description}}</p>
+
+  <button {{action delete}}>Unsubscribe</button>
+  {{!--
+  <p>Last updated: {{lastUpdated}}</p>
+  --}}
+</div>
+
+<hr />
+
+{{render episodes episodes}}
+
+{{outlet}}

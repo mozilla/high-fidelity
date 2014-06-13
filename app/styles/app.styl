@@ -1,0 +1,109 @@
+/* List View */
+.ember-list-view {
+    overflow: auto;
+    position: relative;
+    width: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.ember-list-item-view {
+    border-bottom: 1px solid #bbb;
+    height: 60px;
+    position: absolute;
+    width: 100%;
+}
+
+// Override some defaults
+hr {
+    margin: 0;
+    padding: 0;
+}
+
+ul, dl, ol {
+    margin: 0;
+    padding: 0;
+}
+
+// Generic things
+.center {
+    text-align: center;
+}
+
+// Fixed header/footer
+x-layout {
+    > header, > footer {
+        position: fixed;
+        width: 100%;
+    }
+
+    > header {
+        top: 0;
+    }
+
+    > section {
+        padding: 45px 0 75px;
+    }
+
+    > footer {
+        bottom: 0;
+    }
+}
+
+// Header actions
+x-appbar h1 {
+    display: none;
+}
+x-appbar h1:last-of-type {
+    display: block;
+}
+x-appbar > a {
+    cursor: pointer;
+    padding-left: 2px;
+    padding-right: 2px;
+    min-width: 45px;
+    background: transparent;
+}
+x-appbar > a:hover {
+    background-color: #00405d;
+}
+x-appbar > a::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+// Tabs
+x-tabbar-tab a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.my-podcasts {
+    margin: 5px 0;
+
+    li {
+        display: inline-block;
+        float: left;
+        margin: 0 2.5% 20px;
+        width: 45%;
+
+        img {
+            display: inline-block;
+            height: 100%;
+            width: 100%;
+        }
+
+        .no-cover {
+            background: #dedede;
+            border: 1px solid #000;
+            color: #000;
+            font-size: 1.2em;
+            min-height: 100px;
+            padding: 30px 0 0;
+            text-align: center;
+        }
+    }
+}

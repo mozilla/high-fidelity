@@ -1,0 +1,22 @@
+<x-layout>
+  <header>
+    <x-appbar>
+      <h1>{{t app.title}}</h1>
+      {{outlet headerAction}}
+    </x-appbar>
+  </header>
+  <section>
+    {{outlet}}
+  </section>
+  <footer>
+    <!-- We interact with this programatically for various reasons. -->
+    <audio id="audio-player" preload="auto"></audio>
+
+    {{render "player"}}
+    <x-tabbar>
+        <x-tabbar-tab>{{#link-to 'podcasts'}}{{t tabs.myPodcasts}}{{/link-to}}</x-tabbar-tab>
+        <x-tabbar-tab>{{#link-to 'index'}}{{t tabs.popular}}{{/link-to}}</x-tabbar-tab>
+        <x-tabbar-tab>{{#link-to 'index'}}{{t tabs.search}}{{/link-to}}</x-tabbar-tab>
+    </x-tabbar>
+  </footer>
+</x-layout>
