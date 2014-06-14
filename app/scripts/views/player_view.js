@@ -1,2 +1,1 @@
-HighFidelity.PlayerView = Ember.View.extend({
-});
+HighFidelity.PlayerView = Ember.View.extend({});
