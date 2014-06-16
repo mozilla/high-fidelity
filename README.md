@@ -2,15 +2,15 @@
 
 ## Introduction
 
-This is an experimental, rewrite branch using __Ember.js__ and __Mozilla's recroom__.
+This is an experimental, rewrite branch using Ember.js and Mozilla's recroom.
 
 high-fidelity is an offline-capable, entirely _HTML5/JS_ podcasts app. It's
-chiefly designed for __Firefox OS__, but support for other platforms and browsers
+chiefly designed for Firefox OS, but support for other platforms and browsers
 is an eventual design goal. It requires a datastore that supports large files;
-currently, we just use __IndexedDB__.
+currently, we just use IndexedDB.
 
 The app requires elevated _XMLHttpRequest_ privileges to fetch podcast files.
-In __Firefox OS__, this currently means being installed as a packaged app. Details
+In Firefox OS, this currently means being installed as a packaged app. Details
 for other platforms forthcoming.
 
 ## License 
