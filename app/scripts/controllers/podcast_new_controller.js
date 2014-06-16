@@ -1,8 +1,12 @@
 HighFidelity.PodcastNewController = Ember.ObjectController.extend({
-    rssURL: 'http://atp.fm/episodes?format=rss',
+    rssURL: '',
 
     actions: {
-        create: function() {
+        create: function(url) {
+            if (url) {
+                this.set('rssURL', url);
+            }
+
             var _this = this;
 
             var id = encodeURIComponent(this.get('rssURL')
