@@ -22,9 +22,9 @@ HighFidelity.Episode = DS.Model.extend({
 
 // probably should be mixed-in...
 HighFidelity.Episode.reopen({
-    attributes: function(){
+    attributes: function() {
         var model = this;
-        return Ember.keys(this.get('data')).map(function(key){
+        return Ember.keys(this.get('data')).map(function(key) {
             return Ember.Object.create({
                 model: model,
                 key: key,

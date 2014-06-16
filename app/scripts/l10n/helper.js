@@ -1,3 +1,4 @@
+/*global I18n:true */
 Ember.Handlebars.registerHelper('t', function(property, options) {
     var params = options.hash;
     var _this = this;

@@ -1,12 +1,11 @@
 /* global describe, it */
-
-(function () {
+(function() {
     'use strict';
 
-    describe('Give it some context', function () {
-        describe('maybe a bit more context here', function () {
-            it('should run here few assertions', function () {
-
+    describe('Give it some context', function() {
+        describe('maybe a bit more context here', function() {
+            it('should run here few assertions', function() {
+                // Code goes here...
             });
         });
     });

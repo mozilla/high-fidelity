@@ -1,3 +1,4 @@
+/*global I18n:true */
 I18n.translations = {
     en: {
         app: {
