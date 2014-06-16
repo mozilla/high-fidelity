@@ -1,2 +1,1 @@
-HighFidelity.PodcastNewRoute = Ember.Route.extend({
-});
+HighFidelity.PodcastNewRoute = Ember.Route.extend({});

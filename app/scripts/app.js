@@ -11,8 +11,8 @@ if (HighFidelity.isPackaged) {
     jQuery.ajaxSettings.xhr = function() {
         try {
             return new XMLHttpRequest({mozSystem: true});
-        } catch(e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
         }
     };
 }

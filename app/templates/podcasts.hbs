@@ -1,22 +1,22 @@
 <ul class="my-podcasts">
- {{#collection content=controller}}
-    <li>
-      {{#link-to 'podcast' this class="cover"}}
-        {{#if this.coverImage}}
-          <img {{bind-attr src=this.coverImage}} {{bind-attr alt=this.title}}>
-        {{else}}
-          <span class="no-cover">{{this.title}}</span>
-        {{/if}}
-      {{/link-to}}
-    </li>
-  {{else}}
-    <div class="center">
-      <h2>No podcasts found.</h2>
-      <p>
-        Want to {{#link-to 'podcast.new'}}add one?{{/link-to}}
-      </p>
-    </div>
-  {{/collection}}
+    {{#collection content=controller}}
+        <li>
+            {{#link-to 'podcast' this class="cover"}}
+                {{#if this.coverImage}}
+                    <img {{bind-attr src=this.coverImage}} {{bind-attr alt=this.title}}>
+                {{else}}
+                    <span class="no-cover">{{this.title}}</span>
+                {{/if}}
+            {{/link-to}}
+        </li>
+    {{else}}
+        <div class="center">
+            <h2>No podcasts found.</h2>
+            <p>
+                Want to {{#link-to 'podcast.new'}}add one?{{/link-to}}
+            </p>
+        </div>
+    {{/collection}}
 </ul>
 
 {{outlet}}

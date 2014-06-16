@@ -1,12 +1,4 @@
-HighFidelity.Router.map(function () {
-
-    // this.resource('episodes', function() {
-    //     this.resource('episode', { path: '/:episode_id' }, function() {
-    //         this.route('edit');
-    //     });
-    //     this.route('create');
-    // });
-
+HighFidelity.Router.map(function() {
     this.resource('podcasts', function() {
     });
     this.resource('podcast.new',  {path: '/podcast/new'});
@@ -15,5 +7,4 @@ HighFidelity.Router.map(function () {
         this.route('edit');
     });
     this.resource('episode', { path: '/episode/:episode_id' });
-
 });

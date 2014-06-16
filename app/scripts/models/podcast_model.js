@@ -32,7 +32,7 @@ HighFidelity.Podcast = DS.Model.extend({
     }.property('coverImageBlob', 'coverImageURL'),
 
     getCoverImage: function() {
-        return;
+        //return;
         if (!this.get('coverImageURL')) {
             console.debug('No coverImageURL found; skipping.');
             return;
@@ -144,9 +144,9 @@ HighFidelity.Podcast = DS.Model.extend({
 
 // probably should be mixed-in...
 HighFidelity.Podcast.reopen({
-    attributes: function(){
+    attributes: function() {
         var model = this;
-        return Ember.keys(this.get('data')).map(function(key){
+        return Ember.keys(this.get('data')).map(function(key) {
             return Ember.Object.create({
                 model: model,
                 key: key,

@@ -1,16 +1,16 @@
 <h1>Episode</h1>
 
 <table>
-  {{#each buffer}}
-  <tr>
-    <td>
-      <strong>{{key}}:</strong>
-    </td>
-    <td>
-      {{input value=value}}
-    </td>
-  </tr>
-  {{/each}}
+    {{#each buffer}}
+        <tr>
+            <td>
+                <strong>{{key}}:</strong>
+            </td>
+            <td>
+                {{input value=value}}
+            </td>
+        </tr>
+    {{/each}}
 </table>
 
 <button {{action 'save'}}>Update</button>

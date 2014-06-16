@@ -1,2 +1,1 @@
-HighFidelity.PodcastView = Ember.View.extend({
-});
+HighFidelity.PodcastView = Ember.View.extend({});

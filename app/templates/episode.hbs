@@ -1,16 +1,16 @@
 <h1>Episode</h1>
 
 <table>
-  {{#each model.attributes}}
-  <tr>
-    <td>
-      <strong>{{this.key}}:</strong>
-    </td>
-    <td>
-      {{this.value}}
-    </td>
-  </tr>
-  {{/each}}
+    {{#each model.attributes}}
+        <tr>
+            <td>
+                <strong>{{this.key}}:</strong>
+            </td>
+            <td>
+                {{this.value}}
+            </td>
+        </tr>
+    {{/each}}
 </table>
 
 {{#link-to 'episode.edit' model}}Change{{/link-to}}

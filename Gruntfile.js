@@ -2,7 +2,7 @@
 'use strict';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
-var mountFolder = function (connect, dir) {
+var mountFolder = function(connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
 
@@ -12,7 +12,7 @@ var mountFolder = function (connect, dir) {
 // use this if you want to match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     // show elapsed time at the end
     require('time-grunt')(grunt);
     // load all grunt tasks
@@ -23,6 +23,13 @@ module.exports = function (grunt) {
         app: 'app',
         dist: 'dist'
     };
+
+    var sourceFiles = [
+        'Gruntfile.js',
+        '<%= yeoman.app %>/scripts/{,*/}*.js',
+        '!<%= yeoman.app %>/scripts/vendor/*',
+        'test/spec/{,*/}*.js'
+    ];
 
     grunt.initConfig({
         yeoman: yeomanConfig,
@@ -60,7 +67,7 @@ module.exports = function (grunt) {
             },
             livereload: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function(connect) {
                         return [
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
@@ -71,7 +78,7 @@ module.exports = function (grunt) {
             },
             test: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function(connect) {
                         return [
                             mountFolder(connect, 'test'),
                             mountFolder(connect, '.tmp')
@@ -81,7 +88,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function(connect) {
                         return [
                             mountFolder(connect, yeomanConfig.dist)
                         ];
@@ -107,17 +114,15 @@ module.exports = function (grunt) {
             },
             server: '.tmp'
         },
+        jscs: {
+            source: sourceFiles
+        },
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             },
-            all: [
-                'Gruntfile.js',
-                '<%= yeoman.app %>/scripts/{,*/}*.js',
-                '!<%= yeoman.app %>/scripts/vendor/*',
-                'test/spec/{,*/}*.js'
-            ]
+            source: sourceFiles
         },
         mocha: {
             all: {
@@ -314,7 +319,7 @@ module.exports = function (grunt) {
         neuter: {
             app: {
                 options: {
-                    filepathTransform: function (filepath) {
+                    filepathTransform: function(filepath) {
                         return yeomanConfig.app + '/' + filepath;
                     }
                 },
@@ -324,12 +329,12 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('server', function (target) {
+    grunt.registerTask('server', function(target) {
         grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
         grunt.task.run(['serve:' + target]);
     });
 
-    grunt.registerTask('serve', function (target) {
+    grunt.registerTask('serve', function(target) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
         }
@@ -347,6 +352,8 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
+        'jshint',
+        'jscs',
         'clean:server',
         'replace:app',
         'concurrent:test',
@@ -379,6 +386,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'jshint',
+        'jscs',
         'test',
         'build'
     ]);

@@ -1,22 +1,22 @@
 <div class="episodes">
-  {{#collection content=controller}}
-    <div {{action setEpisode this}} class="episode">
-      <div class="name">
-        {{#unless playbackPosition}}
-          {{#unless playbackCount}}
-            <strong>New:</strong>
-          {{/unless}}
-        {{/unless}}
-        {{name}}
-      </div>
+    {{#collection content=controller}}
+        <div {{action setEpisode this}} class="episode">
+            <div class="name">
+                {{#unless playbackPosition}}
+                    {{#unless playbackCount}}
+                        <strong>New:</strong>
+                    {{/unless}}
+                {{/unless}}
+                {{name}}
+            </div>
 
-      <div class="actions">
-        {{#if isDownloaded}}
-          <i class="fa fa-play-circle"></i>
-        {{else}}
-          <i class="fa fa-cloud-download"></i>
-        {{/if}}
-      </div>
-    </div>
-  {{/collection}}
+            <div class="actions">
+                {{#if isDownloaded}}
+                    <i class="fa fa-play-circle"></i>
+                {{else}}
+                    <i class="fa fa-cloud-download"></i>
+                {{/if}}
+            </div>
+        </div>
+    {{/collection}}
 </div>
