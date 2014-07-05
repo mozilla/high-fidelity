@@ -21,6 +21,7 @@
         "Ember": true,
         "Handlebars": true,
         "DS": true,
-        "Promise": true
+        "Promise": true,
+        "localforage": true
     }
 }
