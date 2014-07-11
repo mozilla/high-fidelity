@@ -9,3 +9,9 @@
 <img alt="The Cracked Podcast" class="cover cover-image"
      {{action create "http://rss.earwolf.com/the-cracked-podcast"}}
      src="http://cdn.earwolf.com/wp-content/uploads/2013/08/EAR_CrackedPodcast_1600x1600_Cover_Final.jpg">
+
+{{#if isAdding}}
+  <div class="full-screen">
+    {{render spinner}}
+  </div>
+{{/if}}

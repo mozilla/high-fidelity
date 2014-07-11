@@ -8,17 +8,17 @@
         {{name}}
       </div>
 
-      {{!--
-      <div class="actions">
-        {{#if isDownloaded}}
-          <i class="fa fa-play-circle"></i>
-        {{else}}
-          <i class="fa fa-cloud-download"></i>
-        {{/if}}
-      </div>
-      --}}
+      {{#if HighFidelity.isPackaged}}
+        <div class="actions">
+          {{#if isDownloaded}}
+            <i class="fa fa-play-circle"></i>
+          {{else}}
+            <i class="fa fa-cloud-download"></i>
+          {{/if}}
+        </div>
+      {{/if}}
     </div>
   {{else}}
-    <p>Loading episodes...</p>
+    {{render spinner}}
   {{/each}}
 </div>

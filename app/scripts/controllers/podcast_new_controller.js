@@ -1,11 +1,19 @@
 HighFidelity.PodcastNewController = Ember.ObjectController.extend({
-    rssURL: 'http://atp.fm/episodes?format=rss',
+    isAdding: false,
+
+    rssURL: '',
 
     actions: {
         create: function(url) {
             if (url) {
                 this.set('rssURL', url);
             }
+
+            if (!this.get('rssURL') || !this.get('rssURL').length) {
+                return;
+            }
+
+            this.set('isAdding', true);
 
             var _this = this;
 
@@ -23,6 +31,8 @@ HighFidelity.PodcastNewController = Ember.ObjectController.extend({
                 });
 
                 podcast.update().then(function() {
+                    _this.set('isAdding', false);
+                    _this.set('rssURL', '');
                     _this.transitionToRoute('podcast', podcast);
                 });
             });

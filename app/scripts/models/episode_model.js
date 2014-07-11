@@ -12,6 +12,10 @@ HighFidelity.Episode = DS.Model.extend({
     // Episode metadata from RSS.
     datePublished: DS.attr('number'),
 
+    // canDownload: function() {
+    //     return HighFidelity.isPackaged;
+    // }.property(),
+
     isPlaying: false,
 
     isDownloaded: function() {
@@ -21,7 +25,58 @@ HighFidelity.Episode = DS.Model.extend({
 
     isNew: function() {
         return !this.get('playbackPosition') && !this.get('playCount');
-    }.property('playbackPosition', 'playCount')
+    }.property('playbackPosition', 'playCount'),
+
+    // Download the episode for local playback.
+    download: function() {
+        var request = new window.XMLHttpRequest({mozSystem: true});
+
+        request.open('GET', this.get('audioURL'), true);
+        request.responseType = 'moz-chunked-arraybuffer';
+
+        request.addEventListener('load', this._setAudioTypeFromEvent);
+
+        request.addEventListener('progress', function(event) {
+            localForage.setItem('_chunk-episode-{id}-{chunk}'.format({
+                chunk: self._chunkCount,
+                id: self.get('id')
+            }), request.response, self._incrementChunkSaveCount);
+
+            // Increment our internal data chunk count.
+            self._chunkCount++;
+        });
+
+        request.addEventListener('error', function(event) {
+            window.alert('Error downloading this episode. Please try again.');
+
+            self.trigger('download:cancel');
+        });
+
+        request.send(null);
+    },
+
+    // Set the audio type based on the responseType (or filename) of this
+    // episode's enclosure file/URL.
+    // _setAudioTypeFromEvent: function(event) {
+    //     // TODO: Make this better.
+    //     var type;
+    //
+    //     try {
+    //         type = event.target.response.type.split('/')[1];
+    //     } catch (e) {
+    //         // Try to extract the type of this file from its filename.
+    //         var enclosureArray = this.get('audioURL').split('.');
+    //         type = enclosureArray[enclosureArray.length - 1];
+    //     }
+    //
+    //     // Assume "mpeg" = MP3, for now. Kinda hacky.
+    //     if (type === 'mpeg') {
+    //         type = 'mp3';
+    //     }
+    //
+    //     this.set('type', type);
+    //     this.save();
+    // }
 });
 
 // probably should be mixed-in...
