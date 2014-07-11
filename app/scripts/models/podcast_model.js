@@ -11,15 +11,16 @@ HighFidelity.Podcast = DS.Model.extend({
     coverImageURL: DS.attr('string'),
 
     // Podcast initialization; mostly used to check for new episodes.
-    init: function() {
-        this._super();
-
-        if (!this.get('lastUpdated') ||
-            this.get('lastUpdated') + 3600 < HighFidelity.timestamp()) {
-            console.log('Updating podcast -- ', this.get('lastUpdated'));
-            // this.update();
-        }
-    },
+    // init: function() {
+    //     this._super();
+    //     console.info('init for podcast:' + this.get('id'),
+    //                  this.get('lastUpdated'), this);
+    //
+    //     if (this._needsUpdate) {
+    //         console.log('Updating podcast -- ', this.get('lastUpdated'));
+    //         this.update();
+    //     }
+    // },
 
     coverImage: function() {
         if (this.get('coverImageBlob')) {
@@ -30,6 +31,17 @@ HighFidelity.Podcast = DS.Model.extend({
             return null;
         }
     }.property('coverImageBlob', 'coverImageURL'),
+
+    destroyRecord: function() {
+        var _this = this;
+        this.get('episodes').forEach(function(episode) {
+            // if (episode.get('isPlaying')) {
+            //     _this.get('controllers.player').send('setEpisode', null);
+            // }
+            episode.destroyRecord();
+        });
+        return this._super();
+    },
 
     getCoverImage: function() {
         //return;
@@ -62,6 +74,7 @@ HighFidelity.Podcast = DS.Model.extend({
     update: function() {
         var _this = this;
 
+        console.info('Updating podcast:' + this.get('id'));
         return new Promise(function(resolve, reject) {
             // _this.getCoverImage();
 
@@ -73,6 +86,7 @@ HighFidelity.Podcast = DS.Model.extend({
                 var $xml = $(result);
                 var $channel = $xml.find('channel');
                 var $items = $xml.find('item');
+                var saved = false;
 
                 if (!$xml.length || !$xml.find('item').length) {
                     // If we can't make sense of this podcast's feed, we delete
@@ -84,77 +98,93 @@ HighFidelity.Podcast = DS.Model.extend({
                 _this.set('title', $channel.find('title').eq(0).text());
                 _this.set('description', $channel.find('description')
                                                  .eq(0).text());
+                _this.set('coverImageURL', $channel.find('itunes\\:image')
+                                                   .attr('href'));
 
-                $items.each(function(i, episode) {
-                    var oldImageURL = _this.get('coverImageURL');
+                _this.get('episodes').then(function(episodes) {
+                    var itemsSaved = 0;
+                    $items.each(function(i, episode) {
+                        var guid = $(episode).find('guid').text();
 
-                    // Use the latest artwork for the cover image.
-                    if (i === 0) {
-                        _this.set('coverImageURL',
-                                  $(episode).find('itunes\\:image')
-                                            .attr('href'));
-                    }
-
-                    _this.save();
-
-                    // If the cover image has changed (or this podcast is new)
-                    // we update the cover image.
-                    if (!oldImageURL ||
-                        oldImageURL !== _this.get('coverImageURL')) {
-                        _this.getCoverImage();
-                    }
-
-                    var _episodes;
-                    _this.get('episodes').then(function(episodes) {
-                        _episodes = episodes;
-
-                        return episodes.filterProperty(
-                            'guid', $(episode).find('guid').text()).length > 0;
-                    }).then(function(episodeExists) {
-                        if (episodeExists) {
-                            // An episode with the same guid already exists,
-                            // so don't save this one.
-                            console.debug('Episodes already exists.');
+                        if (episodes.filterBy('guid', guid).length) {
                             return;
                         }
 
-                        var e = _episodes.store.createRecord('episode', {
-                            guid: $(episode).find('guid').text(),
+                        var oldImageURL = _this.get('coverImageURL');
+
+                        // Use the latest artwork for the cover image.
+                        var episodeImage = $(episode).find('itunes\\:image')
+                                                     .attr('href');
+                        if (i === 0 && episodeImage) {
+                            _this.set('coverImageURL', episodeImage);
+                        }
+
+                        // If the cover image has changed (or this podcast is
+                        // new) we update the cover image.
+                        if (!oldImageURL ||
+                            oldImageURL !== _this.get('coverImageURL')) {
+                            // _this.getCoverImage();
+                        }
+
+                        var e = _this.store.createRecord('episode', {
+                            guid: guid,
                             audioURL: $(episode).find('enclosure').attr('url'),
                             datePublished: HighFidelity.timestamp(
                                 $(episode).find('pubDate').text()
                             ),
                             name: $(episode).find('title').text(),
-                            podcast: _this.get('model')
+                            podcast: _this
                         });
-                        e.save();
 
                         // Add this episode to the list of objects; this will
                         // cause it to appear in any existing lists.
-                        _episodes.addObject(e);
-                    }).then(resolve);
+                        e.save();
+                        episodes.pushObject(e);
+
+                        itemsSaved++;
+
+                        if ($items.length === i + 1) {
+                            console.info('Updated podcast:' + _this.get('id'),
+                                         itemsSaved + ' new episodes.');
+                            saved = true;
+                            _this.save().then(resolve);
+                        }
+                    });
+
+                    if (!itemsSaved && !$items.length && !saved) {
+                        console.info('Updated podcast:' + _this.get('id'),
+                                     itemsSaved + ' new episodes.');
+                        _this.save().then(resolve);
+                    }
                 });
             }, function(error) {
-                console.error('Could not download podcast:', error);
+                console.error('Could not download podcast', error);
                 _this.destroyRecord();
             });
         });
-    }
+    },
+
+    _autoUpdate: function() {
+        if (this.get('lastUpdated') + 3600 < HighFidelity.timestamp()) {
+            console.debug('Auto update for:' + this.get('title'));
+            this.update();
+        }
+    }.observes('lastUpdated').on('init')
 });
 
 // probably should be mixed-in...
-HighFidelity.Podcast.reopen({
-    attributes: function() {
-        var model = this;
-        return Ember.keys(this.get('data')).map(function(key) {
-            return Ember.Object.create({
-                model: model,
-                key: key,
-                valueBinding: '  model.' + key
-            });
-        });
-    }.property()
-});
+// HighFidelity.Podcast.reopen({
+//     attributes: function() {
+//         var model = this;
+//         return Ember.keys(this.get('data')).map(function(key) {
+//             return Ember.Object.create({
+//                 model: model,
+//                 key: key,
+//                 valueBinding: '  model.' + key
+//             });
+//         });
+//     }.property()
+// });
 
 // delete below here if you do not want fixtures
 HighFidelity.Podcast.FIXTURES = [

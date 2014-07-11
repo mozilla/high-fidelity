@@ -1,10 +1,18 @@
 #player {
     background: #ddd;
+    border-top: #010101 1px solid;
     font-size: 18px;
     max-height: 45px;
+    opacity: 0;
     padding: 5px;
+    transition: 300ms linear all;
 
     .play-pause {
         cursor: pointer;
+    }
+
+    &.is-populated {
+        opacity: 1;
+        transition: 300ms linear all;
     }
 }

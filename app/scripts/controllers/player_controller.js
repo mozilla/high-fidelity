@@ -1,4 +1,9 @@
 HighFidelity.PlayerController = Ember.ObjectController.extend({
+    _hasAudio: function() {
+        this.set('isPopulated', !!this.get('model').get('id'));
+    }.observes('model'),
+
+    isPopulated: false,
     progressBar: {
         max: 0,
         value: 0
@@ -10,6 +15,7 @@ HighFidelity.PlayerController = Ember.ObjectController.extend({
 
     actions: {
         pause: function(episode) {
+            clearTimeout(this._saveInBackgroundTimeout);
             clearTimeout(this._timeUpdateTimeout);
             $('#audio-player')[0].pause();
 
@@ -55,9 +61,10 @@ HighFidelity.PlayerController = Ember.ObjectController.extend({
             _this.send('play', _this.get('model'));
         });
 
-        this._timeUpdateTimeout = setTimeout(function() {
-            _this.updateTime();
-        }, 1000);
+        this._saveInBackgroundTimeout = setTimeout(function() {
+            _this._saveInBackground();
+        }, 10000);
+        _this.updateTime();
     },
 
     updateTime: function() {
@@ -74,5 +81,17 @@ HighFidelity.PlayerController = Ember.ObjectController.extend({
         this._timeUpdateTimeout = setTimeout(function() {
             _this.updateTime();
         }, 1000);
+    },
+
+    _saveInBackground: function() {
+        var audio = $('#audio-player')[0];
+        var _this = this;
+
+        this.get('model').set('playbackPosition', audio.currentTime);
+        this.get('model').save();
+
+        this._saveInBackgroundTimeout = setTimeout(function() {
+            _this._saveInBackground();
+        }, 10000);
     }
 });

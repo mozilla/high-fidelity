@@ -1,5 +1,7 @@
 HighFidelity.PodcastRoute = Ember.Route.extend({
     model: function(params) {
+        // Use findQuery so we don't get an error when looking for a
+        // non-existant ID.
         return this.get('store').find('podcast', params.podcast_id);
     },
 

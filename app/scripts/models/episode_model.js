@@ -17,7 +17,11 @@ HighFidelity.Episode = DS.Model.extend({
     isDownloaded: function() {
         return (this.get('audioFile') !== null &&
                 this.get('audioFile') !== undefined);
-    }.property('audioFile')
+    }.property('audioFile'),
+
+    isNew: function() {
+        return !this.get('playbackPosition') && !this.get('playCount');
+    }.property('playbackPosition', 'playCount')
 });
 
 // probably should be mixed-in...

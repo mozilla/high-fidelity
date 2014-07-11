@@ -1,5 +1,5 @@
 HighFidelity.PodcastNewController = Ember.ObjectController.extend({
-    rssURL: '',
+    rssURL: 'http://atp.fm/episodes?format=rss',
 
     actions: {
         create: function(url) {
@@ -9,26 +9,20 @@ HighFidelity.PodcastNewController = Ember.ObjectController.extend({
 
             var _this = this;
 
-            var id = encodeURIComponent(this.get('rssURL')
-                        .replace(/^https?:\/\//, ''));
-            id = id.replace(/%.{2}/g, '.');
-
-            this.store.find('podcast', id).then(function(existingPodcast) {
-                if (existingPodcast.get('id')) {
-                    console.debug('Existing record found with id: ',
-                                  existingPodcast.get('id'));
-                    _this.transitionToRoute('podcast', existingPodcast);
-                    return;
-                }
+            console.debug('Find podcast with rssURL:', this.get('rssURL'));
+            var existingPodcast = this.store.find('podcast', {
+                rssURL: this.get('rssURL')
+            }).then(function(podcast) {
+                console.info('Podcast already exists', podcast.objectAt(0));
+                _this.transitionToRoute('podcast', podcast.objectAt(0));
+            }, function() {
+                console.info('Creating new podcast.');
 
                 var podcast = _this.store.createRecord('podcast', {
-                    id: id,
                     rssURL: _this.get('rssURL')
                 });
 
                 podcast.update().then(function() {
-                    return podcast.save();
-                }).then(function() {
                     _this.transitionToRoute('podcast', podcast);
                 });
             });
