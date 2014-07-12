@@ -15,9 +15,22 @@
     {{render "player"}}
 
     <x-tabbar>
-      <x-tabbar-tab>{{#link-to 'podcasts'}}{{t tabs.myPodcasts}}{{/link-to}}</x-tabbar-tab>
-      <x-tabbar-tab>{{#link-to 'index'}}{{t tabs.popular}}{{/link-to}}</x-tabbar-tab>
-      <x-tabbar-tab>{{#link-to 'index'}}{{t tabs.search}}{{/link-to}}</x-tabbar-tab>
+      <x-tabbar-tab>
+        {{#link-to 'podcasts'}}{{t tabs.myPodcasts}}{{/link-to}}
+      </x-tabbar-tab>
+
+      {{!--
+        Only show popular and search tabs (which require systemXHR) on
+        platforms that can make cross-origin requests to get/parse the results.
+      --}}
+      {{#if HighFidelity.isPackaged}}
+        <x-tabbar-tab>
+          {{#link-to 'index'}}{{t tabs.popular}}{{/link-to}}
+        </x-tabbar-tab>
+        <x-tabbar-tab>
+          {{#link-to 'search'}}{{t tabs.search}}{{/link-to}}
+        </x-tabbar-tab>
+      {{/if}}
     </x-tabbar>
   </footer>
 </x-layout>
