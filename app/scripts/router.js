@@ -1,6 +1,7 @@
 HighFidelity.Router.map(function() {
-    this.resource('podcasts', function() {
-    });
+    this.route('search');
+
+    this.resource('podcasts');
     this.resource('podcast.new',  {path: '/podcast/new'});
     this.resource('podcast', {path: '/podcast/:podcast_id'}, function() {
         // this.route('episodes', {path: '/episodes'});
