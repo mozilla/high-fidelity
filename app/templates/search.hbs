@@ -2,3 +2,25 @@
 
 {{input type="search" value=query placeholder="Podcast Name or Keywords"}}
 <button {{action search}}>Find</button>
+
+{{#if isSearching}}
+  <div class="full-screen">
+    {{render spinner}}
+  </div>
+{{/if}}
+
+{{#if resultCount}}
+  <div class="results">
+    {{#each results}}
+      <div>
+        <div class="name" {{bind-attr data-collection-url=collectionViewUrl}}>
+          <img {{bind-attr src=artworkUrl100}} {{bind-attr alt=trackName}}>
+          <br>
+          {{trackName}}
+        </div>
+      </div>
+    {{else}}
+      <p>No results found.</p>
+    {{/each}}
+  </div>
+{{/if}}

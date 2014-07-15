@@ -1,7 +1,15 @@
 HighFidelity.SearchController = Ember.ObjectController.extend({
+    isSearching: false,
+
     query: '',
+    resultCount: 0,
+    results: null,
 
     search: function(query) {
+        var _this = this;
+
+        this.set('isSearching', true);
+
         return new Promise(function(resolve, reject) {
             var API = 'https://itunes.apple.com/search?media=podcast';
 
@@ -27,6 +35,11 @@ HighFidelity.SearchController = Ember.ObjectController.extend({
 
                     console.info('Raw Search Results:', response);
                     console.info('iTunes Search Results:', results);
+
+                    _this.set('isSearching', false);
+                    _this.set('resultCount', response.resultCount);
+                    _this.set('results', response.results);
+
                     resolve(results);
                 },
                 error: function(error) {
