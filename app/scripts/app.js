@@ -1,5 +1,3 @@
-// var FxosUI = window.FxosUI = Ember.Namespace.create();
-
 var HighFidelity = window.HighFidelity = Ember.Application.create({
     LOG_TRANSITIONS: true
 });

@@ -306,16 +306,12 @@ module.exports = function(grunt) {
         },
         emberTemplates: {
             options: {
-                /* we use a regular expression to set the paths for your
-                templates in <your app name>/templates and for the fxos-ui templates that
-                are a bower dependency */
-                templateBasePath: /app\/templates\/|app\/bower_components\/fxos-ui\/templates\//
+                templateBasePath: 'app/templates/'
             },
             dist: {
                 files: {
                     '.tmp/scripts/compiled-templates.js': [
-                        'app/templates/{,*/}*.hbs',
-                        'app/bower_components/fxos-ui/templates/components/{,*/}*.hbs'
+                        'app/templates/**.hbs'
                     ]
                 }
             }
