@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     var sourceFiles = [
         'Gruntfile.js',
         '<%= yeoman.app %>/scripts/{,*/}*.js',
-        //'!<%= yeoman.app %>/scripts/vendor/*',
+        '!<%= yeoman.app %>/scripts/vendor/*',
         'test/spec/{,*/}*.js'
     ];
 
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
         yeoman: yeomanConfig,
         watch: {
             emberTemplates: {
-                files: ['<%= yeoman.app %>/templates/**/*.hbs','/bower_components/**/*.hbs'],
+                files: ['<%= yeoman.app %>/templates/**/*.hbs'],
                 tasks: ['emberTemplates']
             },
             neuter: {
@@ -311,7 +311,7 @@ module.exports = function(grunt) {
             dist: {
                 files: {
                     '.tmp/scripts/compiled-templates.js': [
-                        'app/templates/**.hbs'
+                        'app/templates/{,*/}*.hbs'
                     ]
                 }
             }
