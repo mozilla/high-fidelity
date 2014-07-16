@@ -1,4 +1,5 @@
 HighFidelity.Router.map(function() {
+    // this.route('popular');
     this.route('search');
 
     this.resource('podcasts');

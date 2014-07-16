@@ -4,7 +4,7 @@
 
     function checkIfPackaged(app) {
         // By default, we aren't a packaged app.
-        app.isPackaged = false;
+        app.set('isPackaged', false);
 
         if (window.navigator.mozApps) {
             var appRequest = window.navigator.mozApps.getSelf();
@@ -14,9 +14,9 @@
                     // The app is installed.
                     if (appRequest.result.manifest &&
                         appRequest.result.manifest.type === 'privileged') {
-                        app.isPackaged = true;
-                        app._permissions = appRequest.result.manifest
-                                                            .permissions;
+                        app.set('isPackaged', true);
+                        app.set('_permissions', appRequest.result.manifest
+                                                                 .permissions);
 
                         jQuery.ajaxSettings.xhr = function() {
                             try {

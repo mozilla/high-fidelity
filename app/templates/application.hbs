@@ -9,7 +9,7 @@
     {{outlet}}
   </section>
   <footer>
-    <!-- We interact with this programatically for various reasons. -->
+    {{!-- We interact with this programatically for various reasons. --}}
     <audio id="audio-player" preload="auto"></audio>
 
     {{render "player"}}
@@ -23,10 +23,12 @@
         Only show popular and search tabs (which require systemXHR) on
         platforms that can make cross-origin requests to get/parse the results.
       --}}
-      {{#if HighFidelity.isPackaged}}
+      {{#if isPackaged}}
+        {{!--
         <x-tabbar-tab>
-          {{#link-to 'index'}}{{t tabs.popular}}{{/link-to}}
+          {{#link-to 'popular'}}{{t tabs.popular}}{{/link-to}}
         </x-tabbar-tab>
+        --}}
         <x-tabbar-tab>
           {{#link-to 'search'}}{{t tabs.search}}{{/link-to}}
         </x-tabbar-tab>
