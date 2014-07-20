@@ -14,9 +14,9 @@
   </ul>
 {{else}}
   <div class="center">
-    <h2>No podcasts found.</h2>
+    <h2>{{t podcast.noneFound}}</h2>
     <p>
-      Want to {{#link-to 'podcast.new'}}add one?{{/link-to}}
+      {{#link-to 'podcast.new'}}{{t podcast.addOne}}{{/link-to}}
     </p>
   </div>
 {{/if}}

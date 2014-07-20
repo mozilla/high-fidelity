@@ -1,7 +1,7 @@
-<h2>Search for a Podcast</h2>
+<h2>{{t search.searchForAPodcast}}</h2>
 
-{{input type="search" value=query placeholder="Podcast Name or Keywords"}}
-<button {{action search}}>Find</button>
+{{input type="search" value=query placeholder=searchPlaceholder id="search-input"}}
+<button {{action search}}>{{t search.find}}</button>
 
 {{#if isSearching}}
   <div class="full-screen">
@@ -20,7 +20,7 @@
         </div>
       </div>
     {{else}}
-      <p>No results found.</p>
+      <p>{{t search.noResults}}</p>
     {{/each}}
   </div>
 {{/if}}

@@ -1,32 +1,53 @@
-/*global I18n:true */
+I18n.defaultLocale = "en-US";
+I18n.locale = window.navigator.language || 'en-US';
+I18n.fallbacks = true;
 I18n.translations = {
     en: {
         app: {
-            title: 'Podcasts'
+            title: 'Podcasts',
         },
         episode: {
-            episodes: 'Episodes'
+            episodes: 'Episodes',
+            new: 'New:',
+        },
+        podcast: {
+            add: 'Add',
+            addOne: 'Want to add one?',
+            addRSSFeed: 'Add RSS Feed',
+            newToPodcasts: 'New to Podcasts?',
+            noneFound: 'No podcasts found.',
+            recommendations: 'Check out our recommendations:',
+        },
+        search: {
+            find: 'Find',
+            noResults: 'No results.',
+            placeholder: 'Podcast Name or Keywords',
+            searchForAPodcast: 'Search for a Podcast',
+            subscribe: 'Subscribe to {{podcast}}?',
         },
         tabs: {
             myPodcasts: 'My Podcasts',
             popular: 'Popular',
-            search: 'Search'
+            search: 'Search',
         },
-        welcome: 'Welcome to Rec Room!'
     },
 
     fr: {
         app: {
-            title: 'Podcasts'
+            title: 'Podcasts',
         },
         episode: {
-            episodes: "Episodes"
+            episodes: "Episodes",
+            new: 'nouveau:',
+        },
+        search: {
+            find: 'trouver',
+            searchForAPodcast: 'Retrouver un podcast',
         },
         tabs: {
             myPodcasts: 'mon podcasts',
             popular: 'populaire',
-            search: 'recherche'
+            search: 'recherche',
         },
-        welcome: 'Bievenue à Rec Room !'
-    }
+    },
 };

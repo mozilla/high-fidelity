@@ -5,6 +5,8 @@ HighFidelity.SearchController = Ember.ObjectController.extend({
     resultCount: 0,
     results: null,
 
+    searchPlaceholder: I18n.t('search.placeholder'),
+
     search: function(query) {
         var _this = this;
 
@@ -33,9 +35,6 @@ HighFidelity.SearchController = Ember.ObjectController.extend({
                         });
                     });
 
-                    console.info('Raw Search Results:', response);
-                    console.info('iTunes Search Results:', results);
-
                     _this.set('isSearching', false);
                     _this.set('resultCount', response.resultCount);
                     _this.set('results', response.results);
@@ -55,7 +54,8 @@ HighFidelity.SearchController = Ember.ObjectController.extend({
         },
 
         subscribe: function(url, podcastName) {
-            if (window.confirm('Subscribe to ' + podcastName + '?')) {
+            if (window.confirm(I18n.t('search.subscribe',
+                               {podcast: podcastName}))) {
                 HighFidelity.Podcast.createFromController(this, url);
             }
         }

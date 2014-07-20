@@ -3,7 +3,7 @@
     <div {{action setEpisode this}} {{bind-attr class=":episode isNew"}}>
       <div class="name">
         {{#if isNew}}
-          <strong>New:</strong>
+          <strong>{{t episode.new}}</strong>
         {{/if}}
         {{name}}
       </div>

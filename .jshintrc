@@ -22,6 +22,7 @@
         "Handlebars": true,
         "DS": true,
         "Promise": true,
+        "I18n": true,
         "localforage": true
     }
 }
