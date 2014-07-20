@@ -112,11 +112,13 @@ HighFidelity.Podcast = DS.Model.extend({
 
                         var oldImageURL = _this.get('coverImageURL');
 
-                        // Use the latest artwork for the cover image.
-                        var episodeImage = $(episode).find('itunes\\:image')
-                                                     .attr('href');
-                        if (i === 0 && episodeImage) {
-                            _this.set('coverImageURL', episodeImage);
+                        if (!_this.set('coverImageURL')) {
+                            // Use the latest artwork for the cover image.
+                            var episodeImage = $(episode).find('itunes\\:image')
+                                                         .attr('href');
+                            if (i === 0 && episodeImage) {
+                                _this.set('coverImageURL', episodeImage);
+                            }
                         }
 
                         // If the cover image has changed (or this podcast is
@@ -172,19 +174,30 @@ HighFidelity.Podcast = DS.Model.extend({
     }.observes('lastUpdated').on('init')
 });
 
-// probably should be mixed-in...
-// HighFidelity.Podcast.reopen({
-//     attributes: function() {
-//         var model = this;
-//         return Ember.keys(this.get('data')).map(function(key) {
-//             return Ember.Object.create({
-//                 model: model,
-//                 key: key,
-//                 valueBinding: '  model.' + key
-//             });
-//         });
-//     }.property()
-// });
+HighFidelity.Podcast.createFromController = function(controller, rssURL) {
+    console.debug('Find podcast with rssURL:', rssURL);
+    var existingPodcast = controller.store.find('podcast', {
+        rssURL: rssURL
+    }).then(function(podcast) {
+        console.info('Podcast already exists', podcast.objectAt(0));
+
+        controller.set('isAdding', false);
+        controller.set('rssURL', '');
+        controller.transitionToRoute('podcast', podcast.objectAt(0));
+    }, function() {
+        console.info('Creating new podcast.');
+
+        var podcast = controller.store.createRecord('podcast', {
+            rssURL: rssURL
+        });
+
+        podcast.update().then(function() {
+            controller.set('isAdding', false);
+            controller.set('rssURL', '');
+            controller.transitionToRoute('podcast', podcast);
+        });
+    });
+};
 
 // delete below here if you do not want fixtures
 HighFidelity.Podcast.FIXTURES = [

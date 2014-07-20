@@ -52,6 +52,12 @@ HighFidelity.SearchController = Ember.ObjectController.extend({
     actions: {
         search: function(query) {
             this.search(this.get('query'));
+        },
+
+        subscribe: function(url, podcastName) {
+            if (window.confirm('Subscribe to ' + podcastName + '?')) {
+                HighFidelity.Podcast.createFromController(this, url);
+            }
         }
     }
 });

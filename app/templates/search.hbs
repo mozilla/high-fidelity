@@ -12,8 +12,8 @@
 {{#if resultCount}}
   <div class="results">
     {{#each results}}
-      <div>
-        <div class="name" {{bind-attr data-collection-url=collectionViewUrl}}>
+      <div class="podcast" {{action subscribe feedUrl trackName}}>
+        <div class="name" {{bind-attr data-collection-url=feedUrl}}>
           <img {{bind-attr src=artworkUrl100}} {{bind-attr alt=trackName}}>
           <br>
           {{trackName}}

@@ -30,11 +30,15 @@ HighFidelity.PlayerController = Ember.ObjectController.extend({
         },
 
         setEpisode: function(episode) {
+            var _this = this;
+
             this.set('model', episode);
 
-            if (this.get('model').get('audioFile')) {
-                // TODO.
-                this.set('audio', null);
+            if (this.get('model').get('isDownloaded')) {
+                episode.blobURL().then(function(url) {
+                    _this.set('audio', url);
+                    _this.playAfterSet();
+                });
             } else {
                 this.set('audio', this.get('model').get('audioURL'));
                 this.playAfterSet();
@@ -46,6 +50,7 @@ HighFidelity.PlayerController = Ember.ObjectController.extend({
         var audio = $('#audio-player')[0];
         var _this = this;
 
+        console.log("this.get('audio')", this.get('audio'));
         $(audio).attr('src', this.get('audio'));
 
         $(audio).bind('canplay', function() {
