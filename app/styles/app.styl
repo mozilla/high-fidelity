@@ -31,7 +31,7 @@ ul, dl, ol {
 }
 
 // Fixed header/footer
-x-layout {
+brick-layout {
     > header, > footer {
         position: fixed;
         width: 100%;
@@ -51,29 +51,29 @@ x-layout {
 }
 
 // Header actions
-x-appbar h1 {
+brick-appbar h1 {
     display: none;
 }
-x-appbar h1:last-of-type {
+brick-appbar h1:last-of-type {
     display: block;
 }
-x-appbar > a {
+brick-appbar > a {
     cursor: pointer;
     padding-left: 2px;
     padding-right: 2px;
     min-width: 45px;
     background: transparent;
 }
-x-appbar > a:hover {
+brick-appbar > a:hover {
     background-color: #00405d;
 }
-x-appbar > a::-moz-focus-inner {
+brick-appbar > a::-moz-focus-inner {
     border: 0;
     padding: 0;
 }
 
 // Tabs
-x-tabbar-tab a {
+brick-tabbar-tab a {
     color: #fff;
     text-decoration: none;
 }
