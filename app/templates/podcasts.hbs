@@ -3,10 +3,10 @@
     {{#each content=controller tagName=ul className="my-podcasts"}}
       <li>
         {{#link-to 'podcast' this class="cover"}}
-          {{#if this.coverImage}}
-            <img {{bind-attr src=this.coverImage}} {{bind-attr alt=this.title}}>
+          {{#if coverImage}}
+            <img {{bind-attr src=coverImage}} {{bind-attr alt=title}}>
           {{else}}
-            <span class="no-cover">{{this.title}}</span>
+            <span class="no-cover">{{title}}</span>
           {{/if}}
         {{/link-to}}
       </li>
