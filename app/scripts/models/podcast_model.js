@@ -23,9 +23,11 @@ HighFidelity.Podcast = DS.Model.extend({
     // },
 
     coverImage: function() {
-        if (this.get('coverImageBlob')) {
-            return null;
-        } else if (this.get('coverImageURL')) {
+        // if (this.get('coverImageBlob')) {
+        //     return null;
+        // } else
+        //
+        if (this.get('coverImageURL')) {
             return this.get('coverImageURL');
         } else {
             return null;
@@ -112,13 +114,12 @@ HighFidelity.Podcast = DS.Model.extend({
 
                         var oldImageURL = _this.get('coverImageURL');
 
-                        if (!_this.set('coverImageURL')) {
-                            // Use the latest artwork for the cover image.
-                            var episodeImage = $(episode).find('itunes\\:image')
-                                                         .attr('href');
-                            if (i === 0 && episodeImage) {
-                                _this.set('coverImageURL', episodeImage);
-                            }
+                        // Use the latest artwork for the cover image.
+                        var episodeImageURL = $(episode).find('itunes\\:image')
+                                                        .attr('href');
+                        console.log('episodeImage', episodeImageURL);
+                        if (i === 0 && episodeImageURL !== oldImageURL) {
+                            _this.set('coverImageURL', episodeImageURL);
                         }
 
                         // If the cover image has changed (or this podcast is
