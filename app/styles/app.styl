@@ -30,6 +30,17 @@ ul, dl, ol {
     text-align: center;
 }
 
+// Awful, awful hack for Firefox OS 1.1.
+.fxos11 {
+    x-layout {
+        min-height: 460px;
+
+        header a {
+            float: right;
+        }
+    }
+}
+
 // Fixed header/footer
 x-layout {
     > header, > footer {
