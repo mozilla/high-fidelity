@@ -1,5 +1,5 @@
 {
-    "version": "0.2.0",
+    "version": "2.0.0",
     "name": "Podcasts",
     "description": "Listen to your favourite podcasts on your HTML5-powered device or browser.",
     "icons": {
@@ -20,6 +20,9 @@
     "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
     "type": "privileged",
     "permissions": {
+        "audio-channel-content": {
+            "description": "Required to play audio in the background."
+        },
         "storage": {
             "description": "Required to store podcast audio files and images."
         },
