@@ -20,6 +20,9 @@
     "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
     "type": "privileged",
     "permissions": {
+        "audio-channel-content": {
+            "description": "Required to play audio in the background."
+        },
         "storage": {
             "description": "Required to store podcast audio files and images."
         },
