@@ -6,15 +6,17 @@ HighFidelity.PodcastNewController = Ember.ObjectController.extend({
     actions: {
         create: function(url) {
             if (url) {
-                if (!url.match(/^http[s]?:\/\//i)) {
-                  url = 'http://' + url;
-                }
-
                 this.set('rssURL', url);
             }
 
             if (!this.get('rssURL') || !this.get('rssURL').length) {
                 return;
+            }
+
+            // If the URL entered doesn't have a protocol attached, make
+            // sure one is added so we don't get an error (#43).
+            if (!this.get('rssURL').match(/^http[s]?:\/\//i)) {
+                this.set('rssURL', 'http://' + this.get('rssURL'));
             }
 
             this.set('isAdding', true);
