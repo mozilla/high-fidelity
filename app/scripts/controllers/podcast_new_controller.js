@@ -6,6 +6,10 @@ HighFidelity.PodcastNewController = Ember.ObjectController.extend({
     actions: {
         create: function(url) {
             if (url) {
+                if (!url.match(/^http[s]?:\/\//i)) {
+                  url = 'http://' + url;
+                }
+
                 this.set('rssURL', url);
             }
 
