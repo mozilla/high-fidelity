@@ -58,10 +58,10 @@ module.exports = function(grunt) {
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
             },
-            build: {
-                files: ['<%= yeoman.app %>/**/*.*'],
-                tasks: ['build']
-            }
+            // build: {
+            //     files: ['<%= yeoman.app %>/**/*.*'],
+            //     tasks: ['build']
+            // }
         },
         connect: {
             options: {
@@ -73,7 +73,7 @@ module.exports = function(grunt) {
                 options: {
                     middleware: function(connect) {
                         return [
-                            lrSnippet,
+                            //lrSnippet,
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, yeomanConfig.app)
                         ];
@@ -275,6 +275,7 @@ module.exports = function(grunt) {
                             'CNAME',
                             'manifest.appcache',
                             'manifest.webapp',
+                            'bower_components/brick/dist/**',
                             'images/{,*/}*.{webp,gif}',
                             'styles/fonts/*'
                         ]

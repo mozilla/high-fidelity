@@ -36,15 +36,25 @@
   <!-- endbuild -->
 </head>
 <body>
+  <script src="bower_components/brick/dist/platform/platform.js"></script>
+
   <!-- build:js(app) scripts/vendor.js -->
   <script src="bower_components/jquery/jquery.js"></script>
   <script src="bower_components/handlebars/handlebars.runtime.js"></script>
   <script src="@@ember"></script>
   <script src="@@ember_data"></script>
-  <script src="bower_components/brick/dist/brick.js"></script>
   <script src="bower_components/localforage/dist/localforage.js"></script>
   <script src="bower_components/i18n-js/app/assets/javascripts/i18n.js"></script>
   <script src="bower_components/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js"></script>
+  <!-- endbuild -->
+
+  <!-- build:html(app) bower_components/brick/dist/brick.html -->
+  <link rel="import"
+        href="bower_components/brick-appbar/dist/brick-appbar.html">
+  <link rel="import"
+        href="bower_components/brick-appbar/src/brick-layout.html">
+  <link rel="import"
+        href="bower_components/brick-appbar/dist/brick-tabbar.html">
   <!-- endbuild -->
 
   <!-- build:js(.tmp) scripts/app.js -->
