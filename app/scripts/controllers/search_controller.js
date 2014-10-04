@@ -1,7 +1,9 @@
 HighFidelity.SearchController = Ember.ObjectController.extend({
     isSearching: false,
+    isNotSearching: Ember.computed.not('isSearching'),
 
     query: '',
+    request: null,
     resultCount: 0,
     results: null,
 
@@ -10,13 +12,18 @@ HighFidelity.SearchController = Ember.ObjectController.extend({
     search: function(query) {
         var _this = this;
 
+        var pendingRequest = this.get('request');
+        if (pendingRequest) {
+          pendingRequest.abort();
+        }
+
         this.set('isSearching', true);
 
         return new Promise(function(resolve, reject) {
             var API = 'https://itunes.apple.com/search?media=podcast';
 
-            $.ajax({
-                url: 'https://itunes.apple.com/search?media=podcast&term=' +
+            _this.set('request', $.ajax({
+                url: API + '&term=' +
                      encodeURIComponent(query),
                 dataType: 'json',
                 success: function(response, xhr) {
@@ -41,10 +48,13 @@ HighFidelity.SearchController = Ember.ObjectController.extend({
 
                     resolve(results);
                 },
-                error: function(error) {
-                    reject(error);
+                error: function(xhr, error) {
+                    if (error != "abort") {
+                        _this.set('isSearching', false);
+                        reject(error);
+                    }
                 }
-            });
+            }));
         });
     },
 
