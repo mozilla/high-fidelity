@@ -3,11 +3,9 @@
 {{input type="search" value=query placeholder=searchPlaceholder id="search-input"}}
 <button {{action search}}>{{t search.find}}</button>
 
-{{#if isSearching}}
-  <div class="full-screen">
-    {{render spinner}}
-  </div>
-{{/if}}
+<div {{bind-attr class="isNotSearching:invisible"}}>
+  {{render spinner}}
+</div>
 
 {{#if resultCount}}
   <div class="results">
