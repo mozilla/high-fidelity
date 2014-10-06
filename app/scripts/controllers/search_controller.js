@@ -1,6 +1,5 @@
 HighFidelity.SearchController = Ember.ObjectController.extend({
     isSearching: false,
-    isNotSearching: Ember.computed.not('isSearching'),
 
     query: '',
     request: null,
@@ -12,9 +11,8 @@ HighFidelity.SearchController = Ember.ObjectController.extend({
     search: function(query) {
         var _this = this;
 
-        var pendingRequest = this.get('request');
-        if (pendingRequest) {
-          pendingRequest.abort();
+        if (this.get('request')) {
+            this.get('request').abort();
         }
 
         this.set('isSearching', true);
@@ -49,7 +47,7 @@ HighFidelity.SearchController = Ember.ObjectController.extend({
                     resolve(results);
                 },
                 error: function(xhr, error) {
-                    if (error != "abort") {
+                    if (error !== 'abort') {
                         _this.set('isSearching', false);
                         reject(error);
                     }

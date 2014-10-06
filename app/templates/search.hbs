@@ -3,7 +3,7 @@
 {{input type="search" value=query placeholder=searchPlaceholder id="search-input"}}
 <button {{action search}}>{{t search.find}}</button>
 
-<div {{bind-attr class="isNotSearching:invisible"}}>
+<div {{bind-attr class="isSearching::hide"}}>
   {{render spinner}}
 </div>
 
