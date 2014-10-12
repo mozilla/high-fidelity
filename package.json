@@ -1,6 +1,6 @@
 {
   "name": "high-fidelity",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "dependencies": {},
   "devDependencies": {
     "connect-livereload": "~0.2.0",
