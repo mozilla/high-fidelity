@@ -9,6 +9,7 @@ HighFidelity.PlayerController = Ember.ObjectController.extend({
         value: 0
     },
     setToPlayAfterLoaded: false,
+    skipTime: 15, // Time, in seconds, to skip backward/forward.
     timeElapsed: '--:--',
     timeRemaining: '--:--',
     timeTotal: '--:--',
@@ -28,14 +29,14 @@ HighFidelity.PlayerController = Ember.ObjectController.extend({
             $('#audio-player')[0].play();
             episode.set('isPlaying', true);
         },
-        
+
         rewind: function(episode) {
-            $('#audio-player')[0].currentTime -= 15;
+            $('#audio-player')[0].currentTime -= this.get('skipTime');
             episode.set('playbackPosition', $('#audio-player')[0].currentTime);
         },
-        
+
         forward: function(episode) {
-            $('#audio-player')[0].currentTime += 15;
+            $('#audio-player')[0].currentTime += this.get('skipTime');
             episode.set('playbackPosition', $('#audio-player')[0].currentTime);
         },
 
