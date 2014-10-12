@@ -12,6 +12,10 @@
     <div class="episode-name">{{name}}</div>
     
     <div class="player-controls">
+      <a {{action rewind model}} class="backward">
+        <i class="fa fa-backward"></i>
+      </a>
+      
       {{#if isPlaying}}
         <a {{action pause model}} class="play-pause">
           <i class="fa fa-pause"></i>
@@ -21,6 +25,10 @@
           <i class="fa fa-play"></i>
         </a>
       {{/if}}
+      
+      <a {{action forward model}} class="forward">
+        <i class="fa fa-forward"></i>
+      </a>
     </div>
   {{/if}}
 </div>

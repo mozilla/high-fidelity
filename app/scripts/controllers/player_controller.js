@@ -28,6 +28,16 @@ HighFidelity.PlayerController = Ember.ObjectController.extend({
             $('#audio-player')[0].play();
             episode.set('isPlaying', true);
         },
+        
+        rewind: function(episode) {
+            $('#audio-player')[0].currentTime -= 15;
+            episode.set('playbackPosition', $('#audio-player')[0].currentTime);
+        },
+        
+        forward: function(episode) {
+            $('#audio-player')[0].currentTime += 15;
+            episode.set('playbackPosition', $('#audio-player')[0].currentTime);
+        },
 
         setEpisode: function(episode) {
             var _this = this;
