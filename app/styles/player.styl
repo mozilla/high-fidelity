@@ -2,13 +2,49 @@
     background: #ddd;
     border-top: #010101 1px solid;
     font-size: 18px;
-    max-height: 45px;
     opacity: 0;
-    padding: 5px;
     transition: 300ms linear all;
-
-    .play-pause {
-        cursor: pointer;
+    
+    progress {
+        width: 100%;
+        border: 0;
+        background: #0AC;
+        height: 25px;
+        
+        &::-moz-progress-bar {
+            background: #00202F;
+        }
+    }
+    
+    #time-elapsed, #time-remaining {
+        position: absolute;
+        top: 5px;
+        color: #fff;
+    }
+    #time-elapsed {
+        left: 5px;
+    }
+    #time-remaining {
+        right: 5px;
+    }
+    
+    .episode-name {
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 5px 10px;
+    }
+    
+    .player-controls {
+        padding-bottom: 5px;
+        text-align: center;
+        
+        .play-pause {
+            cursor: pointer;
+            font-size: 30px;
+            color: #444;
+        }
     }
 
     &.is-populated {

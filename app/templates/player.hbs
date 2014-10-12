@@ -1,21 +1,26 @@
 <div id="player" {{bind-attr class="isPopulated"}}>
   {{#if audio}}
     <div id="time-info">
-      <span id="time-elapsed">{{timeElapsed}}</span>
       <progress id="audio-progress" {{bind-attr max=progressBar.max}}
                                     {{bind-attr value=progressBar.value}}>
       </progress>
+      
+      <span id="time-elapsed">{{timeElapsed}}</span>
       <span id="time-remaining">{{timeTotal}}</span>
     </div>
-    {{#if isPlaying}}
-      <a {{action pause model}} class="play-pause">
-        <i class="fa fa-pause"></i>
-      </a>
-    {{else}}
-      <a {{action play model}} class="play-pause">
-        <i class="fa fa-play"></i>
-      </a>
-    {{/if}}
-    <span>{{name}}</span>
+    
+    <div class="episode-name">{{name}}</div>
+    
+    <div class="player-controls">
+      {{#if isPlaying}}
+        <a {{action pause model}} class="play-pause">
+          <i class="fa fa-pause"></i>
+        </a>
+      {{else}}
+        <a {{action play model}} class="play-pause">
+          <i class="fa fa-play"></i>
+        </a>
+      {{/if}}
+    </div>
   {{/if}}
 </div>
