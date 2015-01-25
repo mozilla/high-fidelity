@@ -1,5 +1,6 @@
 HighFidelity.PodcastNewController = Ember.ObjectController.extend({
     isAdding: false,
+    isInErrorState: false,
 
     rssURL: '',
 
