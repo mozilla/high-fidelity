@@ -162,7 +162,7 @@ HighFidelity.Podcast = DS.Model.extend({
                 });
             }, function(error) {
                 console.error('Could not download podcast', error);
-                _this.destroyRecord();
+                _this.destroyRecord().then(reject);
             });
         });
     },
@@ -196,6 +196,9 @@ HighFidelity.Podcast.createFromController = function(controller, rssURL) {
             controller.set('isAdding', false);
             controller.set('rssURL', '');
             controller.transitionToRoute('podcast', podcast);
+        }, function() {
+            controller.set('isAdding', false);
+            controller.set('isInErrorState', true);
         });
     });
 };

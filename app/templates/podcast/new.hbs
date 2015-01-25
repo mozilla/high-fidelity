@@ -1,5 +1,12 @@
 <h2>{{t podcast.addRSSFeed}}</h2>
 
+{{#if isInErrorState}}
+  <div class="error">
+    <p>Encountered an error while adding Podcast.<p>
+    <p>Is the Podcast URL valid?</p>
+  </div>
+{{/if}}
+
 {{input type="url" value=rssURL placeholder="Podcast URL"}}
 <button {{action create}}>{{t podcast.add}}</button>
 
