@@ -33,6 +33,37 @@ I18n.translations = {
         },
     },
 
+    // Esperanto by @Airon90
+    eo: {
+        app: {
+            title: 'Podkastoj',
+        },
+        episode: {
+            episodes: 'Epizodoj',
+            new: 'Nova:',
+        },
+        podcast: {
+            add: 'Aldoni',
+            addOne: 'Ĉu vi volas aldoni novan?',
+            addRSSFeed: 'Aldoni RSS-fluon',
+            newToPodcasts: 'Ĉu malkutimas podkastojn?',
+            noneFound: 'Neniu podkasto trovata.',
+            recommendations: 'Kontrolu niajn rekomendojn:',
+        },
+        search: {
+            find: 'Trovi',
+            noResults: 'Neniu rezulto.',
+            placeholder: 'Nomo de podkasto aŭ ŝlosilvorto',
+            searchForAPodcast: 'Serĉi podkaston',
+            subscribe: 'Ĉu aliĝi al {{podcast}}?',
+        },
+        tabs: {
+            myPodcasts: 'Miaj podkastoj',
+            popular: 'Popularaj',
+            search: 'Serĉi',
+        },
+    },
+
     // French by @AntoineTurmel
     fr: {
         app: {
@@ -64,6 +95,37 @@ I18n.translations = {
         },
     },
     
+    // Italian by @Airon90
+    it: {
+        app: {
+            title: 'Podcast',
+        },
+        episode: {
+            episodes: 'Episodi',
+            new: 'Nuovo:',
+        },
+        podcast: {
+            add: 'Aggiungi',
+            addOne: 'Aggiungi uno nuovo?',
+            addRSSFeed: 'Aggiungi feed RSS',
+            newToPodcasts: 'Nuovo ai podcast?',
+            noneFound: 'Nessun podcast trovato.',
+            recommendations: 'Controlla i nostri consigli:',
+        },
+        search: {
+            find: 'Trova',
+            noResults: 'Nessun risultato.',
+            placeholder: 'Nome del podcast o parola chiave',
+            searchForAPodcast: 'Cerca un podcast',
+            subscribe: 'Vuoi abbonarti a {{podcast}}?',
+        },
+        tabs: {
+            myPodcasts: 'I miei podcast',
+            popular: 'Popolari',
+            search: 'Cerca',
+        },
+    },
+
     // Polish by @MaciejCzyzewski
     pl: {
         app: {
