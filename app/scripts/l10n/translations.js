@@ -156,4 +156,64 @@ I18n.translations = {
             search: 'Szukaj',
         },
     },
+    // galego by @xmgz
+    gl: {
+        app: {
+            title: 'Podcasts',
+        },
+        episode: {
+            episodes: 'Episodios',
+            new: 'Novo:',
+        },
+        podcast: {
+            add: 'Engadir',
+            addOne: 'Quere engadir un?',
+            addRSSFeed: 'Engdir fonte RSS',
+            newToPodcasts: 'Novo nos podcast?',
+            noneFound: 'Non se atoparon podcast.',
+            recommendations: 'Mire as nosas recomendacións:',
+        },
+        search: {
+            find: 'Buscar',
+            noResults: 'Sen resultados.',
+            placeholder: 'Nome do podcast ou palabras chave',
+            searchForAPodcast: 'Buscar un podcast',
+            subscribe: 'Suscribirse a {{podcast}}?',
+        },
+        tabs: {
+            myPodcasts: 'Os meus podcast',
+            popular: 'Popular',
+            search: 'Buscar',
+        },
+    },
+    // spanish by @xmgz
+    es: {
+        app: {
+            title: 'Podcasts',
+        },
+        episode: {
+            episodes: 'Episodios',
+            new: 'Nuevo:',
+        },
+        podcast: {
+            add: 'Añadir',
+            addOne: 'Desea añadir uno',
+            addRSSFeed: 'Añadir fuente RSS',
+            newToPodcasts: 'Nuevo en los podcast?',
+            noneFound: 'No se encontraron podcast.',
+            recommendations: 'Estas son nuestras recomendaciones:',
+        },
+        search: {
+            find: 'Buscar',
+            noResults: 'Sin resultados.',
+            placeholder: 'Nombre del podcast o palabras clave',
+            searchForAPodcast: 'Buscar un podcast',
+            subscribe: 'Suscribirse a {{podcast}}?',
+        },
+        tabs: {
+            myPodcasts: 'Mis podcast',
+            popular: 'Popular',
+            search: 'Buscar',
+        },
+    },
 };
