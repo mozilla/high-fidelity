@@ -1,0 +1,22 @@
+{
+  "version": "@@versionNumber",
+  "name": "@@appName",
+  "description": "@@appDescription",
+  "icons": {
+    "32": "/assets/images/icons/icon-32.png",
+    "60": "/assets/images/icons/icon-60.png",
+    "64": "/assets/images/icons/icon-64.png",
+    "90": "/assets/images/icons/icon-90.png",
+    "120": "/assets/images/icons/icon-120.png",
+    "128": "/assets/images/icons/icon-128.png",
+    "256": "/assets/images/icons/icon-256.png"
+  },
+  "developer": {
+    "name": "@@developerName",
+    "url": "@@developerUrl"
+  },
+  "launch_path": "/index.html",
+  "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
+  "permissions": {
+  }
+}
