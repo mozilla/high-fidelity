@@ -82,11 +82,17 @@ export default DS.Model.extend({
                     return;
                 }
 
+                console.log("THIS: ", _this);
+
+                console.log('Title: ', $channel.find('title').eq(0).text());
+
                 _this.set('title', $channel.find('title').eq(0).text());
                 _this.set('description', $channel.find('description')
                                                  .eq(0).text());
                 _this.set('coverImageURL', $channel.find('itunes\\:image')
                                                    .attr('href'));
+
+                console.log('Podcast record after setting data: ', _this);
 
                 _this.get('episodes').then(function(episodes) {
                     var itemsSaved = 0;
@@ -132,9 +138,11 @@ export default DS.Model.extend({
                         itemsSaved++;
 
                         if ($items.length === i + 1) {
+                            console.log('Length equals i+1');
                             console.info('Updated podcast:' + _this.get('id'),
                                          itemsSaved + ' new episodes.');
-                            saved = true;
+                            var saved = true;
+                            console.log('PODCAST RECORD AT END OF EPISODE SAVING: ', _this);
                             _this.save().then(resolve);
                         }
                     });
