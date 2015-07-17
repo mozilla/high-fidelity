@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import createFromController from 'ember-hifi/lib/create-from-controller'
 
 export default Ember.Controller.extend({
     isAdding: false,
