@@ -29,24 +29,33 @@ export default Ember.Controller.extend({
 
             self.set('isAdding', true);
 
-            console.info('Creating new podcast.');
-
-            var podcast = self.store.createRecord('podcast', {
+            var existingPodcast = self.store.find('podcast', {
                 rssURL: self.get('rssURL')
-            });
+            }).then(function(podcast) {
+                console.log('Podcast: ', podcast);
+                console.info('Podcast already exists', podcast.objectAt(0));
 
-            podcast.update().then(function() {
-                console.log('Finished Updating!');
                 self.set('isAdding', false);
                 self.set('rssURL', '');
-                self.transitionToRoute('podcast', podcast);
+                self.transitionToRoute('podcast', podcast.objectAt(0));
             }, function() {
-                self.set('isAdding', false);
-                self.set('isInErrorState', true);
+
+                console.info('Creating new podcast.');
+
+                var podcast = self.store.createRecord('podcast', {
+                    rssURL: self.get('rssURL')
+                });
+
+                podcast.update().then(function() {
+                    console.log('Finished Updating!');
+                    self.set('isAdding', false);
+                    self.set('rssURL', '');
+                    self.transitionToRoute('podcast', podcast);
+                }, function() {
+                    self.set('isAdding', false);
+                    self.set('isInErrorState', true);
+                });
             });
-
-
-            // createFromController(this, this.get('rssURL'));
         }
     }
 });
