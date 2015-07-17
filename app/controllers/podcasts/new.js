@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
 
             this.set('isAdding', true);
 
-            HighFidelity.Podcast.createFromController(this, this.get('rssURL'));
+            this.createFromController(this, this.get('rssURL'));
         }
     }
 });

@@ -1,4 +1,6 @@
 import DS from 'ember-data';
+import Ember from 'ember';
+import parseXML from 'xml-parser';
 
 export default DS.Model.extend({
     episodes: DS.hasMany('episode', {async: true}),
@@ -11,7 +13,7 @@ export default DS.Model.extend({
 
     coverImageBlob: DS.attr('string'),
     coverImageURL: DS.attr('string'),
-    
+
     coverImage: function() {
         if (this.get('coverImageURL')) {
             return this.get('coverImageURL');
@@ -21,7 +23,6 @@ export default DS.Model.extend({
     }.property('coverImageBlob', 'coverImageURL'),
 
     destroyRecord: function() {
-        var _this = this;
         this.get('episodes').forEach(function(episode) {
             episode.destroyRecord();
         });
@@ -41,7 +42,7 @@ export default DS.Model.extend({
         request.open('GET', this.get('coverImageURL'), true);
         request.responseType = 'arraybuffer';
 
-        request.addEventListener('load', function(event) {
+        request.addEventListener('load', function() {
             _this.set('coverImageBlob', request.response);
             _this.save();
         });
@@ -59,17 +60,18 @@ export default DS.Model.extend({
         var _this = this;
 
         console.info('Updating podcast:' + this.get('id'));
-        return new Promise(function(resolve, reject) {
+        return new Ember.RSVP.Promise(function(resolve, reject) {
             // _this.getCoverImage();
 
             // Update last updated time so we aren't constantly looking
             // for new episodes ;-)
-            _this.set('lastUpdated', HighFidelity.timestamp());
+            _this.set('lastUpdated', EmberHifi.timestamp());
 
-            HighFidelity.RSS.get(_this.get('rssURL')).then(function(result) {
-                var $xml = $(result);
-                var $channel = $xml.find('channel');
-                var $items = $xml.find('item');
+            EmberHifi.RSS.get(_this.get('rssURL')).then(function(result) {
+                console.log('Result: ', result);
+                var $xml = parseXML(result);
+                var $channel = $xml.channel;
+                var $items = $xml.item;
                 var saved = false;
 
                 if (!$xml.length || !$xml.find('item').length) {
@@ -79,8 +81,8 @@ export default DS.Model.extend({
                     return;
                 }
 
-                _this.set('title', $channel.find('title').eq(0).text());
-                _this.set('description', $channel.find('description')
+                _this.set('title', $channel.title.eq(0).text());
+                _this.set('description', $channel.description
                                                  .eq(0).text());
                 _this.set('coverImageURL', $channel.find('itunes\\:image')
                                                    .attr('href'));
@@ -88,7 +90,7 @@ export default DS.Model.extend({
                 _this.get('episodes').then(function(episodes) {
                     var itemsSaved = 0;
                     $items.each(function(i, episode) {
-                        var guid = $(episode).find('guid').text();
+                        var guid = parseXML(episode).find('guid').text();
 
                         if (episodes.filterBy('guid', guid).length) {
                             return;
@@ -97,7 +99,7 @@ export default DS.Model.extend({
                         var oldImageURL = _this.get('coverImageURL');
 
                         // Use the latest artwork for the cover image.
-                        var episodeImageURL = $(episode).find('itunes\\:image')
+                        var episodeImageURL = parseXML(episode).find('itunes\\:image')
                                                         .attr('href');
                         console.log('episodeImage', episodeImageURL);
                         if (i === 0 && episodeImageURL !== oldImageURL) {
@@ -113,11 +115,11 @@ export default DS.Model.extend({
 
                         var e = _this.store.createRecord('episode', {
                             guid: guid,
-                            audioURL: $(episode).find('enclosure').attr('url'),
-                            datePublished: HighFidelity.timestamp(
-                                $(episode).find('pubDate').text()
+                            audioURL: parseXML(episode).enclosure.attr('url'),
+                            datePublished: EmberHifi.timestamp(
+                                parseXML(episode).pubDate
                             ),
-                            name: $(episode).find('title').text(),
+                            name: parseXML(episode).title,
                             podcast: _this
                         });
 
@@ -150,7 +152,7 @@ export default DS.Model.extend({
     },
 
     _autoUpdate: function() {
-        if (this.get('lastUpdated') + 3600 < HighFidelity.timestamp()) {
+        if (this.get('lastUpdated') + 3600 < EmberHifi.timestamp()) {
             console.debug('Auto update for:' + this.get('title'));
             this.update();
         }
