@@ -12,6 +12,13 @@
     "i18n-js": "git://github.com/fnando/i18n-js#v3.0.0.rc5",
     "jquery": "^1.11.1",
     "loader.js": "ember-cli/loader.js#3.2.0",
-    "qunit": "~1.17.1"
+    "qunit": "~1.17.1",
+    "ember-indexeddb-adapter": "https://github.com/kurko/ember-indexeddb-adapter.git#~0.6.0",
+    "localforage": "~1.2.1"
+  },
+  "resolutions": {
+    "ember": "1.12.0",
+    "ember-data": "1.0.0-beta.18",
+    "jquery": "^1.11.1"
   }
 }

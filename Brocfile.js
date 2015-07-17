@@ -2,9 +2,12 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+  wrapInEval: false
+});
 
 app.import('bower_components/i18n-js/app/assets/javascripts/i18n.js');
+app.import('bower_components/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js');
 
 // Use `app.import` to add additional libraries to the generated
 // output files.

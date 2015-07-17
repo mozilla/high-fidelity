@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 import parseXML from 'npm:xml-parser';
+import timeStamper from 'ember-hifi/lib/timestamp';
+import getRSS from 'ember-hifi/lib/rss';
 
 export default DS.Model.extend({
     episodes: DS.hasMany('episode', {async: true}),
@@ -65,14 +67,13 @@ export default DS.Model.extend({
 
             // Update last updated time so we aren't constantly looking
             // for new episodes ;-)
-            _this.set('lastUpdated', EmberHifi.timestamp());
+            _this.set('lastUpdated', timeStamper.timestamp());
 
-            EmberHifi.RSS.get(_this.get('rssURL')).then(function(result) {
+            getRSS(_this.get('rssURL')).then(function(result) {
                 console.log('Result: ', result);
-                var $xml = parseXML(result);
-                var $channel = $xml.channel;
-                var $items = $xml.item;
-                var saved = false;
+                var $xml = $(result);
+                var $channel = $xml.find('channel');
+                var $items = $xml.find('item');
 
                 if (!$xml.length || !$xml.find('item').length) {
                     // If we can't make sense of this podcast's feed, we delete
@@ -81,8 +82,8 @@ export default DS.Model.extend({
                     return;
                 }
 
-                _this.set('title', $channel.title.eq(0).text());
-                _this.set('description', $channel.description
+                _this.set('title', $channel.find('title').eq(0).text());
+                _this.set('description', $channel.find('description')
                                                  .eq(0).text());
                 _this.set('coverImageURL', $channel.find('itunes\\:image')
                                                    .attr('href'));
@@ -90,7 +91,7 @@ export default DS.Model.extend({
                 _this.get('episodes').then(function(episodes) {
                     var itemsSaved = 0;
                     $items.each(function(i, episode) {
-                        var guid = parseXML(episode).find('guid').text();
+                        var guid = $(episode).find('guid').text();
 
                         if (episodes.filterBy('guid', guid).length) {
                             return;
@@ -99,7 +100,7 @@ export default DS.Model.extend({
                         var oldImageURL = _this.get('coverImageURL');
 
                         // Use the latest artwork for the cover image.
-                        var episodeImageURL = parseXML(episode).find('itunes\\:image')
+                        var episodeImageURL = $(episode).find('itunes\\:image')
                                                         .attr('href');
                         console.log('episodeImage', episodeImageURL);
                         if (i === 0 && episodeImageURL !== oldImageURL) {
@@ -115,11 +116,11 @@ export default DS.Model.extend({
 
                         var e = _this.store.createRecord('episode', {
                             guid: guid,
-                            audioURL: parseXML(episode).enclosure.attr('url'),
-                            datePublished: EmberHifi.timestamp(
-                                parseXML(episode).pubDate
+                            audioURL: $(episode).find('enclosure').attr('url'),
+                            datePublished: timeStamper.timestamp(
+                                $(episode).find('pubDate')
                             ),
-                            name: parseXML(episode).title,
+                            name: $(episode).find('title'),
                             podcast: _this
                         });
 
@@ -152,7 +153,7 @@ export default DS.Model.extend({
     },
 
     _autoUpdate: function() {
-        if (this.get('lastUpdated') + 3600 < EmberHifi.timestamp()) {
+        if (this.get('lastUpdated') + 3600 < timeStamper.timestamp()) {
             console.debug('Auto update for:' + this.get('title'));
             this.update();
         }
