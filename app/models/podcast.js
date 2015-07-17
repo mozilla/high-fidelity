@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import parseXML from 'xml-parser';
+import parseXML from 'npm:xml-parser';
 
 export default DS.Model.extend({
     episodes: DS.hasMany('episode', {async: true}),
