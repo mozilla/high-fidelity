@@ -3,9 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
     isAdding: false,
     isInErrorState: false,
-
     rssURL: '',
-
     actions: {
         create: function(url) {
             var self = this;
