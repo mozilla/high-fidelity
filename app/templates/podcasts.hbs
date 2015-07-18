@@ -1,13 +1,13 @@
 {{#linkTo 'podcasts.new'}}Add New Podcast{{/linkTo}}
 <h3>My Podcasts</h3>
   <ul class="my-podcasts">
-    {{#each podcasts tagName=ul className="my-podcasts"}}
+    {{#each podcast in model tagName=ul className="my-podcasts"}}
       <li>
-        {{#link-to 'podcast' this class="cover"}}
+        {{#link-to 'podcast' podcast class="cover"}}
           {{#if coverImage}}
-            <img {{bind-attr src=coverImage}} {{bind-attr alt=title}}>
+            <img {{bind-attr src=podcast.coverImage}} {{bind-attr alt=podcast.title}}>
           {{else}}
-            <span class="no-cover">{{title}}</span>
+            <span class="no-cover">{{podcast.title}}</span>
           {{/if}}
         {{/link-to}}
       </li>
