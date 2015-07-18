@@ -1,11 +1,11 @@
 <div class="episodes">
-  {{#each content=controller}}
+  {{#each episode in content}}
     <div {{action setEpisode this}} {{bind-attr class=":episode isNew"}}>
       <div class="name">
         {{#if isNew}}
           <strong>{{episode.new}}</strong>
         {{/if}}
-        {{name}}
+        {{episode.name}}
       </div>
 
       {{!-- Commented out while we are streaming-only. This code exposes

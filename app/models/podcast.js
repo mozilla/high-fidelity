@@ -124,9 +124,9 @@ export default DS.Model.extend({
                             guid: guid,
                             audioURL: $(episode).find('enclosure').attr('url'),
                             datePublished: timeStamper.timestamp(
-                                $(episode).find('pubDate')
+                                $(episode).find('pubDate').text()
                             ),
-                            name: $(episode).find('title'),
+                            name: $(episode).find('title').text(),
                             podcast: _this
                         });
 
