@@ -61,7 +61,7 @@ export default DS.Model.extend({
             }
         });
 
-        request.addEventListener('progress', function(event) {
+        request.addEventListener('progress', function() {
             console.info('eventProgress', _this.get('_chunkCount'));
             localforage.setItem('ep:' + _this.get('id') +
                                 _this.get('_chunkCount'), request.response)
@@ -88,7 +88,7 @@ export default DS.Model.extend({
             _this.incrementProperty('_chunkCount');
         });
 
-        request.addEventListener('error', function(event) {
+        request.addEventListener('error', function() {
             window.alert('Error downloading this episode. Please try again.');
 
             // _this.trigger('download:cancel');
@@ -118,7 +118,7 @@ export default DS.Model.extend({
         var chunkCount = this.get('_chunkCount');
         var _this = this;
 
-        return new Promise(function(resolve) {
+        return new Ember.RSVP.Promise(function(resolve) {
             function _walkChunks(chunkID) {
                 if (chunkID === undefined) {
                     chunkID = 0;
