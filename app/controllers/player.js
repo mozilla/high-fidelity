@@ -19,28 +19,29 @@ export default Ember.Controller.extend({
 
     actions: {
         pause: function(episode) {
-            clearTimeout(this._saveInBackgroundTimeout);
+          console.log("Pausing...");
             clearTimeout(this._timeUpdateTimeout);
-            $('#audio-player')[0].pause();
+            clearTimeout(this._saveInBackgroundTimeout);
+            Ember.$('#audio-player')[0].pause();
 
-            episode.set('playbackPosition', $('#audio-player')[0].currentTime);
+            episode.set('playbackPosition', Ember.$('#audio-player')[0].currentTime);
             episode.set('isPlaying', false);
             episode.save();
         },
 
         play: function(episode) {
-            $('#audio-player')[0].play();
+            Ember.$('#audio-player')[0].play();
             episode.set('isPlaying', true);
         },
 
         rewind: function(episode) {
-            $('#audio-player')[0].currentTime -= this.get('skipTime');
-            episode.set('playbackPosition', $('#audio-player')[0].currentTime);
+            Ember.$('#audio-player')[0].currentTime -= this.get('skipTime');
+            episode.set('playbackPosition', Ember.$('#audio-player')[0].currentTime);
         },
 
         forward: function(episode) {
-            $('#audio-player')[0].currentTime += this.get('skipTime');
-            episode.set('playbackPosition', $('#audio-player')[0].currentTime);
+            Ember.$('#audio-player')[0].currentTime += this.get('skipTime');
+            episode.set('playbackPosition', Ember.$('#audio-player')[0].currentTime);
         },
 
         setEpisode: function(episode) {
@@ -61,41 +62,46 @@ export default Ember.Controller.extend({
     },
 
     playAfterSet: function() {
-        var audio = $('#audio-player')[0];
+        var audio = Ember.$('#audio-player')[0];
         var _this = this;
 
-        console.log("this.get('audio')", this.get('audio'));
-        $(audio).attr('src', this.get('audio'));
+        console.log("yeP: ", this.get("model"));
 
-        $(audio).bind('canplay', function() {
-            $(this).unbind('canplay');
+        console.log("this.get('audio')", this.get('audio'));
+        Ember.$(audio).attr('src', this.get('audio'));
+
+        Ember.$(audio).bind('canplay', function() {
+            Ember.$(this).unbind('canplay');
 
             if (_this.get('model').get('playbackPosition')) {
                 audio.currentTime = _this.get('model').get('playbackPosition');
+                console.log("Playback position currentTime: ", audio.currentTime);
             }
 
+            console.log("CANPLAY HAS BEEN BOUND...");
+
             _this.updateTime();
-            _this.set('timeTotal', timeStamper.formatTime(audio.duration));
 
             _this.send('play', _this.get('model'));
         });
 
-        this._saveInBackgroundTimeout = setTimeout(function() {
-            _this._saveInBackground();
-        }, 10000);
-        _this.updateTime();
+        // this.updateTime();
+        this._saveInBackground();
     },
 
     updateTime: function() {
-        var audio = $('#audio-player')[0];
+        var audio = Ember.$('#audio-player')[0];
         var _this = this;
-
-        this.set('timeElapsed', timeStamper.formatTime(audio.currentTime));
-        this.set('timeRemaining',
-                 timeStamper.formatTime(audio.duration - audio.currentTime));
 
         this.set('progressBar.max', audio.duration);
         this.set('progressBar.value', audio.currentTime);
+
+        this.set('timeElapsed', timeStamper.formatTime(audio.currentTime));
+        this.set('timeRemaining', timeStamper.formatTime(audio.duration - audio.currentTime));
+
+        console.log('Audio Current Time: ', audio.currentTime);
+        console.log("Audio Duration: ", audio.duration);
+        console.log('Time Remaining: ', audio.duration - audio.currentTime);
 
         this._timeUpdateTimeout = setTimeout(function() {
             _this.updateTime();
@@ -103,7 +109,7 @@ export default Ember.Controller.extend({
     },
 
     _saveInBackground: function() {
-        var audio = $('#audio-player')[0];
+        var audio = Ember.$('#audio-player')[0];
         var _this = this;
 
         this.get('model').set('playbackPosition', audio.currentTime);

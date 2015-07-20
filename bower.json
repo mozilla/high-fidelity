@@ -14,7 +14,8 @@
     "loader.js": "ember-cli/loader.js#3.2.0",
     "qunit": "~1.17.1",
     "ember-indexeddb-adapter": "https://github.com/kurko/ember-indexeddb-adapter.git#~0.6.0",
-    "localforage": "~1.2.1"
+    "localforage": "~1.2.1",
+    "font-awesome": "~4.3.0"
   },
   "resolutions": {
     "ember": "1.12.0",

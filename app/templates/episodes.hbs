@@ -1,6 +1,11 @@
 <div class="episodes">
+
+    <audio id="audio-player" preload="auto" mozaudiochannel="content"></audio>
+
+    {{render "player"}}
+
   {{#each episode in content}}
-    <div {{action setEpisode this}} {{bind-attr class=":episode isNew"}}>
+    <div {{action "setEpisode" episode}} {{bind-attr class=":episode isNew"}}>
       <div class="name">
         {{#if isNew}}
           <strong>{{episode.new}}</strong>
