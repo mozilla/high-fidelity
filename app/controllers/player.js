@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import timeStamper from 'ember-hifi/lib/timestamp';
 
 export default Ember.Controller.extend({
     _hasAudio: function() {
@@ -74,7 +75,7 @@ export default Ember.Controller.extend({
             }
 
             _this.updateTime();
-            _this.set('timeTotal', HighFidelity.formatTime(audio.duration));
+            _this.set('timeTotal', timeStamper.formatTime(audio.duration));
 
             _this.send('play', _this.get('model'));
         });
@@ -89,9 +90,9 @@ export default Ember.Controller.extend({
         var audio = $('#audio-player')[0];
         var _this = this;
 
-        this.set('timeElapsed', HighFidelity.formatTime(audio.currentTime));
+        this.set('timeElapsed', timeStamper.formatTime(audio.currentTime));
         this.set('timeRemaining',
-                 HighFidelity.formatTime(audio.duration - audio.currentTime));
+                 timeStamper.formatTime(audio.duration - audio.currentTime));
 
         this.set('progressBar.max', audio.duration);
         this.set('progressBar.value', audio.currentTime);
