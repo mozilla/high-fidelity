@@ -2,10 +2,12 @@ import Ember from 'ember';
 import timeStamper from 'ember-hifi/lib/timestamp';
 
 export default Ember.Controller.extend({
+    init: function() {
+        this._super.apply(this, arguments);
+    },
     _hasAudio: function() {
         this.set('isPopulated', !!this.get('model').get('id'));
     }.observes('model'),
-
     isPopulated: false,
     progressBar: {
         max: 0,
@@ -49,12 +51,23 @@ export default Ember.Controller.extend({
 
             this.set('model', episode);
 
+
+
+            console.log('This Get model: ', this.get('model'));
+
+            console.log("Episode: ", episode);
+
+            console.log('getmodel: ', episode.get('name'));
+
             if (this.get('model').get('isDownloaded')) {
+              console.log("Bloburl downloaded, setting audio");
                 episode.blobURL().then(function(url) {
                     _this.set('audio', url);
                     _this.playAfterSet();
                 });
             } else {
+              console.log('Setting Audio...');
+              console.log("Model: ", this.get("model"));
                 this.set('audio', this.get('model').get('audioURL'));
                 this.playAfterSet();
             }

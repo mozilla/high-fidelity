@@ -13,20 +13,21 @@
     <div class="player-controls">
       <a {{action "rewind" model}} class="backward">
         <i class="fa fa-backward"></i>
+        {{fa-icon "backward"}}
       </a>
 
       {{#if model.isPlaying}}
         <a {{action "pause" model}} class="play-pause">
-          <i class="fa fa-pause"></i>
+        {{fa-icon "pause"}}
         </a>
       {{else}}
         <a {{action "play" model}} class="play-pause">
-          <i class="fa fa-play"></i>
+        {{fa-icon "play"}}
         </a>
       {{/if}}
 
       <a {{action "forward" model}} class="forward">
-        <i class="fa fa-forward"></i>
+        {{fa-icon "forward"}}
       </a>
     </div>
 </div>

@@ -3,7 +3,8 @@
     "document",
     "window",
     "-Promise",
-    "$"
+    "$",
+    "EmberHifi"
   ],
   "browser": true,
   "boss": true,

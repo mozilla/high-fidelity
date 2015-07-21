@@ -1,6 +1,5 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import parseXML from 'npm:xml-parser';
 import timeStamper from 'ember-hifi/lib/timestamp';
 import getRSS from 'ember-hifi/lib/rss';
 

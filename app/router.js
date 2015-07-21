@@ -8,12 +8,12 @@ var Router = Ember.Router.extend({
 Router.map(function() {
   this.route('search');
 
-  this.resource('podcasts', { path: '/podcasts' }, function() {
+  this.route('podcasts', { path: '/podcasts' }, function() {
     this.route('new');
   });
 
-  this.resource('podcast', { path: '/podcast/:podcast_id'});
-  this.resource('episode', { path: '/episode/:episode_id' });
+  this.route('podcast', { path: '/podcast/:podcast_id'});
+  // this.resource('episodes', { path: '/episode/:episode_id' });
 });
 
 export default Router;

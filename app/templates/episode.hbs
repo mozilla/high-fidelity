@@ -4,13 +4,13 @@
 
     {{render "player"}}
 
-  {{#each episode in content}}
+  {{#each episode in model}}
     <div {{action "setEpisode" episode}} {{bind-attr class=":episode isNew"}}>
       <div class="name">
         {{#if isNew}}
           <strong>{{episode.new}}</strong>
         {{/if}}
-        {{episode.name}}
+        {{model.name}}
       </div>
 
       {{!-- Commented out while we are streaming-only. This code exposes

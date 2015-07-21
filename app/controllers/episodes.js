@@ -5,6 +5,7 @@ export default Ember.ArrayController.extend({
 
     sortAscending: false,
     sortProperties: ['datePublished'],
+    selectedEpisode: null,
 
     actions: {
         download: function(episode) {
@@ -12,8 +13,11 @@ export default Ember.ArrayController.extend({
         },
 
         setEpisode: function(episode) {
+            this.set('selectedEpisode', episode);
+            console.log('This Get selectedEpisode: ', this.get('selectedEpisode'));
             if (!episode.get('isDownloaded')) {
                 console.log('Not downloaded');
+                console.log("CONTROLLERS PLAYER: ", this.get('controllers.player'));
                 this.get('controllers.player').send('setEpisode', episode);
             } else {
                 console.log('Start playing!');

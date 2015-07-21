@@ -5,3 +5,4 @@ export default Ember.Route.extend({
     return this.store.find('podcast', params.podcast_id);
   }
 });
+
