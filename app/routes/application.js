@@ -1,7 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  //   redirect: function() {
-  //     this.transitionTo('podcasts');
-  // }
+    model: function() {
+        return this.store;
+    },
+    redirect: function() {
+      this.transitionTo('podcasts');
+    }
 });

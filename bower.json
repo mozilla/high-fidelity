@@ -14,5 +14,8 @@
     "qunit": "~1.17.1",
     "font-awesome": "~4.3.0",
     "localforage": "~1.2.1"
+  },
+  "devDependencies": {
+    "ember-localstorage-adapter": "0.5.4"
   }
 }

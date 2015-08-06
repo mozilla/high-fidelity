@@ -1,6 +1,6 @@
-import LFAdapter from 'ember-localforage-adapter/adapters/localforage';
+import DS from 'ember-data';
 
-export default LFAdapter.extend({
+export default DS.LSAdapter.extend({
     databaseName: 'hifi',
     version: 2,
     migrations: function() {
