@@ -1,7 +1,7 @@
 {
-  "name": "ember-hifi",
-  "version": "0.0.0",
-  "description": "Small description for ember-hifi goes here",
+  "name": "high-fidelity",
+  "version": "3.0.0",
+  "description": "Listen to your favourite podcasts on your HTML5-powered device or browser.",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -12,11 +12,14 @@
     "build": "ember build",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": "https://github.com/mozilla/high-fidelity",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": {
+    "name": "Mozilla",
+    "url": "https://mozilla.org/"
+  },
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",

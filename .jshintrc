@@ -4,7 +4,7 @@
     "window",
     "-Promise",
     "$",
-    "EmberHifi"
+    "HighFidelity"
   ],
   "browser": true,
   "boss": true,

@@ -6,7 +6,7 @@ const NUMBER_OF_PODCASTS_TO_GET = 1000;
 
 export default function getRSS(url, callback) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
-        var jsonpCallback = EmberHifi.isPackaged ? '' : '&callback=?';
+        var jsonpCallback = HighFidelity.isPackaged ? '' : '&callback=?';
 
         $.ajax({
             url: 'https://ajax.googleapis.com/ajax/' +

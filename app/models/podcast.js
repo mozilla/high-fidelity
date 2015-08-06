@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import timeStamper from 'ember-hifi/lib/timestamp';
-import getRSS from 'ember-hifi/lib/rss';
+import timeStamper from 'high-fidelity/lib/timestamp';
+import getRSS from 'high-fidelity/lib/rss';
 
 export default DS.Model.extend({
     episodes: DS.hasMany('episode', {async: true}),

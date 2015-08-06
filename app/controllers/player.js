@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import timeStamper from 'ember-hifi/lib/timestamp';
+import timeStamper from 'high-fidelity/lib/timestamp';
 
 export default Ember.Controller.extend({
     init: function() {

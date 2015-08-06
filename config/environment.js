@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'ember-hifi',
+    modulePrefix: 'high-fidelity',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
