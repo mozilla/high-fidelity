@@ -24,6 +24,8 @@ export default DS.Model.extend({
     }.property('coverImageBlob', 'coverImageURL'),
 
     destroyRecord: function() {
+        console.log("This: ", this);
+        console.log("Eps: ", this.get('episodes'));
         this.get('episodes').forEach(function(episode) {
             episode.destroyRecord();
         });

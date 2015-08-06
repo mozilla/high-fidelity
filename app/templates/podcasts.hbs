@@ -5,7 +5,7 @@
       <li>
         {{#link-to 'podcast' podcast class="cover"}}
           {{#if coverImage}}
-            <img {{bind-attr src=podcast.coverImage}} {{bind-attr alt=podcast.title}}>
+            <img src={{podcast.coverImage}} alt={{podcast.title}}>
           {{else}}
             <span class="no-cover">{{podcast.title}}</span>
           {{/if}}
