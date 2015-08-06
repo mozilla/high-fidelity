@@ -4,8 +4,8 @@
 
     {{render "player"}}
 
-  {{#each episode in model}}
-    <div {{action "setEpisode" episode}} {{bind-attr class=":episode isNew"}}>
+  {{#each model as |episode|}}
+    <div {{action "setEpisode" episode}} class="episode {{if isNew "new" "old"}}">
       <div class="name">
         {{#if isNew}}
           <strong>{{episode.new}}</strong>
