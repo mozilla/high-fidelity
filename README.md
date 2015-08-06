@@ -6,7 +6,7 @@ The app requires elevated XMLHttpRequest privileges to fetch podcast files. In F
 
 ## Developing Locally
 
-You will need the following things properly installed on your computer.
+You will need the following things properly installed on your computer:
 
 * [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM)
