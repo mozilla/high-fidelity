@@ -44,8 +44,6 @@ export default DS.Model.extend({
         this.set('_chunkCount', 0);
         this.set('_chunkCountSaved', 0);
 
-        console.log(this, model);
-
         var _this = this;
         var request = new XMLHttpRequest({mozSystem: true});
 

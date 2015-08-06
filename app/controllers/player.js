@@ -21,7 +21,6 @@ export default Ember.Controller.extend({
 
     actions: {
         pause: function(episode) {
-          console.log("Pausing...");
             clearTimeout(this._timeUpdateTimeout);
             clearTimeout(this._saveInBackgroundTimeout);
             Ember.$('#audio-player')[0].pause();
@@ -51,23 +50,12 @@ export default Ember.Controller.extend({
 
             this.set('model', episode);
 
-
-
-            console.log('This Get model: ', this.get('model'));
-
-            console.log("Episode: ", episode);
-
-            console.log('getmodel: ', episode.get('name'));
-
             if (this.get('model').get('isDownloaded')) {
-              console.log("Bloburl downloaded, setting audio");
                 episode.blobURL().then(function(url) {
                     _this.set('audio', url);
                     _this.playAfterSet();
                 });
             } else {
-              console.log('Setting Audio...');
-              console.log("Model: ", this.get("model"));
                 this.set('audio', this.get('model').get('audioURL'));
                 this.playAfterSet();
             }
@@ -78,9 +66,6 @@ export default Ember.Controller.extend({
         var audio = Ember.$('#audio-player')[0];
         var _this = this;
 
-        console.log("yeP: ", this.get("model"));
-
-        console.log("this.get('audio')", this.get('audio'));
         Ember.$(audio).attr('src', this.get('audio'));
 
         Ember.$(audio).bind('canplay', function() {
@@ -88,10 +73,7 @@ export default Ember.Controller.extend({
 
             if (_this.get('model').get('playbackPosition')) {
                 audio.currentTime = _this.get('model').get('playbackPosition');
-                console.log("Playback position currentTime: ", audio.currentTime);
             }
-
-            console.log("CANPLAY HAS BEEN BOUND...");
 
             _this.updateTime();
 
@@ -111,10 +93,6 @@ export default Ember.Controller.extend({
 
         this.set('timeElapsed', timeStamper.formatTime(audio.currentTime));
         this.set('timeRemaining', timeStamper.formatTime(audio.duration - audio.currentTime));
-
-        console.log('Audio Current Time: ', audio.currentTime);
-        console.log("Audio Duration: ", audio.duration);
-        console.log('Time Remaining: ', audio.duration - audio.currentTime);
 
         this._timeUpdateTimeout = setTimeout(function() {
             _this.updateTime();

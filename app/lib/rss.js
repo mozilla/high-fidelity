@@ -5,7 +5,6 @@ import Ember from 'ember';
 const NUMBER_OF_PODCASTS_TO_GET = 1000;
 
 export default function getRSS(url, callback) {
-    console.log('GETTING RSS');
     return new Ember.RSVP.Promise(function(resolve, reject) {
         var jsonpCallback = EmberHifi.isPackaged ? '' : '&callback=?';
 

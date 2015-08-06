@@ -10,7 +10,6 @@ export default Ember.Controller.extend({
 
       if (url) {
         self.set('rssURL', url);
-        console.log('RssURL Set...', url);
       }
 
       if (!self.get('rssURL') || !self.get('rssURL').length) {
@@ -37,14 +36,11 @@ export default Ember.Controller.extend({
       //   self.transitionToRoute('podcast', podcast.objectAt(0));
       // }, function() {
 
-        console.info('Creating new podcast.');
-
         var podcast = self.store.createRecord('podcast', {
           rssURL: self.get('rssURL')
         });
 
         podcast.update().then(function() {
-          console.log('Finished Updating!');
           self.set('isAdding', false);
           self.set('rssURL', '');
           self.transitionToRoute('podcast', podcast);

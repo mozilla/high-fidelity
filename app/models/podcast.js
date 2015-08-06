@@ -69,7 +69,6 @@ export default DS.Model.extend({
             _this.set('lastUpdated', timeStamper.timestamp());
 
             getRSS(_this.get('rssURL')).then(function(result) {
-                console.log('Result: ', result);
                 var $xml = $(result);
                 var $channel = $xml.find('channel');
                 var $items = $xml.find('item');
@@ -80,10 +79,6 @@ export default DS.Model.extend({
                     window.alert('Error downloading podcast feed.');
                     return;
                 }
-
-                console.log("THIS: ", _this);
-
-                console.log('Title: ', $channel.find('title').eq(0).text());
 
                 _this.set('title', $channel.find('title').eq(0).text());
                 _this.set('description', $channel.find('description')
@@ -107,7 +102,6 @@ export default DS.Model.extend({
                         // Use the latest artwork for the cover image.
                         var episodeImageURL = $(episode).find('itunes\\:image')
                                                         .attr('href');
-                        console.log('episodeImage', episodeImageURL);
                         if (i === 0 && episodeImageURL !== oldImageURL) {
                             _this.set('coverImageURL', episodeImageURL);
                         }
@@ -137,11 +131,9 @@ export default DS.Model.extend({
                         itemsSaved++;
 
                         if ($items.length === i + 1) {
-                            console.log('Length equals i+1');
                             console.info('Updated podcast:' + _this.get('id'),
                                          itemsSaved + ' new episodes.');
                             var saved = true;
-                            console.log('PODCAST RECORD AT END OF EPISODE SAVING: ', _this);
                             _this.save().then(resolve);
                         }
                     });

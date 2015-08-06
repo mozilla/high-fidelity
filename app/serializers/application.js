@@ -2,7 +2,6 @@ import DS from 'ember-data';
 
 export default DS.LSSerializer.extend({
   serializeHasMany: function(snapshot, json, relationship) {
-    console.log("WHAT MY OWN HAS MANY");
       var key = relationship.key;
       var payloadKey = this.keyForRelationship ? this.keyForRelationship(key, "hasMany") : key;
       var relationshipType = snapshot.type.determineRelationshipType(relationship, this.store);
