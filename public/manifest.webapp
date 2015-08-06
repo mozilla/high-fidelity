@@ -9,8 +9,7 @@
     "90": "/assets/images/icons/icon-90.png",
     "120": "/assets/images/icons/icon-120.png",
     "128": "/assets/images/icons/icon-128.png",
-    "256": "/assets/images/icons/icon-256.png",
-    "512": "/assets/images/icons/icon-512.png"
+    "256": "/assets/images/icons/icon-256.png"
   },
   "developer": {
     "name": "@@developerName",
