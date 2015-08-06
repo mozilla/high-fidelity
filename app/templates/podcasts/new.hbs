@@ -1,0 +1,30 @@
+<h2>{{podcast.addRSSFeed}}</h2>
+
+{{#if isInErrorState}}
+  <div class="error">
+    <p>Encountered an error while adding Podcast.</p>
+    <p>Is the Podcast URL valid?</p>
+  </div>
+{{/if}}
+
+{{input type="url" value=rssURL placeholder="Podcast URL"}}
+<button {{action 'create'}}>{{podcast.add}}</button>
+
+<h2>{{podcast.newToPodcasts}}</h2>
+<h3>{{podcast.recommendations}}</h3>
+
+<h4>The Cracked Podcast</h4>
+<img alt="The Cracked Podcast" class="cover cover-image"
+     {{action 'create' "http://rss.earwolf.com/the-cracked-podcast"}}
+     src="http://cdn.earwolf.com/wp-content/uploads/2013/08/EAR_CrackedPodcast_1600x1600_Cover_Final.jpg">
+
+<h4>Hello Internet</h4>
+<img alt="Hello Internet" class="cover cover-image"
+          {{action 'create' "http://feeds.podtrac.com/m2lTaLRx8AWb"}}
+          src="http://static.squarespace.com/static/52d66949e4b0a8cec3bcdd46/t/52ebf67fe4b0f4af2a4502d8/1391195777839/1500w/Hello%20Internet.003.png">
+
+{{#if isAdding}}
+  <div class="full-screen">
+    {{render "spinner"}}
+  </div>
+{{/if}}
