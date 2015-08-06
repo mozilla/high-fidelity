@@ -13,7 +13,6 @@ Router.map(function() {
   });
 
   this.route('podcast', { path: '/podcast/:podcast_id'});
-  // this.resource('episodes', { path: '/episode/:episode_id' });
 });
 
 export default Router;
