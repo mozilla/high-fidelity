@@ -85,10 +85,8 @@ export default DS.Model.extend({
                 _this.set('title', $channel.find('title').eq(0).text());
                 _this.set('description', $channel.find('description')
                                                  .eq(0).text());
-                _this.set('coverImageURL', $channel.find('itunes\\:image')
+                _this.set('coverImageURL', $channel.find('itunes\\:image, image')
                                                    .attr('href'));
-
-                console.log('Podcast record after setting data: ', _this);
 
                 _this.get('episodes').then(function(episodes) {
                     var itemsSaved = 0;
@@ -102,7 +100,7 @@ export default DS.Model.extend({
                         var oldImageURL = _this.get('coverImageURL');
 
                         // Use the latest artwork for the cover image.
-                        var episodeImageURL = $(episode).find('itunes\\:image')
+                        var episodeImageURL = $(episode).find('itunes\\:image, image')
                                                         .attr('href');
                         if (i === 0 && episodeImageURL !== oldImageURL) {
                             _this.set('coverImageURL', episodeImageURL);
