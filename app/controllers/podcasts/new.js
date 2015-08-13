@@ -43,7 +43,7 @@ export default Ember.Controller.extend({
         podcast.update().then(function() {
           self.set('isAdding', false);
           self.set('rssURL', '');
-          self.transitionToRoute('podcast', podcast);
+          self.transitionToRoute('podcasts.show', podcast);
         }, function() {
           self.set('isAdding', false);
           self.set('isInErrorState', true);
