@@ -1,9 +1,4 @@
 <div class="episodes">
-
-    <audio id="audio-player" preload="auto" mozaudiochannel="content"></audio>
-
-    {{render "player"}}
-
   <div class="ui celled list">
     {{#each model as |episode|}}
       <div {{action "setEpisode" episode}} class="item episode {{if isNew "new" "old"}}">

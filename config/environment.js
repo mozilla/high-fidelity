@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'high-fidelity',
     environment: environment,
     baseURL: '/',
-    locationType: 'auto',
+    locationType: 'hash',
     i18n: {
       defaultLocale: 'en'
     },

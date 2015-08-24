@@ -1,4 +1,4 @@
-<div id="player" class="{{isPopulated}}">
+<div id="player" class="populated-{{isPopulated}} ui bottom fixed menu">
   <div id="time-info">
     <progress id="audio-progress" max={{progressBar.max}}
               value={{progressBar.value}}>
@@ -12,7 +12,6 @@
 
   <div class="player-controls">
     <a {{action "rewind" model}} class="backward">
-      <i class="fa fa-backward"></i>
       {{fa-icon "backward"}}
     </a>
 
