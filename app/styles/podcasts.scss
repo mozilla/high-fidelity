@@ -1,0 +1,16 @@
+// Podcasts header
+.add-new-podcast-button {
+  float: right;
+}
+
+.podcast-cover img {
+  display: inline-block;
+  width: 100%;
+}
+
+.podcast-show {
+  .podcast-cover img {
+    max-height: 250px;
+    max-width: 250px;
+  }
+}

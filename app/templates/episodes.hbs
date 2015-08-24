@@ -4,34 +4,21 @@
 
     {{render "player"}}
 
-  {{#each model as |episode|}}
-    <div {{action "setEpisode" episode}} class="episode {{if isNew "new" "old"}}">
-      <div class="name">
-        {{#if isNew}}
-          <strong>{{t "episode.new"}}</strong>
-        {{/if}}
-        {{model.name}} {{name}} {{episode.name}}
-      </div>
-
-      {{!-- Commented out while we are streaming-only. This code exposes
-            download/downloading/play/stream UI, but for now we're streaming
-            only so we don't show anything.
-      {{#if HighFidelity.isPackaged}}
-        <div class="actions">
-          {{#if isDownloaded}}
-            <i class="fa fa-play-circle"></i>
-          {{else}}
-            {{#if isDownloading}}
-              <i class="fa fa-spinner fa-spin"></i>
-            {{else}}
-              <i class="fa fa-cloud-download" {{action download this}}></i>
+  <div class="ui celled list">
+    {{#each model as |episode|}}
+      <div {{action "setEpisode" episode}} class="item episode {{if isNew "new" "old"}}">
+        <div class="content">
+          <div class="header">
+            {{#if isNew}}
+              <strong>{{t "episode.new"}}</strong>
             {{/if}}
-          {{/if}}
+            {{model.name}} {{name}} {{episode.name}}
+          </div>
+          <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
         </div>
-      {{/if}}
-      --}}
-    </div>
-  {{else}}
-    {{render "spinner"}}
-  {{/each}}
+      </div>
+    {{else}}
+      {{render "spinner"}}
+    {{/each}}
+  </div>
 </div>

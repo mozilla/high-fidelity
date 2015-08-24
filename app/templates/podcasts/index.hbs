@@ -1,16 +1,13 @@
-{{#link-to 'podcasts.new'}}Add New Podcast{{/link-to}}
-<h3>{{t "tabs.myPodcasts"}}</h3>
-  <ul class="my-podcasts">
-    {{#each model as |podcast|}}
-      <li>
-        {{#link-to 'podcasts.show' podcast class="cover"}}
-          {{#if coverImage}}
-            <img src={{podcast.coverImage}} alt={{podcast.title}}>
-          {{else}}
-            <span class="no-cover">{{podcast.title}}</span>
-          {{/if}}
-        {{/link-to}}
-      </li>
-    {{/each}}
-  </ul>
+<h1 class="ui dividing header">{{t "tabs.myPodcasts"}}</h1>
+
+<div class="ui four column doubling grid">
+  {{#each model as |podcast|}}
+    <div class="column podcast-cover">
+      {{#link-to 'podcasts.show' podcast class="cover"}}
+        <img src={{podcast.coverImageURL}} alt={{podcast.title}}>
+      {{/link-to}}
+    </div>
+  {{/each}}
+</div>
+
 {{outlet}}

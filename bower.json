@@ -12,6 +12,7 @@
     "jquery": "^1.11.1",
     "loader.js": "ember-cli/loader.js#3.2.0",
     "qunit": "~1.17.1",
-    "font-awesome": "~4.3.0"
+    "font-awesome": "~4.3.0",
+    "semantic-ui": "~2.0.8"
   }
 }

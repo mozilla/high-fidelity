@@ -1,3 +1,24 @@
-<h1><a href="/podcasts">{{t "app.title"}}</a></h1>
+<div id="application" class="ui text container">
+  <!--
+  <h1>{{#link-to 'podcasts'}}{{t "app.title"}}{{/link-to}}</h1>
+  -->
 
-{{outlet}}
+  {{outlet}}
+</div>
+
+<div class="ui top labeled icon fixed item menu">
+  {{#link-to 'podcasts' class="item"}}
+    <i class="sound icon"></i>
+    <!-- {{t "tabs.myPodcasts"}} -->
+  {{/link-to}}
+  {{#link-to 'search' class="item"}}
+    <i class="search icon"></i>
+    <!-- {{t "tabs.search"}} -->
+  {{/link-to}}
+    <!-- {{#link-to 'podcasts.new' class="item"}}
+      <i class="plus icon"></i>
+      {{t "podcast.add"}}
+    {{/link-to}} -->
+</div>
+
+{{outlet 'modal'}}

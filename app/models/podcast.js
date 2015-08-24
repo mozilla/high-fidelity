@@ -12,16 +12,7 @@ export default DS.Model.extend({
     lastUpdated: DS.attr('number'),
     lastPlayed: DS.attr('number'),
 
-    coverImageBlob: DS.attr('string'),
     coverImageURL: DS.attr('string'),
-
-    coverImage: function() {
-        if (this.get('coverImageURL')) {
-            return this.get('coverImageURL');
-        } else {
-            return null;
-        }
-    }.property('coverImageBlob', 'coverImageURL'),
 
     destroyRecord: function() {
         var self = this;
@@ -39,31 +30,6 @@ export default DS.Model.extend({
         return this._super();
     },
 
-    getCoverImage: function() {
-        if (!this.get('coverImageURL')) {
-            console.debug('No coverImageURL found; skipping.');
-            return;
-        }
-
-        var _this = this;
-
-        var request = new XMLHttpRequest({mozSystem: true});
-
-        request.open('GET', this.get('coverImageURL'), true);
-        request.responseType = 'arraybuffer';
-
-        request.addEventListener('load', function() {
-            _this.set('coverImageBlob', request.response);
-            _this.save();
-        });
-
-        try {
-            request.send(null);
-        } catch (err) {
-            console.error(err);
-        }
-    },
-
     // Update this podcast from the RSS feed, but don't download any
     // new episodes by default.
     update: function() {
@@ -71,8 +37,6 @@ export default DS.Model.extend({
 
         console.info('Updating podcast:' + this.get('id'));
         return new Ember.RSVP.Promise(function(resolve, reject) {
-            // _this.getCoverImage();
-
             // Update last updated time so we aren't constantly looking
             // for new episodes ;-)
             _this.set('lastUpdated', timeStamper.timestamp());
@@ -92,8 +56,8 @@ export default DS.Model.extend({
                 _this.set('title', $channel.find('title').eq(0).text());
                 _this.set('description', $channel.find('description')
                                                  .eq(0).text());
-                _this.set('coverImageURL', $channel.find('itunes\\:image, image')
-                                                   .attr('href'));
+                _this.set('coverImageURL',
+                  $channel.children('itunes\\:image, image').attr('href'));
 
                 _this.get('episodes').then(function(episodes) {
                     var itemsSaved = 0;
@@ -102,22 +66,6 @@ export default DS.Model.extend({
 
                         if (episodes.filterBy('guid', guid).length) {
                             return;
-                        }
-
-                        var oldImageURL = _this.get('coverImageURL');
-
-                        // Use the latest artwork for the cover image.
-                        var episodeImageURL = $(episode).find('itunes\\:image, image')
-                                                        .attr('href');
-                        if (i === 0 && episodeImageURL !== oldImageURL) {
-                            _this.set('coverImageURL', episodeImageURL);
-                        }
-
-                        // If the cover image has changed (or this podcast is
-                        // new) we update the cover image.
-                        if (!oldImageURL ||
-                            oldImageURL !== _this.get('coverImageURL')) {
-                            // _this.getCoverImage();
                         }
 
                         var e = _this.store.createRecord('episode', {

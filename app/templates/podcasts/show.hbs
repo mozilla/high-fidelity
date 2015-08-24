@@ -1,10 +1,11 @@
-<div class="podcast">
-  <img class="cover-image" src={{model.coverImageURL}}
-               alt={{model.title}}>
+<div class="podcast-show">
+  <div class="podcast-cover">
+    <img src={{model.coverImageURL}} alt={{model.title}}>
+  </div>
 
-  <p>{{model.description}} {{model.lastUpdated}}</p>
+  <p>{{model.description}}<!-- {{model.lastUpdated}}--></p>
 
-  <button {{action "delete"}}>Unsubscribe</button>
+  <button class="negative ui button" {{action "delete"}}>Unsubscribe</button>
 </div>
 
 <hr/>
