@@ -4,7 +4,7 @@ export default {
     },
     "episode": {
         "episodes": 'Epizody', // Fragmenty
-        "new": 'Nowe:',
+        "new": 'Nowe',
     },
     "podcast": {
         "add": 'Dodaj',

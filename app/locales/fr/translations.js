@@ -4,7 +4,7 @@ export default {
     },
     "episode": {
         "episodes": "Episodes",
-        "new": 'nouveau:',
+        "new": 'nouveau',
     },
     "podcast": {
         "add": 'Ajouter',

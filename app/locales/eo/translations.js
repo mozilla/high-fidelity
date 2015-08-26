@@ -4,7 +4,7 @@ export default {
     },
     "episode": {
         "episodes": 'Epizodoj',
-        "new": 'Nova:',
+        "new": 'Nova',
     },
     "podcast": {
         "add": 'Aldoni',

@@ -1,11 +1,23 @@
-<div class="podcast-show">
-  <div class="podcast-cover">
+<div class="podcast-show ui grid">
+  <div class="sixteen wide column">
+    <h1>{{model.title}}</h1>
+  </div>
+
+  <div class="seven wide column centered podcast-cover">
     <img src={{model.coverImageURL}} alt={{model.title}}>
   </div>
 
-  <p>{{model.description}}<!-- {{model.lastUpdated}}--></p>
+  <div class="row">
+    <div class="eight wide column">
+      <button class="blue ui button" {{action "update"}}>Refresh</button>
+    </div>
+    <div class="eight wide column">
+      <button class="negative ui button"
+              {{action "delete"}}>Unsubscribe</button>
+    </div>
+  </div>
 
-  <button class="negative ui button" {{action "delete"}}>Unsubscribe</button>
+  <!-- <p>{{model.description}}</p> -->
 </div>
 
 {{render "episodes" model.episodes}}

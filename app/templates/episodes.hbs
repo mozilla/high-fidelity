@@ -1,19 +1,48 @@
-<div class="episodes">
-  <div class="ui celled list">
-    {{#each model as |episode|}}
-      <div {{action "setEpisode" episode}} class="item episode {{if isNew "new" "old"}}">
-        <div class="content">
-          <div class="header">
-            {{#if isNew}}
-              <strong>{{t "episode.new"}}</strong>
-            {{/if}}
-            {{model.name}} {{name}} {{episode.name}}
+<div class="episodes ui divided relaxed huge list">
+  {{#each model as |episode|}}
+    <div class="item episode {{if isNew "new" "old"}}">
+      <div class="content">
+        <!--
+          The new badge that hangs out in the corner if the episode hasn't
+          been played at all yet
+        -->
+        {{#if episode.isNew}}
+          <!-- <div class="ui red right small corner label new">
+            {{t "episode.new"}}
+          </div> -->
+        {{/if}}
+
+        <div class="ui grid">
+          <div class="thirteen wide column">
+            <!-- Episode name -->
+            <div class="header">
+              {{episode.name}}
+            </div>
+
+            <!-- Date released, length, etc. -->
+            <div class="extra">
+              <div class="ui label medium black">
+                <i class="calendar icon"></i>
+                {{format-timestamp episode.datePublished}}
+              </div>
+              <div class="ui label medium black">
+                <i class="clock icon"></i>
+                126 minutes
+              </div>
+            </div>
+            <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
           </div>
-          <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
+
+          <div class="three wide column middle aligned play-button">
+            <button class="circular ui icon button"
+                    {{action "setEpisode" episode}}>
+              <i class="{{if episode.isPlaying "pause" "play"}} icon"></i>
+            </button>
+          </div>
         </div>
       </div>
-    {{else}}
-      {{render "spinner"}}
-    {{/each}}
-  </div>
+    </div>
+  {{else}}
+    {{render "spinner"}}
+  {{/each}}
 </div>

@@ -9,8 +9,37 @@
 }
 
 .podcast-show {
-  .podcast-cover img {
-    max-height: 250px;
-    max-width: 250px;
+  h1 {
+    text-align: center;
+  }
+
+  .podcast-cover {
+    img {
+      max-height: 250px;
+      max-width: 250px;
+    }
+  }
+}
+
+.episodes {
+  .episode {
+    position: relative;
+
+    &:nth-child(odd) {
+      background: #eee;
+    }
+
+    &.item .header {
+      font-weight: normal;
+      margin: 0 2rem 1rem .125rem;
+    }
+
+    .new {
+      padding: .125rem 0 0 .75rem
+    }
+
+    .column:not(.row).play-button {
+      padding: 2rem .25rem;
+    }
   }
 }
