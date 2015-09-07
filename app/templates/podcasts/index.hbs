@@ -1,13 +1,15 @@
-<h1 class="ui dividing header">{{t "tabs.myPodcasts"}}</h1>
+<div class="podcasts-index">
+  <h1 class="ui dividing header">{{t "tabs.myPodcasts"}}</h1>
 
-<div class="ui doubling six column grid">
-  {{#each model as |podcast|}}
-    <div class="column four wide computer podcast-cover">
-      {{#link-to 'podcasts.show' podcast class="cover"}}
-        <img src={{podcast.coverImageURL}} alt={{podcast.title}}>
-      {{/link-to}}
-    </div>
-  {{/each}}
+  <div class="ui doubling six column grid">
+    {{#each model as |podcast|}}
+      <div class="column four wide computer podcast-cover">
+        {{#link-to 'podcasts.show' podcast class="cover"}}
+          <img src={{podcast.coverImageURL}} alt={{podcast.title}}>
+        {{/link-to}}
+      </div>
+    {{/each}}
+  </div>
 </div>
 
 {{outlet}}
