@@ -1,6 +1,6 @@
 <div class="podcast-show ui grid">
   <div class="sixteen wide column">
-    <h1>{{model.title}}</h1>
+    <h1 class="ui header">{{model.title}}</h1>
   </div>
 
   <div class="seven wide column centered podcast-cover">
@@ -8,10 +8,10 @@
   </div>
 
   <div class="row">
-    <div class="eight wide column">
+    <div class="eight wide column center aligned">
       <button class="blue ui button" {{action "update"}}>Refresh</button>
     </div>
-    <div class="eight wide column">
+    <div class="eight wide column center aligned">
       <button class="negative ui button"
               {{action "delete"}}>Unsubscribe</button>
     </div>
