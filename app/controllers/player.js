@@ -6,7 +6,9 @@ export default Ember.Controller.extend({
         this._super.apply(this, arguments);
     },
     _hasAudio: function() {
-        this.set('isPopulated', !!this.get('model').get('id'));
+        if (this.get('model')) {
+            this.set('isPopulated', !!this.get('model').get('id'));
+        }
     }.observes('model'),
     isPopulated: false,
     progressBar: {
