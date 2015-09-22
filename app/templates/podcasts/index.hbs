@@ -8,6 +8,8 @@
           <img src={{podcast.coverImageURL}} alt={{podcast.title}}>
         {{/link-to}}
       </div>
+    {{else}}
+      <p>You aren't subscribed to any podcasts yet! {{#link-to "podcasts.new" }}Add a new podcast.{{/link-to}}</p>
     {{/each}}
   </div>
 </div>
