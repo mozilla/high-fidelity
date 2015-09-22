@@ -4,7 +4,9 @@ High Fidelity is a Firefox OS Application for subscribing and listening to podca
 
 ## Developing Locally
 
-You will need the following things properly installed on your computer:
+If you'd like to contribute to this project, take a look at the [open issues](https://github.com/mozilla/high-fidelity/issues), or file new ones if you encounter a bug or have a feature request.
+
+To get set up for local development, you will need the following things properly installed on your computer:
 
 * [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM)
