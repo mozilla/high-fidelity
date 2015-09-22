@@ -1,4 +1,4 @@
-.podcasts-index .ui.grid {
+.podcast-index .ui.grid {
   margin-top: 0rem;
 }
 
@@ -48,6 +48,14 @@
 
     .column:not(.row).play-button {
       padding: 2rem .25rem;
+    }
+
+    .ui.label > .icon {
+      margin-right: 0.25em;
+    }
+
+    .ui.circular.button {
+      margin-right: 1.5em;
     }
   }
 }
