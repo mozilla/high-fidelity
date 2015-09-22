@@ -1,3 +1,20 @@
+#player.populated-true {
+  display: block;
+}
+
 #player.populated-false {
   display: none;
+}
+
+progress {
+  -webkit-appearance: none;
+   appearance: none;
+
+   &::-moz-progress-bar {
+    background-color: #4183C4;
+   }
+
+   &[value]::-webkit-progress-value {
+    background-color: #4183C4;
+   }
 }
