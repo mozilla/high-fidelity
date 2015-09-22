@@ -5,8 +5,7 @@ export default Ember.Route.extend({
   model: function() {
       return this.store;
   },
-  afterModel: function(user) {
-    var i18nLocales = this.get('i18n.locales');
+  afterModel: function() {
     var locale = (window.navigator.language || window.navigator.browserLanguage).split('-')[0];
     this.set('i18n.locale', locale);
   },

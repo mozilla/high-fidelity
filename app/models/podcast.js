@@ -24,7 +24,7 @@ export default DS.Model.extend({
                     removeEpisodes();
                 }
             });
-        }
+        };
         removeEpisodes();
 
         return this._super();
@@ -61,6 +61,7 @@ export default DS.Model.extend({
 
                 _this.get('episodes').then(function(episodes) {
                     var itemsSaved = 0;
+                    var saved = false;
                     $items.each(function(i, episode) {
                         var guid = $(episode).find('guid').text();
 
@@ -88,7 +89,7 @@ export default DS.Model.extend({
                         if ($items.length === i + 1) {
                             console.info('Updated podcast:' + _this.get('id'),
                                          itemsSaved + ' new episodes.');
-                            var saved = true;
+                            saved = true;
                             _this.save().then(resolve);
                         }
                     });

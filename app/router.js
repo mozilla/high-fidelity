@@ -10,7 +10,7 @@ Router.map(function() {
 
   this.route('podcasts', { path: '/podcasts' }, function() {
     this.route('new');
-    this.route('show', { path: '/podcast/:podcast_id'})
+    this.route('show', { path: '/podcast/:podcast_id'});
   });
 
   // this.route('podcast', { path: '/podcast/:podcast_id'});
