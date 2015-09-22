@@ -5,7 +5,7 @@ export default DS.Model.extend({
 
     name: DS.attr('string'),
     audioURL: DS.attr('string'),
-    audioLength: DS.attr('number'),
+    audioLength: DS.attr('string'),
     playbackPosition: DS.attr('number'),
     playCount: DS.attr('number'),
     // audioFile: DS.attr('object'),

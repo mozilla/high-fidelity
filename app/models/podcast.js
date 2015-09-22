@@ -76,6 +76,7 @@ export default DS.Model.extend({
                                 $(episode).find('pubDate').text()
                             ),
                             name: $(episode).find('title').text(),
+                            audioLength: $(episode).find('duration').text(),
                             podcast: _this
                         });
 
