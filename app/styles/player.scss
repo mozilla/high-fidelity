@@ -1,5 +1,10 @@
 #player.populated-true {
   display: block;
+  padding: 1em 0em;
+
+  div {
+    text-align: center;
+  }
 }
 
 #player.populated-false {
@@ -17,4 +22,8 @@ progress {
    &[value]::-webkit-progress-value {
     background-color: #4183C4;
    }
+}
+
+.player-controls a {
+  font-size: 1.75rem;
 }
