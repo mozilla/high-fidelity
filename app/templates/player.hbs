@@ -1,11 +1,10 @@
 <div id="player" class="populated-{{isPopulated}} ui bottom fixed menu">
   <div id="time-info">
+    <span id="time-elapsed">{{timeElapsed}}</span>
+    <span id="time-remaining">{{timeRemaining}}</span>
     <progress id="audio-progress" max={{progressBar.max}}
               value={{progressBar.value}}>
     </progress>
-
-    <span id="time-elapsed">{{timeElapsed}}</span>
-    <span id="time-remaining">{{timeRemaining}}</span>
   </div>
 
   <div class="episode-name">{{model.name}}</div>

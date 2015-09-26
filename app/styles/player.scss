@@ -1,6 +1,7 @@
 #player.populated-true {
   display: block;
-  padding: 1em 0em;
+  border-top: 1px solid #222;
+  padding-bottom: 0.5rem;
 
   div {
     text-align: center;
@@ -11,19 +12,39 @@
   display: none;
 }
 
-progress {
-  -webkit-appearance: none;
-   appearance: none;
+#time-info {
+  position: relative;
 
-   &::-moz-progress-bar {
-    background-color: #4183C4;
-   }
+  span {
+    color: #fff;
+    position: absolute;
+    top: 3px;
 
-   &[value]::-webkit-progress-value {
+    &#time-elapsed {
+      left: 5px;
+    }
+
+    &#time-remaining {
+      right: 5px;
+    }
+  }
+
+  progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     background-color: #4183C4;
-   }
+    border: none;
+    width: 100%;
+    height: 25px;
+
+    &::-moz-progress-bar {
+      background-color: rgb(18, 76, 134);
+    }
+  }
+
 }
 
 .player-controls a {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
