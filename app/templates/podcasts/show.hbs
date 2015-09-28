@@ -20,4 +20,5 @@
   <!-- <p>{{model.description}}</p> -->
 </div>
 
-{{render "episodes" controller.sortedEpisodes}}
+  {{#episode-list data=model.episodes}}
+  {{/episode-list}}
