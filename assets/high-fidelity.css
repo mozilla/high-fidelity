@@ -29,14 +29,21 @@
     #time-info progress::-moz-progress-bar {
       background-color: #124c86; }
 
-.player-controls a {
-  font-size: 1.5rem; }
+.player-controls {
+  padding: 0.5rem; }
+  .player-controls a {
+    font-size: 3rem;
+    padding: 0.5rem; }
 
 .podcast-index .ui.grid {
   margin-top: 0rem; }
 
 .add-new-podcast-button {
   float: right; }
+
+.podcast-cover h5.ui.header {
+  line-height: 1rem;
+  margin-bottom: 0.25rem; }
 
 .podcast-cover img {
   display: inline-block;

@@ -2002,7 +2002,7 @@ define('high-fidelity/templates/components/episode-list', ['exports'], function 
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createElement("div");
-        dom.setAttribute(el1,"class","episodes ui divided relaxed huge list");
+        dom.setAttribute(el1,"class","episodes ui divided relaxed large list");
         var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
         var el2 = dom.createComment("");
@@ -2830,7 +2830,7 @@ define('high-fidelity/templates/podcasts/new', ['exports'], function (exports) {
         var el4 = dom.createTextNode("\n    ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("h5");
-        dom.setAttribute(el4,"class","ui header");
+        dom.setAttribute(el4,"class","ui header centered align");
         var el5 = dom.createTextNode("The Cracked Podcast");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2851,8 +2851,12 @@ define('high-fidelity/templates/podcasts/new', ['exports'], function (exports) {
         var el4 = dom.createTextNode("\n    ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("h5");
-        dom.setAttribute(el4,"class","ui header");
-        var el5 = dom.createTextNode("Hello Internet");
+        dom.setAttribute(el4,"class","ui header centered align");
+        var el5 = dom.createTextNode("Hello");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("br");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode("Internet");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n    ");
@@ -4023,7 +4027,7 @@ catch(err) {
 if (runningTests) {
   require("high-fidelity/tests/test-helper");
 } else {
-  require("high-fidelity/app")["default"].create({"name":"high-fidelity","version":"3.0.0+aeb3e638"});
+  require("high-fidelity/app")["default"].create({"name":"high-fidelity","version":"3.0.0+e0fee434"});
 }
 
 /* jshint ignore:end */
