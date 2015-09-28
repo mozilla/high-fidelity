@@ -1,33 +1,22 @@
 {
-    "version": "2.0.0",
-    "name": "Podcasts",
-    "description": "Listen to your favourite podcasts on your HTML5-powered device or browser.",
-    "icons": {
-        "32": "/images/icon-32.png",
-        "60": "/images/icon-60.png",
-        "64": "/images/icon-64.png",
-        "90": "/images/icon-90.png",
-        "120": "/images/icon-120.png",
-        "128": "/images/icon-128.png",
-        "256": "/images/icon-256.png",
-        "512": "/images/icon-512.png"
-    },
-    "developer": {
-        "name": "Mozilla",
-        "url": "https://mozilla.org/"
-    },
-    "launch_path": "/index.html",
-    "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
-    "type": "privileged",
-    "permissions": {
-        "audio-channel-content": {
-            "description": "Required to play audio in the background."
-        },
-        "storage": {
-            "description": "Required to store podcast audio files and images."
-        },
-        "systemXHR": {
-            "description": "Required to download podcasts."
-        }
-    }
+  "version": "3.0.0",
+  "name": "high-fidelity",
+  "description": "Listen to your favourite podcasts on your HTML5-powered device or browser.",
+  "icons": {
+    "32": "/assets/images/icons/icon-32.png",
+    "60": "/assets/images/icons/icon-60.png",
+    "64": "/assets/images/icons/icon-64.png",
+    "90": "/assets/images/icons/icon-90.png",
+    "120": "/assets/images/icons/icon-120.png",
+    "128": "/assets/images/icons/icon-128.png",
+    "256": "/assets/images/icons/icon-256.png"
+  },
+  "developer": {
+    "name": "Mozilla",
+    "url": "https://mozilla.org/"
+  },
+  "launch_path": "/index.html",
+  "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
+  "permissions": {
+  }
 }

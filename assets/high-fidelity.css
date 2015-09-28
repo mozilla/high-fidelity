@@ -1,0 +1,77 @@
+#player.populated-true {
+  display: block;
+  border-top: 1px solid #222;
+  padding-bottom: 0.5rem; }
+  #player.populated-true div {
+    text-align: center; }
+
+#player.populated-false {
+  display: none; }
+
+#time-info {
+  position: relative; }
+  #time-info span {
+    color: #fff;
+    position: absolute;
+    top: 3px; }
+    #time-info span#time-elapsed {
+      left: 5px; }
+    #time-info span#time-remaining {
+      right: 5px; }
+  #time-info progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #4183C4;
+    border: none;
+    width: 100%;
+    height: 25px; }
+    #time-info progress::-moz-progress-bar {
+      background-color: #124c86; }
+
+.player-controls a {
+  font-size: 1.5rem; }
+
+.podcast-index .ui.grid {
+  margin-top: 0rem; }
+
+.add-new-podcast-button {
+  float: right; }
+
+.podcast-cover img {
+  display: inline-block;
+  width: 100%; }
+
+.podcast-show h1 {
+  text-align: center; }
+
+.podcast-show .podcast-cover img {
+  max-height: 250px;
+  max-width: 250px; }
+
+.episodes .episode {
+  position: relative; }
+  .episodes .episode:nth-child(odd) {
+    background: #eee; }
+  .episodes .episode.item .header {
+    font-weight: normal;
+    margin: 0 2rem 1rem 0.125rem; }
+  .episodes .episode.item .content {
+    padding-left: .75rem; }
+  .episodes .episode .new {
+    padding: 0.125rem 0 0 0.75rem; }
+  .episodes .episode .column:not(.row).play-button {
+    padding: 2rem 0.25rem; }
+  .episodes .episode .ui.label > .icon {
+    margin-right: 0.25em; }
+  .episodes .episode .ui.circular.button {
+    margin-right: 1.5em; }
+
+#application {
+  padding-top: 70px; }
+
+.horizontal-padding {
+  padding-left: 2em;
+  padding-right: 2em; }
+
+/*# sourceMappingURL=high-fidelity.css.map */
