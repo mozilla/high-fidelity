@@ -15,7 +15,7 @@
     "name": "Mozilla",
     "url": "https://mozilla.org/"
   },
-  "launch_path": "/index.html",
+  "launch_path": "/high-fidelity/index.html",
   "installs_allowed_from": ["https://marketplace.firefox.com", "*"],
   "permissions": {
   }
