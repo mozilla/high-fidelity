@@ -45,6 +45,10 @@
 
 }
 
-.player-controls a {
-  font-size: 1.5rem;
+.player-controls {
+  padding: 0.5rem;
+    a {
+      font-size: 3rem;
+      padding: 0.5rem;
+    }
 }

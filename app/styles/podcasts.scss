@@ -7,9 +7,16 @@
   float: right;
 }
 
-.podcast-cover img {
-  display: inline-block;
-  width: 100%;
+.podcast-cover {
+  h5.ui.header {
+    line-height: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  img {
+    display: inline-block;
+    width: 100%;
+  }
 }
 
 .podcast-show {
