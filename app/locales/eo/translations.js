@@ -13,6 +13,7 @@ export default {
         "newToPodcasts": 'Ĉu malkutimas podkastojn?',
         "noneFound": 'Neniu podkasto trovata.',
         "recommendations": 'Kontrolu niajn rekomendojn:',
+        "URLplaceholder": "podcast URL",
     },
     "search": {
         "find": 'Trovi',

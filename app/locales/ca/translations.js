@@ -14,6 +14,7 @@ export default {
 	    "newToPodcasts": 'Us estreneu en els podcasts?',
 	    "noneFound": "No s'ha trobat podcasts.",
 	    "recommendations": 'Aquestes són les nostres recomanacions:',
+	    "URLplaceholder": "URL del podcast",
 	},
 	"search": {
 	    "find": 'Cercar',
