@@ -2,7 +2,7 @@
   <h1 class="ui dividing header">{{t "tabs.myPodcasts"}}</h1>
 
   <div class="ui doubling six column grid">
-    {{#each controller.sortedPodcasts as |podcast|}}
+    {{#each sortedPodcasts as |podcast|}}
       <div class="column four wide computer podcast-cover">
         {{#link-to "podcasts.show" podcast class="cover"}}
           <img src={{podcast.coverImageURL}} alt={{podcast.title}}>
