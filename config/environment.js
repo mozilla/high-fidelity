@@ -23,11 +23,11 @@ module.exports = function(environment) {
     contentSecurityPolicy: {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-eval' https://ajax.googleapis.com/",
-      'font-src': "'self'",
-      'connect-src': "'self'",
-      'img-src': "'self'",
+      'font-src': "'self' data:",
+      'connect-src': "'self' http: https:",
+      'img-src': "'self' http: https: data:",
       'style-src': "'self'",
-      'media-src': "'self'"
+      'media-src': "'self' http: https:"
     }
   };
 
