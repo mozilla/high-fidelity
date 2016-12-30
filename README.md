@@ -1,3 +1,7 @@
+**This project is unmaintained and likely no longer works.**
+
+-----
+
 # High Fidelity
 
 High Fidelity is a Firefox OS Application for subscribing and listening to podcasts. It is built with ember-cli, using ember-data and localstorage for managing podcast data. Supporting other platforms/browsers, and implementing service workers are eventual design goals.
