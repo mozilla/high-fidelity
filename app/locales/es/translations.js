@@ -14,6 +14,7 @@ export default {
 	    "newToPodcasts": 'Nuevo en los podcast?',
 	    "noneFound": 'No se encontraron podcast.',
 	    "recommendations": 'Estas son nuestras recomendaciones:',
+	    "URLplaceholder": "URL del podcast",
 	},
 	"search": {
 	    "find": 'Buscar',

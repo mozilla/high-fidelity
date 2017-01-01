@@ -13,6 +13,7 @@ export default {
         "newToPodcasts": 'Nowe do podcastu?',
         "noneFound": 'Nie znaleziono podcastów.',
         "recommendations": 'Sprawdź nasze rekomendacje:',
+        "URLplaceholder": "podcast URL",
     },
     "search": {
         "find": 'Szukaj',
